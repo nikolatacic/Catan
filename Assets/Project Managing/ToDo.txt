@@ -1,0 +1,12 @@
+Photoshop:
+-Try and merge layers from all psds into one.
+-Is it possible to have large layer but then use it on the picture in smaller variant? mayble duplicate.
+-Have one PSD project for Catan. 
+
+
+
+Unity:
+-Create ui to choose settings for the game. Including number of players.
+-Camera settings, zoom in and out, panning
+- Choosing multiple designs. 
+-Ui can be collapsed for almost a clear window
