@@ -1,7 +1,7 @@
 Photoshop:
--Try and merge layers from all psds into one.
--Is it possible to have large layer but then use it on the picture in smaller variant? mayble duplicate.
--Have one PSD project for Catan. 
+
+-Use correct sizes for your textures, You can reduce them a lot.
+-Create texture for bridge to boat
 
 
 
@@ -10,3 +10,13 @@ Unity:
 -Camera settings, zoom in and out, panning
 - Choosing multiple designs. 
 -Ui can be collapsed for almost a clear window
+
+
+
+---------------------------------
+Archive: (Done)
+
+Photoshop:
+-Try and merge layers from all psds into one.
+-Is it possible to have large layer but then use it on the picture in smaller variant? mayble duplicate.
+-Have one PSD project for Catan. 
