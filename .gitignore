@@ -59,8 +59,3 @@ sysinfo.txt
 *.sln.iml
 Assets/HierarchyDecorationEditorTool/HierarchyDecorationSO.asset
 Assets/HierarchyDecorationEditorTool/HierarchyDecorationSO.asset.meta
-
-Assets/Scenes/Mare.unity
-Assets/Scenes/Tacic.unity
-Assets/Scenes/Mare.unity.meta
-Assets/Scenes/Tacic.unity.meta
