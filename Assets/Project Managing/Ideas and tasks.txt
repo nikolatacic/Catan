@@ -1,8 +1,0 @@
-Learned:
-
--Photoshop tools
--Texture packer
-
--Tools:
--Color picker web addon
--Text to image converter - choose from font
