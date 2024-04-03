@@ -4,15 +4,6 @@ using UnityEngine;
 
 public class Field : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] private ResourceType resourceType;
+    [SerializeField] private int diceNumber;
 }
