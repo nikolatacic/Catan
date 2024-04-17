@@ -298,6 +298,7 @@ GameObject:
   - component: {fileID: 53364421}
   - component: {fileID: 53364423}
   - component: {fileID: 53364422}
+  - component: {fileID: 53364424}
   m_Layer: 0
   m_Name: House_29
   m_TagString: Untagged
@@ -386,6 +387,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &53364424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53364420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 53364422}
+  neighbourHouses: []
 --- !u!1 &54118985
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,6 +413,7 @@ GameObject:
   - component: {fileID: 54118986}
   - component: {fileID: 54118988}
   - component: {fileID: 54118987}
+  - component: {fileID: 54118989}
   m_Layer: 0
   m_Name: House_24
   m_TagString: Untagged
@@ -485,6 +502,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &54118989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54118985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 54118987}
+  neighbourHouses: []
 --- !u!1 &56019111
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,6 +809,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 97080603}
+  - component: {fileID: 97080604}
   m_Layer: 0
   m_Name: Level
   m_TagString: Untagged
@@ -801,6 +834,73 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &97080604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97080602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41a34cbb90e993d43a88917c06913846, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  houses:
+  - {fileID: 1851464560}
+  - {fileID: 2082302489}
+  - {fileID: 887500874}
+  - {fileID: 1283684838}
+  - {fileID: 1126680297}
+  - {fileID: 1604791433}
+  - {fileID: 930227707}
+  - {fileID: 467694433}
+  - {fileID: 2138728462}
+  - {fileID: 1680531053}
+  - {fileID: 524162371}
+  - {fileID: 1581383974}
+  - {fileID: 350371490}
+  - {fileID: 149382584}
+  - {fileID: 614991624}
+  - {fileID: 1178414559}
+  - {fileID: 1615399668}
+  - {fileID: 2076656996}
+  - {fileID: 1627479927}
+  - {fileID: 340622659}
+  - {fileID: 1860786018}
+  - {fileID: 2070094287}
+  - {fileID: 995819860}
+  - {fileID: 54118989}
+  - {fileID: 1103905071}
+  - {fileID: 2079599551}
+  - {fileID: 1869068040}
+  - {fileID: 434289906}
+  - {fileID: 53364424}
+  - {fileID: 671430860}
+  - {fileID: 1424284876}
+  - {fileID: 1988135918}
+  - {fileID: 2131001041}
+  - {fileID: 871434828}
+  - {fileID: 1529749153}
+  - {fileID: 1364372970}
+  - {fileID: 956199107}
+  - {fileID: 2024179156}
+  - {fileID: 671574917}
+  - {fileID: 1044717643}
+  - {fileID: 723227074}
+  - {fileID: 1882945686}
+  - {fileID: 1679116805}
+  - {fileID: 1644634311}
+  - {fileID: 1957817617}
+  - {fileID: 1983460653}
+  - {fileID: 1049531867}
+  - {fileID: 894449698}
+  - {fileID: 2038312176}
+  - {fileID: 403713651}
+  - {fileID: 843062453}
+  - {fileID: 1785954394}
+  - {fileID: 2011564723}
+  - {fileID: 1267385911}
 --- !u!1 &142654443
 GameObject:
   m_ObjectHideFlags: 0
@@ -848,6 +948,7 @@ GameObject:
   - component: {fileID: 149382581}
   - component: {fileID: 149382583}
   - component: {fileID: 149382582}
+  - component: {fileID: 149382584}
   m_Layer: 0
   m_Name: House_14
   m_TagString: Untagged
@@ -936,6 +1037,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &149382584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149382580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 149382582}
+  neighbourHouses: []
 --- !u!1 &217240209
 GameObject:
   m_ObjectHideFlags: 0
@@ -1626,6 +1742,7 @@ GameObject:
   - component: {fileID: 340622656}
   - component: {fileID: 340622658}
   - component: {fileID: 340622657}
+  - component: {fileID: 340622659}
   m_Layer: 0
   m_Name: House_20
   m_TagString: Untagged
@@ -1714,6 +1831,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &340622659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340622655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 340622657}
+  neighbourHouses: []
 --- !u!1 &350371486
 GameObject:
   m_ObjectHideFlags: 0
@@ -1725,6 +1857,7 @@ GameObject:
   - component: {fileID: 350371487}
   - component: {fileID: 350371489}
   - component: {fileID: 350371488}
+  - component: {fileID: 350371490}
   m_Layer: 0
   m_Name: House_13
   m_TagString: Untagged
@@ -1813,6 +1946,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &350371490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350371486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 350371488}
+  neighbourHouses: []
 --- !u!1 &384104940
 GameObject:
   m_ObjectHideFlags: 0
@@ -2077,6 +2225,7 @@ GameObject:
   - component: {fileID: 403713648}
   - component: {fileID: 403713650}
   - component: {fileID: 403713649}
+  - component: {fileID: 403713651}
   m_Layer: 0
   m_Name: House_45
   m_TagString: Untagged
@@ -2165,6 +2314,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &403713651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403713647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 403713649}
+  neighbourHouses: []
 --- !u!1 &434289902
 GameObject:
   m_ObjectHideFlags: 0
@@ -2176,6 +2340,7 @@ GameObject:
   - component: {fileID: 434289903}
   - component: {fileID: 434289905}
   - component: {fileID: 434289904}
+  - component: {fileID: 434289906}
   m_Layer: 0
   m_Name: House_28
   m_TagString: Untagged
@@ -2264,6 +2429,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &434289906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 434289902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 434289904}
+  neighbourHouses: []
 --- !u!1 &453316448
 GameObject:
   m_ObjectHideFlags: 0
@@ -2409,6 +2589,7 @@ GameObject:
   - component: {fileID: 467694430}
   - component: {fileID: 467694432}
   - component: {fileID: 467694431}
+  - component: {fileID: 467694433}
   m_Layer: 0
   m_Name: House_8
   m_TagString: Untagged
@@ -2497,6 +2678,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &467694433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467694429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 467694431}
+  neighbourHouses: []
 --- !u!1 &513083054
 GameObject:
   m_ObjectHideFlags: 0
@@ -2628,6 +2824,7 @@ GameObject:
   - component: {fileID: 524162368}
   - component: {fileID: 524162370}
   - component: {fileID: 524162369}
+  - component: {fileID: 524162371}
   m_Layer: 0
   m_Name: House_11
   m_TagString: Untagged
@@ -2716,6 +2913,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &524162371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 524162367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 524162369}
+  neighbourHouses: []
 --- !u!4 &585183981 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7475137104652283129, guid: c93b0158acebfc84fa31582922f10cef, type: 3}
@@ -2814,6 +3026,7 @@ GameObject:
   - component: {fileID: 614991621}
   - component: {fileID: 614991623}
   - component: {fileID: 614991622}
+  - component: {fileID: 614991624}
   m_Layer: 0
   m_Name: House_15
   m_TagString: Untagged
@@ -2902,6 +3115,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &614991624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 614991620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 614991622}
+  neighbourHouses: []
 --- !u!1 &660948164
 GameObject:
   m_ObjectHideFlags: 0
@@ -2983,6 +3211,7 @@ GameObject:
   - component: {fileID: 671430857}
   - component: {fileID: 671430859}
   - component: {fileID: 671430858}
+  - component: {fileID: 671430860}
   m_Layer: 0
   m_Name: House_30
   m_TagString: Untagged
@@ -3071,6 +3300,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &671430860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 671430856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 671430858}
+  neighbourHouses: []
 --- !u!1 &671574913
 GameObject:
   m_ObjectHideFlags: 0
@@ -3082,6 +3326,7 @@ GameObject:
   - component: {fileID: 671574914}
   - component: {fileID: 671574916}
   - component: {fileID: 671574915}
+  - component: {fileID: 671574917}
   m_Layer: 0
   m_Name: House_50
   m_TagString: Untagged
@@ -3170,6 +3415,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &671574917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 671574913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 671574915}
+  neighbourHouses: []
 --- !u!1 &723227070
 GameObject:
   m_ObjectHideFlags: 0
@@ -3181,6 +3441,7 @@ GameObject:
   - component: {fileID: 723227071}
   - component: {fileID: 723227073}
   - component: {fileID: 723227072}
+  - component: {fileID: 723227074}
   m_Layer: 0
   m_Name: House_52
   m_TagString: Untagged
@@ -3269,6 +3530,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &723227074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723227070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 723227072}
+  neighbourHouses: []
 --- !u!1 &763348362
 GameObject:
   m_ObjectHideFlags: 0
@@ -3870,6 +4146,7 @@ GameObject:
   - component: {fileID: 843062450}
   - component: {fileID: 843062452}
   - component: {fileID: 843062451}
+  - component: {fileID: 843062453}
   m_Layer: 0
   m_Name: House_46
   m_TagString: Untagged
@@ -3958,6 +4235,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &843062453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843062449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 843062451}
+  neighbourHouses: []
 --- !u!1 &858154615
 GameObject:
   m_ObjectHideFlags: 0
@@ -4103,6 +4395,7 @@ GameObject:
   - component: {fileID: 871434825}
   - component: {fileID: 871434827}
   - component: {fileID: 871434826}
+  - component: {fileID: 871434828}
   m_Layer: 0
   m_Name: House_34
   m_TagString: Untagged
@@ -4191,6 +4484,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &871434828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871434824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 871434826}
+  neighbourHouses: []
 --- !u!1 &887500870
 GameObject:
   m_ObjectHideFlags: 0
@@ -4202,6 +4510,7 @@ GameObject:
   - component: {fileID: 887500871}
   - component: {fileID: 887500873}
   - component: {fileID: 887500872}
+  - component: {fileID: 887500874}
   m_Layer: 0
   m_Name: House_3
   m_TagString: Untagged
@@ -4290,6 +4599,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &887500874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 887500870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 887500872}
+  neighbourHouses: []
 --- !u!1 &894449694
 GameObject:
   m_ObjectHideFlags: 0
@@ -4301,6 +4625,7 @@ GameObject:
   - component: {fileID: 894449695}
   - component: {fileID: 894449697}
   - component: {fileID: 894449696}
+  - component: {fileID: 894449698}
   m_Layer: 0
   m_Name: House_43
   m_TagString: Untagged
@@ -4389,6 +4714,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &894449698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 894449694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 894449696}
+  neighbourHouses: []
 --- !u!1 &917005592
 GameObject:
   m_ObjectHideFlags: 0
@@ -4444,6 +4784,7 @@ GameObject:
   - component: {fileID: 930227704}
   - component: {fileID: 930227706}
   - component: {fileID: 930227705}
+  - component: {fileID: 930227707}
   m_Layer: 0
   m_Name: House_7
   m_TagString: Untagged
@@ -4532,6 +4873,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &930227707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 930227703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 930227705}
+  neighbourHouses: []
 --- !u!1 &942418546
 GameObject:
   m_ObjectHideFlags: 0
@@ -4625,6 +4981,7 @@ GameObject:
   - component: {fileID: 956199104}
   - component: {fileID: 956199106}
   - component: {fileID: 956199105}
+  - component: {fileID: 956199107}
   m_Layer: 0
   m_Name: House_37
   m_TagString: Untagged
@@ -4713,6 +5070,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &956199107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956199103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 956199105}
+  neighbourHouses: []
 --- !u!1 &957383714
 GameObject:
   m_ObjectHideFlags: 0
@@ -4918,6 +5290,7 @@ GameObject:
   - component: {fileID: 995819857}
   - component: {fileID: 995819859}
   - component: {fileID: 995819858}
+  - component: {fileID: 995819860}
   m_Layer: 0
   m_Name: House_23
   m_TagString: Untagged
@@ -5006,6 +5379,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &995819860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 995819856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 995819858}
+  neighbourHouses: []
 --- !u!1 &1044717639
 GameObject:
   m_ObjectHideFlags: 0
@@ -5017,6 +5405,7 @@ GameObject:
   - component: {fileID: 1044717640}
   - component: {fileID: 1044717642}
   - component: {fileID: 1044717641}
+  - component: {fileID: 1044717643}
   m_Layer: 0
   m_Name: House_51
   m_TagString: Untagged
@@ -5105,6 +5494,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1044717643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044717639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1044717641}
+  neighbourHouses: []
 --- !u!1 &1049531863
 GameObject:
   m_ObjectHideFlags: 0
@@ -5116,6 +5520,7 @@ GameObject:
   - component: {fileID: 1049531864}
   - component: {fileID: 1049531866}
   - component: {fileID: 1049531865}
+  - component: {fileID: 1049531867}
   m_Layer: 0
   m_Name: House_42
   m_TagString: Untagged
@@ -5204,6 +5609,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1049531867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049531863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1049531865}
+  neighbourHouses: []
 --- !u!1 &1090581788
 GameObject:
   m_ObjectHideFlags: 0
@@ -5297,6 +5717,7 @@ GameObject:
   - component: {fileID: 1103905068}
   - component: {fileID: 1103905070}
   - component: {fileID: 1103905069}
+  - component: {fileID: 1103905071}
   m_Layer: 0
   m_Name: House_25
   m_TagString: Untagged
@@ -5385,6 +5806,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1103905071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1103905067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1103905069}
+  neighbourHouses: []
 --- !u!1 &1109625052
 GameObject:
   m_ObjectHideFlags: 0
@@ -5478,6 +5914,7 @@ GameObject:
   - component: {fileID: 1126680294}
   - component: {fileID: 1126680296}
   - component: {fileID: 1126680295}
+  - component: {fileID: 1126680297}
   m_Layer: 0
   m_Name: House_5
   m_TagString: Untagged
@@ -5566,6 +6003,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1126680297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126680293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1126680295}
+  neighbourHouses: []
 --- !u!1 &1136652313
 GameObject:
   m_ObjectHideFlags: 0
@@ -5741,6 +6193,7 @@ GameObject:
   - component: {fileID: 1178414556}
   - component: {fileID: 1178414558}
   - component: {fileID: 1178414557}
+  - component: {fileID: 1178414559}
   m_Layer: 0
   m_Name: House_16
   m_TagString: Untagged
@@ -5829,6 +6282,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1178414559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178414555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1178414557}
+  neighbourHouses: []
 --- !u!1 &1190038150
 GameObject:
   m_ObjectHideFlags: 0
@@ -6004,6 +6472,7 @@ GameObject:
   - component: {fileID: 1267385908}
   - component: {fileID: 1267385910}
   - component: {fileID: 1267385909}
+  - component: {fileID: 1267385911}
   m_Layer: 0
   m_Name: House_49
   m_TagString: Untagged
@@ -6092,6 +6561,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1267385911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267385907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1267385909}
+  neighbourHouses: []
 --- !u!1 &1283684834
 GameObject:
   m_ObjectHideFlags: 0
@@ -6103,6 +6587,7 @@ GameObject:
   - component: {fileID: 1283684835}
   - component: {fileID: 1283684837}
   - component: {fileID: 1283684836}
+  - component: {fileID: 1283684838}
   m_Layer: 0
   m_Name: House_4
   m_TagString: Untagged
@@ -6191,6 +6676,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1283684838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283684834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1283684836}
+  neighbourHouses: []
 --- !u!1 &1310793510
 GameObject:
   m_ObjectHideFlags: 0
@@ -6478,6 +6978,7 @@ GameObject:
   - component: {fileID: 1364372967}
   - component: {fileID: 1364372969}
   - component: {fileID: 1364372968}
+  - component: {fileID: 1364372970}
   m_Layer: 0
   m_Name: House_36
   m_TagString: Untagged
@@ -6566,6 +7067,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1364372970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364372966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1364372968}
+  neighbourHouses: []
 --- !u!1 &1365950523
 GameObject:
   m_ObjectHideFlags: 0
@@ -6691,6 +7207,7 @@ GameObject:
   - component: {fileID: 1424284873}
   - component: {fileID: 1424284875}
   - component: {fileID: 1424284874}
+  - component: {fileID: 1424284876}
   m_Layer: 0
   m_Name: House_31
   m_TagString: Untagged
@@ -6779,6 +7296,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1424284876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424284872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1424284874}
+  neighbourHouses: []
 --- !u!1 &1439058640
 GameObject:
   m_ObjectHideFlags: 0
@@ -7174,6 +7706,7 @@ GameObject:
   - component: {fileID: 1529749150}
   - component: {fileID: 1529749152}
   - component: {fileID: 1529749151}
+  - component: {fileID: 1529749153}
   m_Layer: 0
   m_Name: House_35
   m_TagString: Untagged
@@ -7262,6 +7795,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1529749153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1529749149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1529749151}
+  neighbourHouses: []
 --- !u!1 &1541219946
 GameObject:
   m_ObjectHideFlags: 0
@@ -7713,6 +8261,7 @@ GameObject:
   - component: {fileID: 1581383971}
   - component: {fileID: 1581383973}
   - component: {fileID: 1581383972}
+  - component: {fileID: 1581383974}
   m_Layer: 0
   m_Name: House_12
   m_TagString: Untagged
@@ -7801,6 +8350,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1581383974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1581383970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1581383972}
+  neighbourHouses: []
 --- !u!1 &1604791429
 GameObject:
   m_ObjectHideFlags: 0
@@ -7812,6 +8376,7 @@ GameObject:
   - component: {fileID: 1604791430}
   - component: {fileID: 1604791432}
   - component: {fileID: 1604791431}
+  - component: {fileID: 1604791433}
   m_Layer: 0
   m_Name: House_6
   m_TagString: Untagged
@@ -7900,6 +8465,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1604791433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1604791429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1604791431}
+  neighbourHouses: []
 --- !u!1 &1607232274
 GameObject:
   m_ObjectHideFlags: 0
@@ -7993,6 +8573,7 @@ GameObject:
   - component: {fileID: 1615399665}
   - component: {fileID: 1615399667}
   - component: {fileID: 1615399666}
+  - component: {fileID: 1615399668}
   m_Layer: 0
   m_Name: House_17
   m_TagString: Untagged
@@ -8081,6 +8662,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1615399668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615399664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1615399666}
+  neighbourHouses: []
 --- !u!1 &1621107598
 GameObject:
   m_ObjectHideFlags: 0
@@ -8340,6 +8936,7 @@ GameObject:
   - component: {fileID: 1627479924}
   - component: {fileID: 1627479926}
   - component: {fileID: 1627479925}
+  - component: {fileID: 1627479927}
   m_Layer: 0
   m_Name: House_19
   m_TagString: Untagged
@@ -8428,6 +9025,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1627479927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1627479923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1627479925}
+  neighbourHouses: []
 --- !u!1 &1631862795
 GameObject:
   m_ObjectHideFlags: 0
@@ -8521,6 +9133,7 @@ GameObject:
   - component: {fileID: 1644634308}
   - component: {fileID: 1644634310}
   - component: {fileID: 1644634309}
+  - component: {fileID: 1644634311}
   m_Layer: 0
   m_Name: House_39
   m_TagString: Untagged
@@ -8609,6 +9222,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1644634311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644634307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1644634309}
+  neighbourHouses: []
 --- !u!1 &1679116801
 GameObject:
   m_ObjectHideFlags: 0
@@ -8620,6 +9248,7 @@ GameObject:
   - component: {fileID: 1679116802}
   - component: {fileID: 1679116804}
   - component: {fileID: 1679116803}
+  - component: {fileID: 1679116805}
   m_Layer: 0
   m_Name: House_54
   m_TagString: Untagged
@@ -8708,6 +9337,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1679116805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679116801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1679116803}
+  neighbourHouses: []
 --- !u!1 &1680531049
 GameObject:
   m_ObjectHideFlags: 0
@@ -8719,6 +9363,7 @@ GameObject:
   - component: {fileID: 1680531050}
   - component: {fileID: 1680531052}
   - component: {fileID: 1680531051}
+  - component: {fileID: 1680531053}
   m_Layer: 0
   m_Name: House_10
   m_TagString: Untagged
@@ -8807,6 +9452,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1680531053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680531049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1680531051}
+  neighbourHouses: []
 --- !u!1 &1687989351
 GameObject:
   m_ObjectHideFlags: 0
@@ -9160,6 +9820,7 @@ GameObject:
   - component: {fileID: 1785954391}
   - component: {fileID: 1785954393}
   - component: {fileID: 1785954392}
+  - component: {fileID: 1785954394}
   m_Layer: 0
   m_Name: House_47
   m_TagString: Untagged
@@ -9248,6 +9909,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1785954394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785954390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1785954392}
+  neighbourHouses: []
 --- !u!1 &1793250360
 GameObject:
   m_ObjectHideFlags: 0
@@ -9341,6 +10017,7 @@ GameObject:
   - component: {fileID: 1851464557}
   - component: {fileID: 1851464559}
   - component: {fileID: 1851464558}
+  - component: {fileID: 1851464560}
   m_Layer: 0
   m_Name: House_1
   m_TagString: Untagged
@@ -9429,6 +10106,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1851464560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851464556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1851464558}
+  neighbourHouses:
+  - {fileID: 2082302489}
 --- !u!1 &1860786014
 GameObject:
   m_ObjectHideFlags: 0
@@ -9440,6 +10133,7 @@ GameObject:
   - component: {fileID: 1860786015}
   - component: {fileID: 1860786017}
   - component: {fileID: 1860786016}
+  - component: {fileID: 1860786018}
   m_Layer: 0
   m_Name: House_21
   m_TagString: Untagged
@@ -9528,6 +10222,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1860786018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860786014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1860786016}
+  neighbourHouses: []
 --- !u!1 &1861165588
 GameObject:
   m_ObjectHideFlags: 0
@@ -9571,6 +10280,7 @@ GameObject:
   - component: {fileID: 1869068037}
   - component: {fileID: 1869068039}
   - component: {fileID: 1869068038}
+  - component: {fileID: 1869068040}
   m_Layer: 0
   m_Name: House_27
   m_TagString: Untagged
@@ -9659,6 +10369,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1869068040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869068036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1869068038}
+  neighbourHouses: []
 --- !u!1 &1873251976
 GameObject:
   m_ObjectHideFlags: 0
@@ -9752,6 +10477,7 @@ GameObject:
   - component: {fileID: 1882945683}
   - component: {fileID: 1882945685}
   - component: {fileID: 1882945684}
+  - component: {fileID: 1882945686}
   m_Layer: 0
   m_Name: House_53
   m_TagString: Untagged
@@ -9840,6 +10566,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1882945686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1882945682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1882945684}
+  neighbourHouses: []
 --- !u!1 &1886085507
 GameObject:
   m_ObjectHideFlags: 0
@@ -10015,6 +10756,7 @@ GameObject:
   - component: {fileID: 1957817614}
   - component: {fileID: 1957817616}
   - component: {fileID: 1957817615}
+  - component: {fileID: 1957817617}
   m_Layer: 0
   m_Name: House_40
   m_TagString: Untagged
@@ -10103,6 +10845,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1957817617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957817613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1957817615}
+  neighbourHouses: []
 --- !u!1 &1958861774
 GameObject:
   m_ObjectHideFlags: 0
@@ -10317,6 +11074,7 @@ GameObject:
   - component: {fileID: 1983460650}
   - component: {fileID: 1983460652}
   - component: {fileID: 1983460651}
+  - component: {fileID: 1983460653}
   m_Layer: 0
   m_Name: House_41
   m_TagString: Untagged
@@ -10405,6 +11163,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1983460653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983460649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1983460651}
+  neighbourHouses: []
 --- !u!1 &1988135914
 GameObject:
   m_ObjectHideFlags: 0
@@ -10416,6 +11189,7 @@ GameObject:
   - component: {fileID: 1988135915}
   - component: {fileID: 1988135917}
   - component: {fileID: 1988135916}
+  - component: {fileID: 1988135918}
   m_Layer: 0
   m_Name: House_32
   m_TagString: Untagged
@@ -10504,6 +11278,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1988135918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988135914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 1988135916}
+  neighbourHouses: []
 --- !u!1 &2011564719
 GameObject:
   m_ObjectHideFlags: 0
@@ -10515,6 +11304,7 @@ GameObject:
   - component: {fileID: 2011564720}
   - component: {fileID: 2011564722}
   - component: {fileID: 2011564721}
+  - component: {fileID: 2011564723}
   m_Layer: 0
   m_Name: House_48
   m_TagString: Untagged
@@ -10603,6 +11393,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2011564723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011564719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 2011564721}
+  neighbourHouses: []
 --- !u!1 &2024179152
 GameObject:
   m_ObjectHideFlags: 0
@@ -10614,6 +11419,7 @@ GameObject:
   - component: {fileID: 2024179153}
   - component: {fileID: 2024179155}
   - component: {fileID: 2024179154}
+  - component: {fileID: 2024179156}
   m_Layer: 0
   m_Name: House_38
   m_TagString: Untagged
@@ -10702,6 +11508,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2024179156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2024179152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 2024179154}
+  neighbourHouses: []
 --- !u!1 &2038312172
 GameObject:
   m_ObjectHideFlags: 0
@@ -10713,6 +11534,7 @@ GameObject:
   - component: {fileID: 2038312173}
   - component: {fileID: 2038312175}
   - component: {fileID: 2038312174}
+  - component: {fileID: 2038312176}
   m_Layer: 0
   m_Name: House_44
   m_TagString: Untagged
@@ -10801,6 +11623,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2038312176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038312172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 2038312174}
+  neighbourHouses: []
 --- !u!1 &2070094283
 GameObject:
   m_ObjectHideFlags: 0
@@ -10812,6 +11649,7 @@ GameObject:
   - component: {fileID: 2070094284}
   - component: {fileID: 2070094286}
   - component: {fileID: 2070094285}
+  - component: {fileID: 2070094287}
   m_Layer: 0
   m_Name: House_22
   m_TagString: Untagged
@@ -10900,6 +11738,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2070094287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2070094283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 2070094285}
+  neighbourHouses: []
 --- !u!1 &2076656992
 GameObject:
   m_ObjectHideFlags: 0
@@ -10911,6 +11764,7 @@ GameObject:
   - component: {fileID: 2076656993}
   - component: {fileID: 2076656995}
   - component: {fileID: 2076656994}
+  - component: {fileID: 2076656996}
   m_Layer: 0
   m_Name: House_18
   m_TagString: Untagged
@@ -10999,6 +11853,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2076656996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076656992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 2076656994}
+  neighbourHouses: []
 --- !u!1 &2079599547
 GameObject:
   m_ObjectHideFlags: 0
@@ -11010,6 +11879,7 @@ GameObject:
   - component: {fileID: 2079599548}
   - component: {fileID: 2079599550}
   - component: {fileID: 2079599549}
+  - component: {fileID: 2079599551}
   m_Layer: 0
   m_Name: House_26
   m_TagString: Untagged
@@ -11098,6 +11968,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2079599551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079599547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 2079599549}
+  neighbourHouses: []
 --- !u!1 &2080846429
 GameObject:
   m_ObjectHideFlags: 0
@@ -11191,6 +12076,7 @@ GameObject:
   - component: {fileID: 2082302486}
   - component: {fileID: 2082302488}
   - component: {fileID: 2082302487}
+  - component: {fileID: 2082302489}
   m_Layer: 0
   m_Name: House_2
   m_TagString: Untagged
@@ -11279,6 +12165,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2082302489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082302485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 2082302487}
+  neighbourHouses: []
 --- !u!1 &2103778980
 GameObject:
   m_ObjectHideFlags: 0
@@ -11477,6 +12378,7 @@ GameObject:
   - component: {fileID: 2131001038}
   - component: {fileID: 2131001040}
   - component: {fileID: 2131001039}
+  - component: {fileID: 2131001041}
   m_Layer: 0
   m_Name: House_33
   m_TagString: Untagged
@@ -11565,6 +12467,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2131001041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131001037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 2131001039}
+  neighbourHouses: []
 --- !u!1 &2138728458
 GameObject:
   m_ObjectHideFlags: 0
@@ -11576,6 +12493,7 @@ GameObject:
   - component: {fileID: 2138728459}
   - component: {fileID: 2138728461}
   - component: {fileID: 2138728460}
+  - component: {fileID: 2138728462}
   m_Layer: 0
   m_Name: House_9
   m_TagString: Untagged
@@ -11664,6 +12582,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2138728462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138728458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9763823620835d43844f47675884f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledSprite: {fileID: 5679775917538178850, guid: 42a4722eaf43c38498b27c57a7624fe0, type: 3}
+  collider: {fileID: 2138728460}
+  neighbourHouses: []
 --- !u!1 &2139800472
 GameObject:
   m_ObjectHideFlags: 0
