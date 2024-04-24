@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Field : MonoBehaviour
@@ -12,17 +13,10 @@ public class Field : MonoBehaviour
     [SerializeField] public ResourceType resourceType;
     [SerializeField] public int diceNumber;
     [SerializeField] public SpriteRenderer diceNumberRenderer;
-    
+    [SerializeField] public int production;
+    [SerializeField] public SpriteRenderer productionRenderer;
+    [SerializeField] public SpriteRenderer infoWindowRenderer;
+    [SerializeField] public TextMeshPro productionTextMeshPro;
 
-    public void SetDiceNumber(int number)
-    {
-        CalculateProduction();
-    }
-
-    private void CalculateProduction()
-    {
-        
-    }
-    
     //private void SetUpPoints
 }

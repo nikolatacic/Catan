@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Random = System.Random;
 
@@ -18,6 +19,10 @@ public class ResourceSettings
 public class MapGenerator : MonoBehaviour
 {
     [SerializeField] private List<ResourceSettings> resourceSettings;
+    [Tooltip("Production dots, values from 1-4, index 0 represents value 1")] 
+    [SerializeField] private List<Sprite> productionDots;
+    [SerializeField] private Color fieldNormalProductionTextColor;
+    [SerializeField] private Color fieldMaxProductionTextColor;
     [SerializeField] private List<Transform> fieldHolders;
     [SerializeField] private List<Sprite> numberSprites;
     [SerializeField] private GameObject fieldPrefab;
@@ -26,8 +31,8 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private bool fillRestWithDesert;
 
     
-    
-    // TODO: For now, fields are allready placed on locations.
+    // Maybe this should be default settings for map saved in scriptable object for it? 
+    // TODO: For now, fields are already placed on locations.
 
 
     private void OnValidate()
@@ -159,13 +164,16 @@ public class MapGenerator : MonoBehaviour
         Random random = new Random();
         foreach (Field field in fields)
         {
-            int chosenResourceIndex = random.Next(0, possibleResources.Count - 1);
+            int chosenResourceIndex = random.Next(0, possibleResources.Count); // exclusive upper bound?
             ResourceSettings chosenResource = resourceSettings[possibleResources[chosenResourceIndex]];
             
             if (chosenResource.resourceType == ResourceType.Desert)
             {
                 field.resourceIconRenderer.sprite = null;
                 field.diceNumberRenderer.sprite = null;
+                field.productionTextMeshPro.text = "";
+                field.productionRenderer.sprite = null;
+                field.infoWindowRenderer.sprite = null;
             }
             else
             {
@@ -173,7 +181,24 @@ public class MapGenerator : MonoBehaviour
                 int chosenNumber = possibleNumbers[chosenNumberIndex];
                 field.resourceIconRenderer.sprite = chosenResource.resourceIcon;
                 field.diceNumber = chosenNumber;
+                //TODO: MAYBE REMOVE
+                //field.diceNumberRenderer.sprite = numberSprites[chosenNumber];
                 possibleNumbers.RemoveAt(chosenNumberIndex);
+                field.production = CalculateProduction(2, chosenNumber);
+                field.productionRenderer.sprite = productionDots[field.production - 1];
+                field.productionTextMeshPro.text = chosenNumber.ToString();
+                if (field.production == 5)
+                {
+                    field.productionRenderer.color = fieldMaxProductionTextColor;
+                    field.diceNumberRenderer.color = fieldMaxProductionTextColor;
+                    field.productionTextMeshPro.color = fieldMaxProductionTextColor;
+                }
+                else
+                {
+                    field.productionRenderer.color = fieldNormalProductionTextColor;
+                    field.diceNumberRenderer.color = fieldNormalProductionTextColor;
+                    field.productionTextMeshPro.color = fieldNormalProductionTextColor;
+                }
                 //field.diceNumberRenderer.sprite = cho;
             }
             
@@ -184,5 +209,22 @@ public class MapGenerator : MonoBehaviour
             
             possibleResources.RemoveAt(chosenResourceIndex);
         }
+    }
+
+    private int CalculateProduction(int numberOfDices, int diceNumber)
+    {
+        // TODO: Hardcoded for 2 dices. Change that later
+        if (numberOfDices != 2)
+        {
+            Debug.LogError("Not yer defined for != 2 dices");
+            return 0;
+        }
+
+        if (diceNumber > 7)
+        {
+            diceNumber = 14 - diceNumber;
+        }
+
+        return diceNumber - 1;
     }
 }

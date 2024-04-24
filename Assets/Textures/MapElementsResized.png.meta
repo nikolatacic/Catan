@@ -1,40 +1,61 @@
 fileFormatVersion: 2
-guid: efbbe980c44bd5b4bafb6e766110d4b9
+guid: 20672c26e65b60640aa234f50fe5d342
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2619106238860224752
-    second: Production_Dot
+      213: 6205794386602645832
+    second: MapElementsResized_15
   - first:
-      213: -2210572555842365518
-    second: Dot
+      213: 2640111491500183457
+    second: Port_Dot
   - first:
-      213: 2702589100366462733
-    second: Wood
-  - first:
-      213: -2551866404643980260
-    second: Ore
-  - first:
-      213: 1099716165199895019
-    second: Background
-  - first:
-      213: 2556051834412524375
+      213: -4939516434204257109
     second: Sheep
   - first:
-      213: -7726052049767368683
+      213: 6331730000561283834
+    second: Ore
+  - first:
+      213: -380726878111496845
     second: Wheat
   - first:
-      213: 5874304623379445794
-    second: Info_Window
+      213: -2327451163828212908
+    second: Wood
   - first:
-      213: 764033058003286349
+      213: -2074254463413238400
     second: Brick
   - first:
-      213: -3348191783745563938
+      213: 5863663566865576602
+    second: Background
+  - first:
+      213: -734866660626809968
+    second: Info_Window
+  - first:
+      213: 3118539242484512352
+    second: Info_Window_With_Indicators
+  - first:
+      213: -4283976805015160861
+    second: Port
+  - first:
+      213: -7739746261304421538
     second: Tile
   - first:
-      213: -771396634782265853
-    second: Port
+      213: -2619106238860224752
+    second: Production_Dots_1
+  - first:
+      213: -2210572555842365518
+    second: Production_Dots_2
+  - first:
+      213: 2702589100366462733
+    second: Production_Dots_3
+  - first:
+      213: -2551866404643980260
+    second: Production_Dots_4
+  - first:
+      213: 1099716165199895019
+    second: Production_Dots_5
+  - first:
+      213: 2556051834412524375
+    second: Production_Dot
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -149,12 +170,264 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Production_Dot
+      name: MapElementsResized_15
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 998
+        width: 19
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 849509a6d196f1650800000000000000
+      internalID: 6205794386602645832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Port_Dot
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 980
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1af8b42e96f83a420800000000000000
+      internalID: 2640111491500183457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sheep
+      rect:
+        serializedVersion: 2
+        x: 663
+        y: 927
+        width: 113
+        height: 87
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba41d0949ff437bb0800000000000000
+      internalID: -4939516434204257109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ore
+      rect:
+        serializedVersion: 2
+        x: 796
+        y: 926
+        width: 102
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af2a32973e2ded750800000000000000
+      internalID: 6331730000561283834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wheat
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 816
+        width: 127
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37588b9ebe267baf0800000000000000
+      internalID: -380726878111496845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 809
+        width: 69
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45b23f37f7b33bfd0800000000000000
+      internalID: -2327451163828212908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brick
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 799
+        width: 106
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0854c7e2e84c633e0800000000000000
+      internalID: -2074254463413238400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Background
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 787
+        width: 110
+        height: 119
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a923c6172faef5150800000000000000
+      internalID: 5863663566865576602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Info_Window
+      rect:
+        serializedVersion: 2
+        x: 502
+        y: 783
+        width: 173
+        height: 123
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09bbf086aaa3dc5f0800000000000000
+      internalID: -734866660626809968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Info_Window_With_Indicators
+      rect:
+        serializedVersion: 2
+        x: 695
+        y: 783
+        width: 173
+        height: 123
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 066b7661be6474b20800000000000000
+      internalID: 3118539242484512352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Port
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 441
+        width: 369
+        height: 322
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e7fe071bc14c84c0800000000000000
+      internalID: -4283976805015160861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tile
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 369
+        width: 344
+        height: 394
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e53da4348c5e69490800000000000000
+      internalID: -7739746261304421538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Production_Dots_1
       rect:
         serializedVersion: 2
         x: 10
         y: 998
-        width: 19
+        width: 24
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -170,13 +443,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dot
+      name: Production_Dots_2
       rect:
         serializedVersion: 2
-        x: 39
-        y: 980
-        width: 34
-        height: 34
+        x: 54
+        y: 998
+        width: 58
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -191,13 +464,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Wood
+      name: Production_Dots_3
       rect:
         serializedVersion: 2
-        x: 83
-        y: 917
-        width: 69
-        height: 97
+        x: 132
+        y: 998
+        width: 92
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -212,13 +485,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ore
+      name: Production_Dots_4
       rect:
         serializedVersion: 2
-        x: 162
-        y: 926
-        width: 102
-        height: 88
+        x: 244
+        y: 998
+        width: 126
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -233,13 +506,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Background
+      name: Production_Dots_5
       rect:
         serializedVersion: 2
         x: 390
-        y: 895
-        width: 110
-        height: 119
+        y: 998
+        width: 160
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -254,13 +527,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sheep
+      name: Production_Dot
       rect:
         serializedVersion: 2
-        x: 510
-        y: 927
-        width: 113
-        height: 87
+        x: 570
+        y: 998
+        width: 19
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -270,111 +543,6 @@ TextureImporter:
       bones: []
       spriteID: 753e4a1d99be87320800000000000000
       internalID: 2556051834412524375
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Wheat
-      rect:
-        serializedVersion: 2
-        x: 633
-        y: 924
-        width: 126
-        height: 90
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 518ff69589c87c490800000000000000
-      internalID: -7726052049767368683
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Info_Window
-      rect:
-        serializedVersion: 2
-        x: 770
-        y: 891
-        width: 173
-        height: 123
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 22877fa7ee8b58150800000000000000
-      internalID: 5874304623379445794
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Brick
-      rect:
-        serializedVersion: 2
-        x: 274
-        y: 907
-        width: 106
-        height: 74
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d49f0faa4046a9a00800000000000000
-      internalID: 764033058003286349
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Tile
-      rect:
-        serializedVersion: 2
-        x: 10
-        y: 487
-        width: 344
-        height: 394
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ed2d6f9ef45d881d0800000000000000
-      internalID: -3348191783745563938
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Port
-      rect:
-        serializedVersion: 2
-        x: 364
-        y: 559
-        width: 369
-        height: 322
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 30e0fd209d27b45f0800000000000000
-      internalID: -771396634782265853
       vertices: []
       indices: 
       edges: []
