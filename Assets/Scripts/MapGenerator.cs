@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Random = System.Random;
 
 [Serializable]
 public class ResourceSettings
 {
-    // TODO: Umesto name, da ide enum?
     public ResourceType resourceType;
     public Color tileColor;
     public Sprite resourceIcon;
@@ -32,14 +29,7 @@ public class MapGenerator : MonoBehaviour
 
     
     // Maybe this should be default settings for map saved in scriptable object for it? 
-    // TODO: For now, fields are already placed on locations.
-
-
-    private void OnValidate()
-    {
-        // TODO: Number of resource count per map should be less than available fields. Rest fill with desert.
-        // TODO: Or in CanGenerateMap
-    }
+    // TODO: Add option to have already placed fields, and should not instantiate them
 
     private void Awake()
     {
@@ -82,16 +72,20 @@ public class MapGenerator : MonoBehaviour
 
     public bool CanGenerateMap()
     {
+        
+        // TODO: Number of resource count per map should be less than available fields. Rest fill with desert.
+        
         int fieldsCount = GetFieldsCount();
         
-        // If no filling with desert, maxCount must be same as filed count, meaning you add deserts manually.
-        // Also if 
+        // If shouldn't fill with desert fields, maxCount must be same as filed count, meaning you add deserts manually in settings.
+        // Also if you should fill with deserts, fields count must be smaller than maxfieldcount
         if ((!fillRestWithDesert && fieldsCount != maxFieldCount) || (fillRestWithDesert && fieldsCount > maxFieldCount))
         {
             return false;
         }
         
-        if (fillRestWithDesert && fieldsCount > maxFieldCount){ // Ovo sve treba u onvalidate, ne treba u produkciji. Jedino ako  //se ne setuje iz koda
+        //TODO: This should maybe go in invalidate function, not in production? 
+        if (fillRestWithDesert && fieldsCount > maxFieldCount){ 
             return false;
         }
 
@@ -102,7 +96,7 @@ public class MapGenerator : MonoBehaviour
     {
         int fieldsCount = GetFieldsCount();
         
-        //primer 4 4 4 3 3 1 je normalno. ako stavis 4 4 4 3 3 0 da dopuni 1. 19 je maxcount podesen, a 18 kad se ovde saberu. znaci jos 1 pustinja da se doda
+        // Example default: 4 4 4 3 3 1. If you put 4 4 4 3 3 0, it should auto fill 1 desert if max count of fields is set to 19.
         if (fillRestWithDesert && fieldsCount < maxFieldCount)
         {
             ResourceSettings desertResource = resourceSettings.FirstOrDefault(res => res.resourceType == ResourceType.Desert);
@@ -199,13 +193,11 @@ public class MapGenerator : MonoBehaviour
                     field.diceNumberRenderer.color = fieldNormalProductionTextColor;
                     field.productionTextMeshPro.color = fieldNormalProductionTextColor;
                 }
-                //field.diceNumberRenderer.sprite = cho;
             }
             
             // For each resource
             field.tileRenderer.color = chosenResource.tileColor;
             field.resourceType = chosenResource.resourceType;
-
             
             possibleResources.RemoveAt(chosenResourceIndex);
         }
