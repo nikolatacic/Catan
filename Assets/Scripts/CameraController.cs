@@ -18,18 +18,18 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float maxCameraSize = 5f;
     [SerializeField] private float cameraZoomSpeed = 5f;
 
-    private Camera camera;
+    private Camera mainCamera;
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Confined;
-        camera = transform.GetComponent<Camera>();
+        mainCamera = transform.GetComponent<Camera>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!IsMouseOverGameWindow() || camera == null)
+        if (!IsMouseOverGameWindow() || mainCamera == null)
         {
             return;
         }
@@ -60,11 +60,11 @@ public class CameraController : MonoBehaviour
         
 
         // Scroll
-        if (camera.orthographic)
+        if (mainCamera.orthographic)
         {
-            float cameraSize = camera.orthographicSize - scroll * cameraZoomSpeed;
+            float cameraSize = mainCamera.orthographicSize - scroll * cameraZoomSpeed;
             cameraSize = Mathf.Clamp(cameraSize, minCameraSize, maxCameraSize);
-            camera.orthographicSize = cameraSize;
+            mainCamera.orthographicSize = cameraSize;
         }
         else
         {

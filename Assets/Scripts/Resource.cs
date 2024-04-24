@@ -8,5 +8,6 @@ public enum ResourceType
     Brick,
     Wheat,
     Sheep,
-    Ore
+    Ore,
+    Desert
 }

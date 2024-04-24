@@ -1,55 +1,40 @@
 fileFormatVersion: 2
-guid: 4dcb64b362cec3c4384223c992df26ab
+guid: efbbe980c44bd5b4bafb6e766110d4b9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8945736600681121594
-    second: MapElements1_0
+      213: -2619106238860224752
+    second: Production_Dot
   - first:
-      213: -1363255422071893071
-    second: MapElements1_1
+      213: -2210572555842365518
+    second: Dot
   - first:
-      213: 6539694085140110051
-    second: MapElements1_2
+      213: 2702589100366462733
+    second: Wood
   - first:
-      213: -8055143868937207073
-    second: MapElements1_3
+      213: -2551866404643980260
+    second: Ore
   - first:
-      213: 6847229771477998832
-    second: MapElements1_4
+      213: 1099716165199895019
+    second: Background
   - first:
-      213: -9123160577648974878
-    second: MapElements1_5
+      213: 2556051834412524375
+    second: Sheep
   - first:
-      213: -7480437006293652444
-    second: MapElements1_6
+      213: -7726052049767368683
+    second: Wheat
   - first:
-      213: -7280998037861327540
-    second: MapElements1_7
+      213: 5874304623379445794
+    second: Info_Window
   - first:
-      213: -6802754447633585576
-    second: MapElements1_8
+      213: 764033058003286349
+    second: Brick
   - first:
-      213: 8048692711141410696
-    second: MapElements1_9
+      213: -3348191783745563938
+    second: Tile
   - first:
-      213: 6125239645463293677
-    second: MapElements1_10
-  - first:
-      213: 5417299364662866787
-    second: MapElements1_11
-  - first:
-      213: 8245272081073374584
-    second: MapElements1_12
-  - first:
-      213: -7386817018883862579
-    second: MapElements1_13
-  - first:
-      213: 1554121167230294245
-    second: MapElements1_14
-  - first:
-      213: 2282158622599664967
-    second: MapElements1_15
+      213: -771396634782265853
+    second: Port
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -164,13 +149,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MapElements1_0
+      name: Production_Dot
       rect:
         serializedVersion: 2
-        x: 1
-        y: 1746
-        width: 241
-        height: 301
+        x: 10
+        y: 998
+        width: 19
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -178,20 +163,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c8f03e45fb5ad380800000000000000
-      internalID: -8945736600681121594
+      spriteID: 0171abb90c017abd0800000000000000
+      internalID: -2619106238860224752
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MapElements1_1
+      name: Dot
       rect:
         serializedVersion: 2
-        x: 252
-        y: 1755
-        width: 198
-        height: 291
+        x: 39
+        y: 980
+        width: 34
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -199,20 +184,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1b3974d9a6eb41de0800000000000000
-      internalID: -1363255422071893071
+      spriteID: 2b7d9caf8f77251e0800000000000000
+      internalID: -2210572555842365518
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MapElements1_2
+      name: Wood
       rect:
         serializedVersion: 2
-        x: 461
-        y: 1752
-        width: 232
-        height: 295
+        x: 83
+        y: 917
+        width: 69
+        height: 97
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -220,20 +205,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3eadf742f19a1ca50800000000000000
-      internalID: 6539694085140110051
+      spriteID: d0f7f25c776818520800000000000000
+      internalID: 2702589100366462733
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MapElements1_3
+      name: Ore
       rect:
         serializedVersion: 2
-        x: 703
-        y: 1747
-        width: 233
-        height: 300
+        x: 162
+        y: 926
+        width: 102
+        height: 88
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -241,20 +226,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fd205554451663090800000000000000
-      internalID: -8055143868937207073
+      spriteID: c1c31fc7603f59cd0800000000000000
+      internalID: -2551866404643980260
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MapElements1_4
+      name: Background
       rect:
         serializedVersion: 2
-        x: 946
-        y: 1756
-        width: 255
-        height: 291
+        x: 390
+        y: 895
+        width: 110
+        height: 119
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -262,20 +247,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0fcdc60f23f360f50800000000000000
-      internalID: 6847229771477998832
+      spriteID: be99e74960af24f00800000000000000
+      internalID: 1099716165199895019
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MapElements1_5
+      name: Sheep
       rect:
         serializedVersion: 2
-        x: 1211
-        y: 1749
-        width: 229
-        height: 298
+        x: 510
+        y: 927
+        width: 113
+        height: 87
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -283,20 +268,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2e3a26c8ac5046180800000000000000
-      internalID: -9123160577648974878
+      spriteID: 753e4a1d99be87320800000000000000
+      internalID: 2556051834412524375
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MapElements1_6
+      name: Wheat
       rect:
         serializedVersion: 2
-        x: 1450
-        y: 1744
-        width: 242
-        height: 303
+        x: 633
+        y: 924
+        width: 126
+        height: 90
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -304,20 +289,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 42c2e230d26203890800000000000000
-      internalID: -7480437006293652444
+      spriteID: 518ff69589c87c490800000000000000
+      internalID: -7726052049767368683
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MapElements1_7
+      name: Info_Window
       rect:
         serializedVersion: 2
-        x: 1702
-        y: 1756
-        width: 231
-        height: 291
+        x: 770
+        y: 891
+        width: 173
+        height: 123
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -325,20 +310,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c4d95f66cd2b4fa90800000000000000
-      internalID: -7280998037861327540
+      spriteID: 22877fa7ee8b58150800000000000000
+      internalID: 5874304623379445794
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MapElements1_8
+      name: Brick
       rect:
         serializedVersion: 2
-        x: 1
-        y: 1430
-        width: 248
-        height: 303
+        x: 274
+        y: 907
+        width: 106
+        height: 74
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -346,20 +331,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 85a67965fd2c791a0800000000000000
-      internalID: -6802754447633585576
+      spriteID: d49f0faa4046a9a00800000000000000
+      internalID: 764033058003286349
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MapElements1_9
+      name: Tile
       rect:
         serializedVersion: 2
-        x: 259
-        y: 1431
-        width: 239
-        height: 303
+        x: 10
+        y: 487
+        width: 344
+        height: 394
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -367,81 +352,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8870cd18063b2bf60800000000000000
-      internalID: 8048692711141410696
+      spriteID: ed2d6f9ef45d881d0800000000000000
+      internalID: -3348191783745563938
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MapElements1_10
+      name: Port
       rect:
         serializedVersion: 2
-        x: 508
-        y: 1606
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: deeaaff2109310550800000000000000
-      internalID: 6125239645463293677
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MapElements1_11
-      rect:
-        serializedVersion: 2
-        x: 646
-        y: 1566
-        width: 168
-        height: 168
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 363fda0f11d1e2b40800000000000000
-      internalID: 5417299364662866787
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MapElements1_12
-      rect:
-        serializedVersion: 2
-        x: 824
-        y: 1453
-        width: 400
-        height: 281
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 87503dcb5471d6270800000000000000
-      internalID: 8245272081073374584
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MapElements1_13
-      rect:
-        serializedVersion: 2
-        x: 1234
-        y: 1412
+        x: 364
+        y: 559
         width: 369
         height: 322
       alignment: 0
@@ -451,50 +373,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dcf0e90fe01cc7990800000000000000
-      internalID: -7386817018883862579
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MapElements1_14
-      rect:
-        serializedVersion: 2
-        x: 1613
-        y: 1692
-        width: 52
-        height: 42
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5e85daea7f8519510800000000000000
-      internalID: 1554121167230294245
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MapElements1_15
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 786
-        width: 536
-        height: 616
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 745d5250d2bdbaf10800000000000000
-      internalID: 2282158622599664967
+      spriteID: 30e0fd209d27b45f0800000000000000
+      internalID: -771396634782265853
       vertices: []
       indices: 
       edges: []
