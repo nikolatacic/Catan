@@ -241,45 +241,52 @@ Assets/
 ---
 
 ## PHASE 4: Core Systems - Card System
-**Status**: ⚪ Not Started  
+**Status**: 🟢 Completed  
 **Duration**: 3-4 days  
-**Dependencies**: Phase 1
+**Dependencies**: Phase 1  
+**Completed**: 2024-12-19
 
 ### Goals
 Create a generic card system for deck management, hand management, and card operations.
 
 ### Tasks
 1. **Card System Design**
-   - [ ] Define ICard interface/base class
-   - [ ] Define ICardSystem interface
-   - [ ] Define CardData structure
-   - [ ] Plan deck, hand, discard pile structure
+   - [x] Define ICard interface
+   - [x] Define ICardSystem interface
+   - [x] Define CardData structure
+   - [x] Plan deck, hand, discard pile structure
 
 2. **Card System Implementation**
-   - [ ] Implement CardSystem class
-   - [ ] Add CreateDeck() method
-   - [ ] Add ShuffleDeck() method
-   - [ ] Add DrawCard() method
-   - [ ] Add DrawCards(int count) method
-   - [ ] Add AddToHand() method
-   - [ ] Add DiscardCard() method
-   - [ ] Add GetHand() method
-   - [ ] Add GetDeckCount() method
+   - [x] Implement CardSystem class
+   - [x] Add CreateDeck() method
+   - [x] Add ShuffleDeck() method (Fisher-Yates algorithm)
+   - [x] Add DrawCard() method
+   - [x] Add DrawCards(int count) method
+   - [x] Add AddToHand() method
+   - [x] Add DiscardCard() method
+   - [x] Add GetHand() method
+   - [x] Add GetDeckCount() method
+   - [x] Add GetHandCount() method
+   - [x] Add GetDiscardCount() method
+   - [x] Add Reset() method
 
 3. **Card Configuration**
-   - [ ] Create CardConfig ScriptableObject
-   - [ ] Define card types, counts, properties
+   - [x] Create CardConfig ScriptableObject
+   - [x] Define card types, counts, properties (CardTypeEntry)
 
 4. **Events**
-   - [ ] Create CardDrawnEvent
-   - [ ] Create CardDiscardedEvent
-   - [ ] Create HandChangedEvent
+   - [x] Create CardDrawnEvent
+   - [x] Create CardDiscardedEvent
+   - [x] Create HandChangedEvent
 
 5. **Testing**
-   - [ ] Test deck creation
-   - [ ] Test shuffling
-   - [ ] Test drawing
-   - [ ] Test hand management
+   - [x] Test deck creation
+   - [x] Test shuffling
+   - [x] Test drawing (single and multiple)
+   - [x] Test hand management
+   - [x] Test discard
+   - [x] Test event publishing
+   - [x] Test reset
 
 ### Folder Structure
 ```
