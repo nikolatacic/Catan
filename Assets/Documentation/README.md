@@ -14,6 +14,7 @@ Catan board game implementation in Unity, designed with reusability in mind. Sys
 - **[PROGRESS.md](./PROGRESS.md)**: Current progress tracking and status
 - **[CODING_STANDARDS.md](./CODING_STANDARDS.md)**: Coding standards and best practices
 - **[QUICK_REFERENCE.md](./QUICK_REFERENCE.md)**: Quick reference guide
+- **[PACKAGE_STRUCTURE.md](./PACKAGE_STRUCTURE.md)**: Package extraction strategy and dependency structure (Important for endgame phases)
 
 ## Architecture
 

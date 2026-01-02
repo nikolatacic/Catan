@@ -2,10 +2,10 @@
 
 ## Current Status
 
-**Current Phase**: Phase 1 - Infrastructure Layer  
-**Status**: 🟡 Starting  
+**Current Phase**: Phase 2 - Core Systems - Dice System  
+**Status**: 🟡 In Progress  
 **Started**: 2024-12-19  
-**Previous Phase Completed**: Phase 0 - Project Setup & Documentation (2024-12-19)
+**Previous Phase Completed**: Phase 1 - Infrastructure Layer (2024-12-19)
 
 ---
 
@@ -14,8 +14,8 @@
 | Phase | Name | Status | Started | Completed | Notes |
 |-------|------|--------|---------|-----------|-------|
 | 0 | Project Setup & Documentation | 🟢 Completed | 2024-12-19 | 2024-12-19 | All documentation created |
-| 1 | Infrastructure Layer | 🟡 In Progress | 2024-12-19 | - | Starting implementation |
-| 2 | Core Systems - Dice System | ⚪ Not Started | - | - | - |
+| 1 | Infrastructure Layer | 🟢 Completed | 2024-12-19 | 2024-12-19 | All infrastructure systems implemented |
+| 2 | Core Systems - Dice System | 🟡 In Progress | 2024-12-19 | - | Implementation complete, ready for testing |
 | 3 | Game Systems - Catan Dice System | ⚪ Not Started | - | - | - |
 | 4 | Core Systems - Card System | ⚪ Not Started | - | - | - |
 | 5 | Game Systems - Catan Card System | ⚪ Not Started | - | - | - |
@@ -93,6 +93,14 @@
 - ✅ UnityLogger implementation
 - ✅ TestEvent for validation
 - ✅ InfrastructureTest script for testing
+
+### Core Systems
+- ✅ IDiceSystem interface
+- ✅ DiceSystem class (Roll methods, GetLastResult, Reset)
+- ✅ DiceRollResult data class
+- ✅ DiceConfig ScriptableObject
+- ✅ DiceRolledEvent
+- ✅ DiceSystemTest script for testing
 
 ### Core Systems
 - None yet

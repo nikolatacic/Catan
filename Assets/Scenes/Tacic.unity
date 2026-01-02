@@ -307,6 +307,7 @@ GameObject:
   m_Component:
   - component: {fileID: 644978133}
   - component: {fileID: 644978132}
+  - component: {fileID: 644978134}
   m_Layer: 0
   m_Name: InfrastructurePhase0Test
   m_TagString: Untagged
@@ -326,8 +327,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 720bae3516755ff4ca747f6f27f4dc9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runTestsOnStart: 1
-  enableDebugLogging: 1
+  runTestsOnStart: 0
+  enableDebugLogging: 0
 --- !u!4 &644978133
 Transform:
   m_ObjectHideFlags: 0
@@ -343,6 +344,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &644978134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644978131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd17c61b1d3634d44b00e427957c36bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runTestsOnStart: 1
+  enableEventBusLogging: 0
 --- !u!1 &670420151
 GameObject:
   m_ObjectHideFlags: 0

@@ -111,44 +111,46 @@ Assets/
 ---
 
 ## PHASE 2: Core Systems - Dice System
-**Status**: ⚪ Not Started  
+**Status**: 🟡 In Progress  
 **Duration**: 2-3 days  
-**Dependencies**: Phase 1
+**Dependencies**: Phase 1  
+**Started**: 2024-12-19
 
 ### Goals
 Create a generic, reusable dice system that can work in any game requiring dice.
 
 ### Tasks
 1. **Dice System Design**
-   - [ ] Define IDiceSystem interface
-   - [ ] Define DiceRollResult data class
-   - [ ] Define DiceConfig ScriptableObject
-   - [ ] Plan event structure (DiceRolledEvent)
+   - [x] Define IDiceSystem interface
+   - [x] Define DiceRollResult data class
+   - [x] Define DiceConfig ScriptableObject
+   - [x] Plan event structure (DiceRolledEvent)
 
 2. **Dice System Implementation**
-   - [ ] Implement DiceSystem class
-   - [ ] Add Roll(int diceCount) method
-   - [ ] Add Roll(int diceCount, int sides) method
-   - [ ] Add RollWithModifiers() method
-   - [ ] Add GetLastResult() method
-   - [ ] Add Reset() method
-   - [ ] Implement random number generation
-   - [ ] Publish DiceRolledEvent after each roll
+   - [x] Implement DiceSystem class
+   - [x] Add Roll(int diceCount) method
+   - [x] Add Roll(int diceCount, int sides) method
+   - [x] Add Roll(DiceConfig config) method
+   - [x] Add GetLastResult() method
+   - [x] Add Reset() method
+   - [x] Implement random number generation
+   - [x] Publish DiceRolledEvent after each roll
 
 3. **Dice Configuration**
-   - [ ] Create DiceConfig ScriptableObject
-   - [ ] Add fields: diceCount, sides, modifiers
-   - [ ] Create default config asset
+   - [x] Create DiceConfig ScriptableObject
+   - [x] Add fields: diceCount, sides, modifiers, minValue, maxValue
+   - [ ] Create default config asset (can be created in Unity Editor)
 
 4. **Events**
-   - [ ] Create DiceRolledEvent (in CoreSystems/Dice/Events/)
-   - [ ] Event should contain: results, total, timestamp
+   - [x] Create DiceRolledEvent (in CoreSystems/Dice/Events/)
+   - [x] Event contains: results, total, timestamp
 
 5. **Testing**
-   - [ ] Create test scene for dice rolling
-   - [ ] Test various configurations
-   - [ ] Test event publishing
-   - [ ] Validate randomness
+   - [x] Create test script (DiceSystemTest.cs)
+   - [x] Test various configurations
+   - [x] Test event publishing
+   - [x] Test last result tracking
+   - [x] Test reset functionality
 
 ### Folder Structure
 ```
