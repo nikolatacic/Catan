@@ -314,33 +314,36 @@ Assets/
 ---
 
 ## PHASE 5: Game Systems - Catan Card System
-**Status**: ⚪ Not Started  
+**Status**: 🟢 Completed  
 **Duration**: 2-3 days  
-**Dependencies**: Phase 4
+**Dependencies**: Phase 4  
+**Completed**: 2024-12-19
 
 ### Goals
 Implement Catan-specific cards (development cards) using the generic card system.
 
 ### Tasks
 1. **Catan Card Types**
-   - [ ] Define CatanCardType enum (Knight, RoadBuilding, YearOfPlenty, etc.)
-   - [ ] Create CatanCardData class
-   - [ ] Define card effects structure
+   - [x] Define CatanCardType enum (Knight, RoadBuilding, YearOfPlenty, Monopoly, VictoryPoint)
+   - [x] Create CatanCardData class
+   - [x] Define card properties (CanPlayImmediately, IsVictoryPoint)
 
 2. **Catan Card System**
-   - [ ] Create CatanCardSystem class
-   - [ ] Compose CardSystem
-   - [ ] Implement development card deck creation
-   - [ ] Implement card usage/activation
-   - [ ] Handle card effects
+   - [x] Create CatanCardSystem class
+   - [x] Compose CardSystem
+   - [x] Implement development card deck creation (25 cards standard distribution)
+   - [x] Implement card usage/activation
+   - [x] Handle card mapping between generic and Catan cards
 
 3. **Events**
-   - [ ] Create CatanCardDrawnEvent
-   - [ ] Create CatanCardUsedEvent
+   - [x] Create CatanCardDrawnEvent
+   - [x] Create CatanCardUsedEvent
 
 4. **Integration**
-   - [ ] Replace existing CardController
-   - [ ] Connect to UI
+   - [x] Register with ServiceLocator
+   - [x] Create test script
+   - [ ] Replace existing CardController (can be done when integrating with UI)
+   - [ ] Connect to UI (can be done in Phase 14)
 
 ### Success Criteria
 - ✅ Development cards work correctly

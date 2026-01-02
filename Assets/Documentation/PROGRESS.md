@@ -2,11 +2,11 @@
 
 ## Current Status
 
-**Current Phase**: Phase 4 - Core Systems - Card System  
+**Current Phase**: Phase 5 - Game Systems - Catan Card System  
 **Status**: 🟢 Completed  
 **Started**: 2024-12-19  
 **Completed**: 2024-12-19  
-**Previous Phase Completed**: Phase 3 - Game Systems - Catan Dice System (2024-12-19)
+**Previous Phase Completed**: Phase 4 - Core Systems - Card System (2024-12-19)
 
 ---
 
@@ -19,6 +19,7 @@
 | 2 | Core Systems - Dice System | 🟢 Completed | 2024-12-19 | 2024-12-19 | Generic dice system with custom values support |
 | 3 | Game Systems - Catan Dice System | 🟢 Completed | 2024-12-19 | 2024-12-19 | Catan-specific dice system implemented |
 | 4 | Core Systems - Card System | 🟢 Completed | 2024-12-19 | 2024-12-19 | Generic card system with deck/hand/discard management |
+| 5 | Game Systems - Catan Card System | 🟢 Completed | 2024-12-19 | 2024-12-19 | Catan development card system implemented |
 | 3 | Game Systems - Catan Dice System | ⚪ Not Started | - | - | - |
 | 4 | Core Systems - Card System | ⚪ Not Started | - | - | - |
 | 5 | Game Systems - Catan Card System | ⚪ Not Started | - | - | - |
@@ -43,6 +44,30 @@
 ---
 
 ## Current Phase Details
+
+### Phase 5: Game Systems - Catan Card System (Completed)
+
+**Tasks**:
+- [x] Create CatanCardType enum
+- [x] Create CatanCardData class
+- [x] Create CatanCardSystem class
+- [x] Implement development card deck creation
+- [x] Implement card drawing and usage
+- [x] Create Catan card events
+- [x] Register with ServiceLocator
+- [x] Create test script
+- [x] Create README guide
+
+**Blockers**: None
+
+**Notes**: 
+- Catan card system successfully wraps generic CardSystem
+- Standard deck distribution (25 cards) implemented
+- Card mapping between generic and Catan cards working
+- Events publishing correctly
+- Ready for UI integration in later phases
+
+---
 
 ### Phase 4: Core Systems - Card System (Completed)
 
@@ -157,6 +182,11 @@
 - ✅ CatanDiceSystem class (wraps DiceSystem)
 - ✅ CatanDiceRolledEvent (with robber detection)
 - ✅ CatanDiceSystemTest script for testing
+- ✅ CatanCardType enum
+- ✅ CatanCardData class
+- ✅ CatanCardSystem class (wraps CardSystem)
+- ✅ CatanCardDrawnEvent, CatanCardUsedEvent
+- ✅ CatanCardSystemTest script for testing
 
 ### Game-Specific
 - None yet
@@ -261,6 +291,7 @@ None currently
 - Phase 2 completed: Core Systems - Dice System (with custom face values)
 - Phase 3 completed: Game Systems - Catan Dice System (with robber detection)
 - Phase 4 completed: Core Systems - Card System (deck, hand, discard management)
+- Phase 5 completed: Game Systems - Catan Card System (development cards)
 - Phase 0 completed
 - Phase 1 started: Infrastructure Layer implementation
   - Created IEvent interface
