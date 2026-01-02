@@ -353,81 +353,7 @@ Implement Catan-specific cards (development cards) using the generic card system
 
 ---
 
-## PHASE 6: Core Systems - Trading System
-**Status**: ⚪ Not Started  
-**Duration**: 3-4 days  
-**Dependencies**: Phase 1
-
-### Goals
-Create a generic trading system for resource/item exchange.
-
-### Tasks
-1. **Trading System Design**
-   - [ ] Define ITradingSystem interface
-   - [ ] Define TradeOffer structure
-   - [ ] Define TradeResult structure
-   - [ ] Plan validation system
-
-2. **Trading System Implementation**
-   - [ ] Implement TradingSystem class
-   - [ ] Add CreateOffer() method
-   - [ ] Add AcceptOffer() method
-   - [ ] Add RejectOffer() method
-   - [ ] Add ValidateOffer() method
-   - [ ] Add ExecuteTrade() method
-
-3. **Events**
-   - [ ] Create TradeOfferCreatedEvent
-   - [ ] Create TradeAcceptedEvent
-   - [ ] Create TradeRejectedEvent
-
-4. **Testing**
-   - [ ] Test offer creation
-   - [ ] Test validation
-   - [ ] Test trade execution
-   - [ ] Test event flow
-
-### Success Criteria
-- ✅ Generic trading system works
-- ✅ Can trade any resource/item type
-- ✅ Proper validation
-- ✅ Events published correctly
-
----
-
-## PHASE 7: Game Systems - Catan Trading System
-**Status**: ⚪ Not Started  
-**Duration**: 2-3 days  
-**Dependencies**: Phase 6
-
-### Goals
-Implement Catan-specific trading (player-to-player, ports).
-
-### Tasks
-1. **Catan Trading Rules**
-   - [ ] Implement port trading (3:1, 2:1 ratios)
-   - [ ] Implement player-to-player trading
-   - [ ] Add trading validation rules
-
-2. **Catan Trading System**
-   - [ ] Create CatanTradingSystem
-   - [ ] Compose TradingSystem
-   - [ ] Add port trading methods
-   - [ ] Add player trading methods
-
-3. **Integration**
-   - [ ] Connect to ResourceSystem
-   - [ ] Connect to UI
-
-### Success Criteria
-- ✅ Port trading works
-- ✅ Player trading works
-- ✅ Validation correct
-- ✅ UI integration works
-
----
-
-## PHASE 8: Core Systems - Resource/Inventory System
+## PHASE 6: Core Systems - Resource/Inventory System
 **Status**: ⚪ Not Started  
 **Duration**: 2-3 days  
 **Dependencies**: Phase 1
@@ -440,15 +366,18 @@ Create a generic resource/inventory management system.
    - [ ] Define IResourceSystem interface
    - [ ] Define ResourceInventory class
    - [ ] Define ResourceType as generic (or enum)
+   - [ ] Plan CardSystem integration (hybrid approach)
    - [ ] Plan add/remove/query operations
 
 2. **Resource System Implementation**
    - [ ] Implement ResourceSystem class
-   - [ ] Add AddResource() method
-   - [ ] Add RemoveResource() method
-   - [ ] Add HasResource() method
-   - [ ] Add GetResourceCount() method
-   - [ ] Add TransferResource() method
+   - [ ] Use CardSystem internally (one per resource type)
+   - [ ] Add AddResource() method (adds cards to hand)
+   - [ ] Add RemoveResource() method (removes cards from hand)
+   - [ ] Add HasResource() method (checks card count)
+   - [ ] Add GetResourceCount() method (returns hand count)
+   - [ ] Add TransferResource() method (transfers cards between inventories)
+   - [ ] Add CreateResourceDeck() method (creates deck of identical cards)
 
 3. **Events**
    - [ ] Create ResourceAddedEvent
@@ -462,31 +391,35 @@ Create a generic resource/inventory management system.
 
 ### Success Criteria
 - ✅ Generic resource system works
+- ✅ Uses CardSystem internally for card management
+- ✅ Simple interface for resource operations
 - ✅ Can handle any resource type
 - ✅ Proper validation (no negatives)
 - ✅ Events published correctly
 
 ---
 
-## PHASE 9: Game Systems - Catan Resource System
+## PHASE 7: Game Systems - Catan Resource System
 **Status**: ⚪ Not Started  
 **Duration**: 2-3 days  
-**Dependencies**: Phase 8
+**Dependencies**: Phase 6
 
 ### Goals
 Implement Catan-specific resources and distribution.
 
 ### Tasks
 1. **Catan Resources**
-   - [ ] Use existing ResourceType enum
+   - [ ] Use existing ResourceType enum (Wood, Sheep, Brick, Wheat, Ore)
    - [ ] Create CatanResourceInventory
+   - [ ] Implement Catan resource deck creation (5 decks, ~18 cards each)
    - [ ] Implement Catan resource distribution rules
 
 2. **Catan Resource System**
    - [ ] Create CatanResourceSystem
-   - [ ] Compose ResourceSystem
+   - [ ] Compose ResourceSystem (which uses CardSystem internally)
    - [ ] Implement dice-based distribution
    - [ ] Handle robber blocking
+   - [ ] Connect to bank resource supply
 
 3. **Integration**
    - [ ] Connect to CatanDiceSystem
@@ -497,14 +430,58 @@ Implement Catan-specific resources and distribution.
 - ✅ Resource distribution works
 - ✅ Dice-based collection works
 - ✅ Robber blocking works
+- ✅ Bank resource supply managed correctly
 - ✅ UI updates correctly
 
 ---
 
-## PHASE 10: Game Systems - Building System
+## PHASE 8: Game Systems - Terrain Generation Refactoring
+**Status**: ⚪ Not Started  
+**Duration**: 2-3 days  
+**Dependencies**: Phase 1
+
+### Goals
+Refactor existing MapGenerator to follow new architecture and integrate with game systems.
+
+### Tasks
+1. **Terrain System Design**
+   - [ ] Analyze existing MapGenerator.cs
+   - [ ] Define ITerrainSystem interface
+   - [ ] Define TerrainData class
+   - [ ] Plan integration with ResourceSystem
+
+2. **Terrain System Implementation**
+   - [ ] Create TerrainSystem class
+   - [ ] Refactor map generation logic
+   - [ ] Implement terrain placement
+   - [ ] Implement dice number assignment
+   - [ ] Implement resource type assignment
+   - [ ] Add validation rules (6 and 8 not adjacent, etc.)
+
+3. **Integration**
+   - [ ] Connect to ResourceSystem (for resource distribution)
+   - [ ] Connect to CatanDiceSystem (for dice numbers)
+   - [ ] Maintain compatibility with existing Field system
+   - [ ] Connect to UI
+
+4. **Events**
+   - [ ] Create TerrainGeneratedEvent
+   - [ ] Create TerrainPlacedEvent
+
+### Success Criteria
+- ✅ Map generation works correctly
+- ✅ Follows new architecture patterns
+- ✅ Integrates with other systems
+- ✅ Validation rules enforced
+- ✅ Events published correctly
+- ✅ Compatible with existing Field/MapGenerator code
+
+---
+
+## PHASE 9: Game Systems - Building System
 **Status**: ⚪ Not Started  
 **Duration**: 4-5 days  
-**Dependencies**: Phase 9
+**Dependencies**: Phase 7
 
 ### Goals
 Implement Catan building placement and validation.
@@ -542,10 +519,10 @@ Implement Catan building placement and validation.
 
 ---
 
-## PHASE 11: Game Systems - Robber System
+## PHASE 10: Game Systems - Victory System
 **Status**: ⚪ Not Started  
 **Duration**: 2-3 days  
-**Dependencies**: Phase 9, Phase 10
+**Dependencies**: Phase 9
 
 ### Goals
 Implement Catan robber mechanics.
@@ -575,9 +552,9 @@ Implement Catan robber mechanics.
 
 ---
 
-## PHASE 12: Game Systems - Victory System
+## PHASE 11: Game-Specific - Game Flow
 **Status**: ⚪ Not Started  
-**Duration**: 2-3 days  
+**Duration**: 4-5 days  
 **Dependencies**: Phase 10
 
 ### Goals
@@ -607,19 +584,19 @@ Implement victory point tracking and win condition.
 
 ---
 
-## PHASE 13: Game-Specific - Game Flow
+## PHASE 11: Game-Specific - Game Flow
 **Status**: ⚪ Not Started  
 **Duration**: 4-5 days  
-**Dependencies**: All previous phases
+**Dependencies**: Phase 10
 
 ### Goals
-Orchestrate all systems into a complete game flow.
+Orchestrate all systems into a complete game flow for playable prototype.
 
 ### Tasks
 1. **GameManager**
    - [ ] Create GameManager singleton
    - [ ] Implement state machine
-   - [ ] Manage game phases
+   - [ ] Manage game phases (setup, play, end)
    - [ ] Coordinate system initialization
    - [ ] Handle game start/end
 
@@ -636,25 +613,27 @@ Orchestrate all systems into a complete game flow.
    - [ ] Track player states
 
 4. **Integration**
-   - [ ] Wire all systems together
+   - [ ] Wire all systems together (Resources, Building, Victory, Terrain)
    - [ ] Connect events
    - [ ] Test complete flow
+   - [ ] Ensure playable prototype works end-to-end
 
 ### Success Criteria
 - ✅ Game can start and end
 - ✅ All phases work correctly
 - ✅ Turn order works
 - ✅ All systems integrated
+- ✅ Basic playable prototype functional
 
 ---
 
-## PHASE 14: Presentation - UI Integration
+## PHASE 12: Presentation - UI Integration
 **Status**: ⚪ Not Started  
 **Duration**: 3-4 days  
-**Dependencies**: Phase 13
+**Dependencies**: Phase 11
 
 ### Goals
-Connect UI to game systems via events.
+Connect UI to game systems via events for playable prototype.
 
 ### Tasks
 1. **UIManager**
@@ -663,12 +642,13 @@ Connect UI to game systems via events.
    - [ ] Update UI based on events
    - [ ] Publish user action events
 
-2. **UI Components**
+2. **UI Components (Priority for Prototype)**
    - [ ] Update dice UI
    - [ ] Update resource UI
    - [ ] Update building UI
-   - [ ] Update card UI
-   - [ ] Update trading UI
+   - [ ] Update victory point UI
+   - [ ] Update terrain/map UI
+   - [ ] (Defer: card UI, trading UI to later phases)
 
 3. **Integration**
    - [ ] Connect all UI to systems
@@ -679,14 +659,148 @@ Connect UI to game systems via events.
 - ✅ All UI updates correctly
 - ✅ User actions trigger game events
 - ✅ Visual feedback works
-- ✅ Complete game playable
+- ✅ Playable prototype complete
 
 ---
 
-## PHASE 15: Polish & Testing
+## PHASE 13: Polish & Testing
 **Status**: ⚪ Not Started  
 **Duration**: 3-5 days  
-**Dependencies**: Phase 14
+**Dependencies**: Phase 12
+
+### Goals
+Polish the game and ensure everything works correctly for playable prototype.
+
+### Tasks
+1. **Testing**
+   - [ ] Test all game scenarios
+   - [ ] Test edge cases
+   - [ ] Test error handling
+   - [ ] Performance testing
+
+2. **Polish**
+   - [ ] Visual polish
+   - [ ] Sound effects (optional)
+   - [ ] Animations (optional)
+   - [ ] UI/UX improvements
+
+3. **Documentation**
+   - [ ] Code documentation
+   - [ ] Usage guides
+   - [ ] Package extraction guides
+
+### Success Criteria
+- ✅ Game is fully playable
+- ✅ All systems work correctly
+- ✅ Code is clean and documented
+- ✅ Ready for package extraction
+
+---
+
+## PHASE 14: Game Systems - Robber System
+**Status**: ⚪ Not Started  
+**Duration**: 2-3 days  
+**Dependencies**: Phase 7, Phase 9
+
+### Goals
+Implement Catan robber mechanics (deferred from initial prototype).
+
+### Tasks
+1. **Robber System**
+   - [ ] Create RobberSystem class
+   - [ ] Implement robber placement
+   - [ ] Implement resource stealing
+   - [ ] Implement resource discard (7+ resources)
+
+2. **Events**
+   - [ ] Create RobberPlacedEvent
+   - [ ] Create ResourceStolenEvent
+   - [ ] Create ResourceDiscardEvent
+
+3. **Integration**
+   - [ ] Connect to CatanDiceSystem (7 trigger)
+   - [ ] Connect to ResourceSystem
+   - [ ] Connect to UI
+
+### Success Criteria
+- ✅ Robber placement works
+- ✅ Resource stealing works
+- ✅ Discard mechanic works
+- ✅ UI integration works
+
+---
+
+## PHASE 15: Core Systems - Trading System
+**Status**: ⚪ Not Started  
+**Duration**: 3-4 days  
+**Dependencies**: Phase 1
+
+### Goals
+Create a generic trading system for resource/item exchange (deferred from initial prototype).
+
+### Tasks
+1. **Trading System Design**
+   - [ ] Define ITradingSystem interface
+   - [ ] Define TradeOffer structure
+   - [ ] Define TradeResult structure
+   - [ ] Plan validation system
+
+2. **Trading System Implementation**
+   - [ ] Implement TradingSystem class
+   - [ ] Add CreateOffer() method
+   - [ ] Add AcceptOffer() method
+   - [ ] Add RejectOffer() method
+   - [ ] Add ValidateOffer() method
+   - [ ] Add ExecuteTrade() method
+
+3. **Events**
+   - [ ] Create TradeOfferCreatedEvent
+   - [ ] Create TradeAcceptedEvent
+   - [ ] Create TradeRejectedEvent
+
+4. **Testing**
+   - [ ] Test offer creation
+   - [ ] Test validation
+   - [ ] Test trade execution
+   - [ ] Test event flow
+
+### Success Criteria
+- ✅ Generic trading system works
+- ✅ Can trade any resource/item type
+- ✅ Proper validation
+- ✅ Events published correctly
+
+---
+
+## PHASE 16: Game Systems - Catan Trading System
+**Status**: ⚪ Not Started  
+**Duration**: 2-3 days  
+**Dependencies**: Phase 15
+
+### Goals
+Implement Catan-specific trading (player-to-player, ports) (deferred from initial prototype).
+
+### Tasks
+1. **Catan Trading Rules**
+   - [ ] Implement port trading (3:1, 2:1 ratios)
+   - [ ] Implement player-to-player trading
+   - [ ] Add trading validation rules
+
+2. **Catan Trading System**
+   - [ ] Create CatanTradingSystem
+   - [ ] Compose TradingSystem
+   - [ ] Add port trading methods
+   - [ ] Add player trading methods
+
+3. **Integration**
+   - [ ] Connect to ResourceSystem
+   - [ ] Connect to UI
+
+### Success Criteria
+- ✅ Port trading works
+- ✅ Player trading works
+- ✅ Validation correct
+- ✅ UI integration works
 
 ### Goals
 Polish the game and ensure everything works correctly.

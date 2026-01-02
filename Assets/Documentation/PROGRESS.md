@@ -20,18 +20,17 @@
 | 3 | Game Systems - Catan Dice System | 🟢 Completed | 2024-12-19 | 2024-12-19 | Catan-specific dice system implemented |
 | 4 | Core Systems - Card System | 🟢 Completed | 2024-12-19 | 2024-12-19 | Generic card system with deck/hand/discard management |
 | 5 | Game Systems - Catan Card System | 🟢 Completed | 2024-12-19 | 2024-12-19 | Catan development card system implemented |
-| 3 | Game Systems - Catan Dice System | ⚪ Not Started | - | - | - |
-| 4 | Core Systems - Card System | ⚪ Not Started | - | - | - |
-| 5 | Game Systems - Catan Card System | ⚪ Not Started | - | - | - |
-| 6 | Core Systems - Trading System | ⚪ Not Started | - | - | - |
-| 7 | Game Systems - Catan Trading System | ⚪ Not Started | - | - | - |
-| 8 | Core Systems - Resource System | ⚪ Not Started | - | - | - |
-| 9 | Game Systems - Catan Resource System | ⚪ Not Started | - | - | - |
-| 10 | Game Systems - Building System | ⚪ Not Started | - | - | - |
-| 11 | Game Systems - Robber System | ⚪ Not Started | - | - | - |
-| 12 | Game Systems - Victory System | ⚪ Not Started | - | - | - |
-| 13 | Game-Specific - Game Flow | ⚪ Not Started | - | - | - |
-| 14 | Presentation - UI Integration | ⚪ Not Started | - | - | - |
+| 6 | Core Systems - Resource System | ⚪ Not Started | - | - | **PRIORITY: Playable Prototype** |
+| 7 | Game Systems - Catan Resource System | ⚪ Not Started | - | - | **PRIORITY: Playable Prototype** |
+| 8 | Game Systems - Terrain Generation Refactoring | ⚪ Not Started | - | - | **PRIORITY: Playable Prototype** |
+| 9 | Game Systems - Building System | ⚪ Not Started | - | - | **PRIORITY: Playable Prototype** |
+| 10 | Game Systems - Victory System | ⚪ Not Started | - | - | **PRIORITY: Playable Prototype** |
+| 11 | Game-Specific - Game Flow | ⚪ Not Started | - | - | **PRIORITY: Playable Prototype** |
+| 12 | Presentation - UI Integration | ⚪ Not Started | - | - | **PRIORITY: Playable Prototype** |
+| 13 | Polish & Testing | ⚪ Not Started | - | - | **PRIORITY: Playable Prototype** |
+| 14 | Game Systems - Robber System | ⚪ Not Started | - | - | Deferred (not critical for basic prototype) |
+| 15 | Core Systems - Trading System | ⚪ Not Started | - | - | Deferred (not critical for basic prototype) |
+| 16 | Game Systems - Catan Trading System | ⚪ Not Started | - | - | Deferred (not critical for basic prototype) |
 | 15 | Polish & Testing | ⚪ Not Started | - | - | - |
 
 **Legend**:
