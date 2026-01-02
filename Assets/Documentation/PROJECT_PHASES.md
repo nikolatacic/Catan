@@ -354,40 +354,45 @@ Implement Catan-specific cards (development cards) using the generic card system
 ---
 
 ## PHASE 6: Core Systems - Resource/Inventory System
-**Status**: ⚪ Not Started  
+**Status**: 🟢 Completed  
 **Duration**: 2-3 days  
-**Dependencies**: Phase 1
+**Dependencies**: Phase 1, Phase 4  
+**Completed**: 2024-12-19
 
 ### Goals
 Create a generic resource/inventory management system.
 
 ### Tasks
 1. **Resource System Design**
-   - [ ] Define IResourceSystem interface
-   - [ ] Define ResourceInventory class
-   - [ ] Define ResourceType as generic (or enum)
-   - [ ] Plan CardSystem integration (hybrid approach)
-   - [ ] Plan add/remove/query operations
+   - [x] Define IResourceSystem interface
+   - [x] Define ResourceInventory class
+   - [x] Define ResourceType as generic (string-based)
+   - [x] Plan CardSystem integration (hybrid approach)
+   - [x] Plan add/remove/query operations
 
 2. **Resource System Implementation**
-   - [ ] Implement ResourceSystem class
-   - [ ] Use CardSystem internally (one per resource type)
-   - [ ] Add AddResource() method (adds cards to hand)
-   - [ ] Add RemoveResource() method (removes cards from hand)
-   - [ ] Add HasResource() method (checks card count)
-   - [ ] Add GetResourceCount() method (returns hand count)
-   - [ ] Add TransferResource() method (transfers cards between inventories)
-   - [ ] Add CreateResourceDeck() method (creates deck of identical cards)
+   - [x] Implement ResourceSystem class
+   - [x] Use CardSystem internally (one per resource type)
+   - [x] Add AddResource() method (adds cards to hand)
+   - [x] Add RemoveResource() method (removes cards from hand)
+   - [x] Add HasResource() method (checks card count)
+   - [x] Add GetResourceCount() method (returns hand count)
+   - [x] Add TransferResource() method (transfers cards between inventories)
+   - [x] Add CreateResourceDeck() method (creates deck of identical cards)
+   - [x] Add DrawFromDeck() method (draws from bank/supply)
+   - [x] Add GetDeckCount() method (checks deck availability)
 
 3. **Events**
-   - [ ] Create ResourceAddedEvent
-   - [ ] Create ResourceRemovedEvent
-   - [ ] Create ResourceChangedEvent
+   - [x] Create ResourceAddedEvent
+   - [x] Create ResourceRemovedEvent
+   - [x] Create ResourceChangedEvent
 
 4. **Testing**
-   - [ ] Test resource operations
-   - [ ] Test validation
-   - [ ] Test events
+   - [x] Test resource operations
+   - [x] Test validation
+   - [x] Test events
+   - [x] Test deck operations
+   - [x] Test transfer operations
 
 ### Success Criteria
 - ✅ Generic resource system works

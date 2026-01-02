@@ -2,11 +2,11 @@
 
 ## Current Status
 
-**Current Phase**: Phase 5 - Game Systems - Catan Card System  
+**Current Phase**: Phase 6 - Core Systems - Resource System  
 **Status**: 🟢 Completed  
 **Started**: 2024-12-19  
 **Completed**: 2024-12-19  
-**Previous Phase Completed**: Phase 4 - Core Systems - Card System (2024-12-19)
+**Previous Phase Completed**: Phase 5 - Game Systems - Catan Card System (2024-12-19)
 
 ---
 
@@ -20,7 +20,7 @@
 | 3 | Game Systems - Catan Dice System | 🟢 Completed | 2024-12-19 | 2024-12-19 | Catan-specific dice system implemented |
 | 4 | Core Systems - Card System | 🟢 Completed | 2024-12-19 | 2024-12-19 | Generic card system with deck/hand/discard management |
 | 5 | Game Systems - Catan Card System | 🟢 Completed | 2024-12-19 | 2024-12-19 | Catan development card system implemented |
-| 6 | Core Systems - Resource System | ⚪ Not Started | - | - | **PRIORITY: Playable Prototype** |
+| 6 | Core Systems - Resource System | 🟢 Completed | 2024-12-19 | 2024-12-19 | Generic resource system with CardSystem hybrid approach |
 | 7 | Game Systems - Catan Resource System | ⚪ Not Started | - | - | **PRIORITY: Playable Prototype** |
 | 8 | Game Systems - Terrain Generation Refactoring | ⚪ Not Started | - | - | **PRIORITY: Playable Prototype** |
 | 9 | Game Systems - Building System | ⚪ Not Started | - | - | **PRIORITY: Playable Prototype** |
@@ -176,6 +176,11 @@
 - ✅ CardConfig ScriptableObject
 - ✅ CardDrawnEvent, CardDiscardedEvent, HandChangedEvent
 - ✅ CardSystemTest script for testing
+- ✅ IResourceSystem interface
+- ✅ ResourceInventory class (uses CardSystem internally)
+- ✅ ResourceSystem class (hybrid approach)
+- ✅ ResourceAddedEvent, ResourceRemovedEvent, ResourceChangedEvent
+- ✅ ResourceSystemTest script for testing
 
 ### Game Systems
 - ✅ CatanDiceSystem class (wraps DiceSystem)
