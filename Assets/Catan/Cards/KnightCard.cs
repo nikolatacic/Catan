@@ -8,11 +8,26 @@ namespace Catan
         public override string CardId => "knight";
         public override string DisplayName => "Knight";
 
-        public override bool IsPlayable(IGameContext context) => throw new System.NotImplementedException();
+        // Knights can be played before rolling dice or during the trading/building phase,
+        // but never the same turn they were purchased.
+        public override bool IsPlayable(IGameContext context)
+        {
+            if (context is not CatanGameContext catanContext) return false;
+            if (TurnPurchased == catanContext.TurnManager.TurnNumber) return false;
+
+            var phase = catanContext.TurnManager.CurrentCatanPhase;
+            return phase == CatanTurnPhase.RollDice
+                || phase == CatanTurnPhase.Trading
+                || phase == CatanTurnPhase.Building;
+        }
 
         public override void OnPlay(IGameContext context)
         {
-            ((CatanPlayer)context.ActivePlayer).KnightsPlayed++;
+            var catanContext = (CatanGameContext)context;
+            var catanPlayer = (CatanPlayer)context.ActivePlayer;
+
+            catanPlayer.KnightsPlayed++;
+            catanContext.TurnManager.RobberSystem.Activate(context.ActivePlayer);
             EventBus.Publish(new KnightPlayedEvent { Player = context.ActivePlayer });
         }
     }
