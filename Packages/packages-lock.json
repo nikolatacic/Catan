@@ -9,6 +9,94 @@
       },
       "hash": "fd8ff1fb700caf062eb5cce364c1d0a85f99ebe6"
     },
+    "com.gamecore.board": {
+      "version": "file:com.gamecore.board",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.gamecore.events": "1.0.0"
+      }
+    },
+    "com.gamecore.build": {
+      "version": "file:com.gamecore.build",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.gamecore.events": "1.0.0",
+        "com.gamecore.player": "1.0.0",
+        "com.gamecore.resources": "1.0.0",
+        "com.gamecore.board": "1.0.0"
+      }
+    },
+    "com.gamecore.cards": {
+      "version": "file:com.gamecore.cards",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.gamecore.events": "1.0.0",
+        "com.gamecore.player": "1.0.0"
+      }
+    },
+    "com.gamecore.events": {
+      "version": "file:com.gamecore.events",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.gamecore.player": {
+      "version": "file:com.gamecore.player",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.gamecore.events": "1.0.0"
+      }
+    },
+    "com.gamecore.resources": {
+      "version": "file:com.gamecore.resources",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.gamecore.events": "1.0.0",
+        "com.gamecore.player": "1.0.0"
+      }
+    },
+    "com.gamecore.score": {
+      "version": "file:com.gamecore.score",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.gamecore.events": "1.0.0",
+        "com.gamecore.player": "1.0.0"
+      }
+    },
+    "com.gamecore.statemachine": {
+      "version": "file:com.gamecore.statemachine",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.gamecore.events": "1.0.0"
+      }
+    },
+    "com.gamecore.trade": {
+      "version": "file:com.gamecore.trade",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.gamecore.events": "1.0.0",
+        "com.gamecore.player": "1.0.0",
+        "com.gamecore.resources": "1.0.0"
+      }
+    },
+    "com.gamecore.turn": {
+      "version": "file:com.gamecore.turn",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.gamecore.events": "1.0.0",
+        "com.gamecore.statemachine": "1.0.0",
+        "com.gamecore.player": "1.0.0"
+      }
+    },
     "com.unity.2d.animation": {
       "version": "14.0.3",
       "depth": 0,
