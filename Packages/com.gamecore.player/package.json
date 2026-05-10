@@ -1,0 +1,10 @@
+{
+  "name": "com.gamecore.player",
+  "version": "1.0.0",
+  "displayName": "GameCore Player",
+  "description": "IPlayer contract and PlayerManager",
+  "unity": "6000.0",
+  "dependencies": {
+    "com.gamecore.events": "1.0.0"
+  }
+}

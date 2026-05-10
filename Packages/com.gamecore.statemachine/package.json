@@ -1,0 +1,10 @@
+{
+  "name": "com.gamecore.statemachine",
+  "version": "1.0.0",
+  "displayName": "GameCore State Machine",
+  "description": "Generic state machine",
+  "unity": "6000.0",
+  "dependencies": {
+    "com.gamecore.events": "1.0.0"
+  }
+}

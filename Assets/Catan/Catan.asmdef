@@ -1,0 +1,21 @@
+{
+  "name": "Catan",
+  "rootNamespace": "Catan",
+  "references": [
+    "com.gamecore.events",
+    "com.gamecore.statemachine",
+    "com.gamecore.player",
+    "com.gamecore.board",
+    "com.gamecore.turn",
+    "com.gamecore.resources",
+    "com.gamecore.cards",
+    "com.gamecore.trade",
+    "com.gamecore.build",
+    "com.gamecore.score"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "autoReferenced": true
+}

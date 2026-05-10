@@ -1,0 +1,10 @@
+{
+  "name": "com.gamecore.statemachine",
+  "rootNamespace": "GameCore.StateMachine",
+  "references": ["com.gamecore.events"],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "autoReferenced": true
+}

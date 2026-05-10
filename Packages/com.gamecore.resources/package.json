@@ -1,0 +1,11 @@
+{
+  "name": "com.gamecore.resources",
+  "version": "1.0.0",
+  "displayName": "GameCore Resources",
+  "description": "Type-agnostic resource economy",
+  "unity": "6000.0",
+  "dependencies": {
+    "com.gamecore.events": "1.0.0",
+    "com.gamecore.player": "1.0.0"
+  }
+}

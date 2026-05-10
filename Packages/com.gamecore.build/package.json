@@ -1,0 +1,13 @@
+{
+  "name": "com.gamecore.build",
+  "version": "1.0.0",
+  "displayName": "GameCore Build",
+  "description": "Placement and removal of game pieces",
+  "unity": "6000.0",
+  "dependencies": {
+    "com.gamecore.events": "1.0.0",
+    "com.gamecore.player": "1.0.0",
+    "com.gamecore.resources": "1.0.0",
+    "com.gamecore.board": "1.0.0"
+  }
+}

@@ -1,5 +1,15 @@
 {
   "dependencies": {
+    "com.gamecore.events": "file:../Packages/com.gamecore.events",
+    "com.gamecore.statemachine": "file:../Packages/com.gamecore.statemachine",
+    "com.gamecore.turn": "file:../Packages/com.gamecore.turn",
+    "com.gamecore.board": "file:../Packages/com.gamecore.board",
+    "com.gamecore.player": "file:../Packages/com.gamecore.player",
+    "com.gamecore.resources": "file:../Packages/com.gamecore.resources",
+    "com.gamecore.cards": "file:../Packages/com.gamecore.cards",
+    "com.gamecore.trade": "file:../Packages/com.gamecore.trade",
+    "com.gamecore.build": "file:../Packages/com.gamecore.build",
+    "com.gamecore.score": "file:../Packages/com.gamecore.score",
     "com.boxqkrtm.ide.cursor": "https://github.com/boxqkrtm/com.unity.ide.cursor.git",
     "com.unity.2d.animation": "14.0.3",
     "com.unity.2d.pixel-perfect": "5.1.1",

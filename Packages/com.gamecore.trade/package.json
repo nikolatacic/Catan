@@ -1,0 +1,12 @@
+{
+  "name": "com.gamecore.trade",
+  "version": "1.0.0",
+  "displayName": "GameCore Trade",
+  "description": "Trade negotiation between players and bank",
+  "unity": "6000.0",
+  "dependencies": {
+    "com.gamecore.events": "1.0.0",
+    "com.gamecore.player": "1.0.0",
+    "com.gamecore.resources": "1.0.0"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "com.gamecore.resources",
+  "rootNamespace": "GameCore.Resources",
+  "references": ["com.gamecore.events", "com.gamecore.player"],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "autoReferenced": true
+}
