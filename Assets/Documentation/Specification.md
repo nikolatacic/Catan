@@ -24,7 +24,7 @@
 | 2 | Infrastructure (EventBus + StateMachine) | **Done** | Naming fixed, StateMachine publishes events, EditMode tests written |
 | 3 | Core data (Board, Player, Resources) | **Done** | `HexGrid.BuildTopology` implemented; `PlayerManager` complete; tests written for ResourceBundle, ResourceInventory, PlayerManager, HexGrid |
 | 4 | Catan board & pieces | **Done** | `CatanBoardGenerator` (19 tiles, 6/8 constraint, ports), `CatanHexTile.ProduceResources`, `CatanBoard`, `PortSystem.GetTradeRatio` all implemented; EditMode tests written |
-| 5 | Turn system & dice | Not started | `CatanTurnManager`, `RobberSystem`, `DiceManager.Roll` all stubbed |
+| 5 | Turn system & dice | **Done** | `TurnManager` base (NextTurn/AdvancePhase/SkipActor), `CatanTurnManager` (HandleDiceRoll, setup phase queue, phase sequencing), `DiceManager` (injectable roller), `RobberSystem` (Activate/MoveRobber/ForceDiscard/steal); EditMode tests written |
 | 6 | Rules & game logic | Not started | `CatanBuildRule`, `CatanTradeRule`, dev cards, score trackers all stubbed |
 | 7 | Unity scene & UI | Not started | No scene, no MonoBehaviour views yet |
 | 8 | Polish & edge cases | Not started | |
@@ -53,6 +53,10 @@
 | `Assets/Catan/Board/PortSystem.cs` | Complete — `GetTradeRatio` returns best 2:1/3:1/4 ratio per player |
 | `Assets/Catan/Build/Settlement.cs` | Complete — `BuildCost`, `ProductionMultiplier`, `UpgradeToCity` |
 | `Assets/Catan/Build/Road.cs` | Complete — `BuildCost` |
+| `Packages/com.gamecore.turn/Runtime/TurnManager.cs` | Complete — `NextTurn`, `AdvancePhase`, `SkipActor` |
+| `Assets/Catan/Turn/DiceManager.cs` | Complete — `Roll()` with injectable die function |
+| `Assets/Catan/Turn/RobberSystem.cs` | Complete — `Activate`, `MoveRobber`, `ForceDiscard` |
+| `Assets/Catan/Turn/CatanTurnManager.cs` | Complete — `StartGame`, `RequestRoll`, `HandleDiceRoll`, `NextTurn`, `AdvancePhase` |
 
 ---
 
@@ -142,3 +146,4 @@ Assets/Documentation/
 | 2026-05-10 | Phase 2: fixed naming violations (camelCase + full descriptive names), completed StateMachine event publishing, wrote EditMode tests for EventBus, GameEventChannel, StateMachine, HexCoord |
 | 2026-05-10 | Phase 3: implemented HexGrid.BuildTopology (3-pass: create edges/vertices, wire adjacency, build per-tile lookup); completed PlayerManager; wrote EditMode tests for ResourceBundle, ResourceInventory, PlayerManager, HexGrid topology |
 | 2026-05-10 | Phase 4: implemented CatanResources static registry, CatanHexTile.ProduceResources, CatanBoard (MoveRobber/GetTilesForNumber/GetPlayersOnTile/ProduceResourcesForNumber), CatanBoardGenerator (Fisher-Yates shuffle, 6/8 adjacency constraint, port system), PortSystem.GetTradeRatio, Settlement.BuildCost, Road.BuildCost; wrote EditMode tests for CatanBoardGenerator, CatanBoard, PortSystem |
+| 2026-05-10 | Phase 5: implemented TurnManager base (NextTurn/AdvancePhase/SkipActor), CatanTurnManager (HandleDiceRoll routing, setup phase queue, AdvancePhase sequencing, StartGame/RequestRoll/NextTurn), DiceManager (injectable Func<int,int,int> roller), RobberSystem (Activate with discard check, MoveRobber with random steal, ForceDiscard), CatanPhaseChangedEvent; wrote EditMode tests for DiceManager, RobberSystem, CatanTurnManager |

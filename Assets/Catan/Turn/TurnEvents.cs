@@ -11,4 +11,5 @@ namespace Catan
     public struct ResourceStolenEvent : IGameEvent { public IPlayer Thief; public IPlayer Victim; public IResource Stolen; }
     public struct DiscardRequiredEvent : IGameEvent { public IPlayer Player; public int Count; }
     public struct KnightPlayedEvent : IGameEvent { public IPlayer Player; }
+    public struct CatanPhaseChangedEvent : IGameEvent { public CatanTurnPhase From; public CatanTurnPhase To; }
 }
