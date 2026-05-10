@@ -22,7 +22,7 @@
 |---|---|---|---|
 | 1 | Scaffold all classes | **Done** | 98 files; all types exist as compilable stubs |
 | 2 | Infrastructure (EventBus + StateMachine) | **Done** | Naming fixed, StateMachine publishes events, EditMode tests written |
-| 3 | Core data (Board, Player, Resources) | **Partially done** | `HexCoord` math done, `ResourceBundle` + `ResourceInventory` done; `HexGrid.GetVertices/GetEdges` stubbed |
+| 3 | Core data (Board, Player, Resources) | **Done** | `HexGrid.BuildTopology` implemented; `PlayerManager` complete; tests written for ResourceBundle, ResourceInventory, PlayerManager, HexGrid |
 | 4 | Catan board & pieces | Not started | `CatanBoardGenerator`, `CatanHexTile.ProduceResources`, `PortSystem` all stubbed |
 | 5 | Turn system & dice | Not started | `CatanTurnManager`, `RobberSystem`, `DiceManager.Roll` all stubbed |
 | 6 | Rules & game logic | Not started | `CatanBuildRule`, `CatanTradeRule`, dev cards, score trackers all stubbed |
@@ -133,3 +133,4 @@ Assets/Documentation/
 | 2026-05-10 | Phase 1: scaffolded all 98 files — 10 packages + Assets/Catan/ layer + manifest.json |
 | 2026-05-10 | Created per-package READMEs, PackagesReadme.md, Specification.md (this file) |
 | 2026-05-10 | Phase 2: fixed naming violations (camelCase + full descriptive names), completed StateMachine event publishing, wrote EditMode tests for EventBus, GameEventChannel, StateMachine, HexCoord |
+| 2026-05-10 | Phase 3: implemented HexGrid.BuildTopology (3-pass: create edges/vertices, wire adjacency, build per-tile lookup); completed PlayerManager; wrote EditMode tests for ResourceBundle, ResourceInventory, PlayerManager, HexGrid topology |
