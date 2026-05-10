@@ -9,33 +9,33 @@ namespace GameCore.Events
 
         public static void Subscribe<T>(Action<T> handler) where T : IGameEvent
         {
-            var type = typeof(T);
-            if (_handlers.TryGetValue(type, out var existing))
-                _handlers[type] = Delegate.Combine(existing, handler);
+            var eventType = typeof(T);
+            if (_handlers.TryGetValue(eventType, out var existingDelegate))
+                _handlers[eventType] = Delegate.Combine(existingDelegate, handler);
             else
-                _handlers[type] = handler;
+                _handlers[eventType] = handler;
         }
 
         public static void Unsubscribe<T>(Action<T> handler) where T : IGameEvent
         {
-            var type = typeof(T);
-            if (_handlers.TryGetValue(type, out var existing))
+            var eventType = typeof(T);
+            if (_handlers.TryGetValue(eventType, out var existingDelegate))
             {
-                var updated = Delegate.Remove(existing, handler);
-                if (updated == null) _handlers.Remove(type);
-                else _handlers[type] = updated;
+                var updatedDelegate = Delegate.Remove(existingDelegate, handler);
+                if (updatedDelegate == null) _handlers.Remove(eventType);
+                else _handlers[eventType] = updatedDelegate;
             }
         }
 
-        public static void Publish<T>(T evt) where T : IGameEvent
+        public static void Publish<T>(T gameEvent) where T : IGameEvent
         {
-            if (_handlers.TryGetValue(typeof(T), out var del))
+            if (_handlers.TryGetValue(typeof(T), out var handlerDelegate))
             {
-                var handler = (Action<T>)del;
-                foreach (var d in handler.GetInvocationList())
+                var typedHandler = (Action<T>)handlerDelegate;
+                foreach (var invocationTarget in typedHandler.GetInvocationList())
                 {
-                    try { ((Action<T>)d)(evt); }
-                    catch (Exception e) { UnityEngine.Debug.LogException(e); }
+                    try { ((Action<T>)invocationTarget)(gameEvent); }
+                    catch (Exception exception) { UnityEngine.Debug.LogException(exception); }
                 }
             }
         }

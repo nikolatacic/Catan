@@ -26,36 +26,40 @@ namespace GameCore.Board
 
         public int Distance(HexCoord other)
         {
-            int dq = Q - other.Q, dr = R - other.R;
-            return (Math.Abs(dq) + Math.Abs(dr) + Math.Abs(dq + dr)) / 2;
+            int deltaQ = Q - other.Q, deltaR = R - other.R;
+            return (Math.Abs(deltaQ) + Math.Abs(deltaR) + Math.Abs(deltaQ + deltaR)) / 2;
         }
 
         public Vector3 ToWorldPosition(float size)
         {
-            float x = size * (3f / 2f * Q);
-            float z = size * (MathF.Sqrt(3) * (R + Q / 2f));
-            return new Vector3(x, 0, z);
+            float worldX = size * (3f / 2f * Q);
+            float worldZ = size * (MathF.Sqrt(3) * (R + Q / 2f));
+            return new Vector3(worldX, 0, worldZ);
         }
 
-        public static HexCoord FromWorldPosition(Vector3 pos, float size)
+        public static HexCoord FromWorldPosition(Vector3 worldPosition, float size)
         {
-            float q = (2f / 3f * pos.x) / size;
-            float r = (-1f / 3f * pos.x + MathF.Sqrt(3) / 3f * pos.z) / size;
-            return Round(q, r);
+            float fractionalQ = (2f / 3f * worldPosition.x) / size;
+            float fractionalR = (-1f / 3f * worldPosition.x + MathF.Sqrt(3) / 3f * worldPosition.z) / size;
+            return Round(fractionalQ, fractionalR);
         }
 
-        private static HexCoord Round(float q, float r)
+        private static HexCoord Round(float fractionalQ, float fractionalR)
         {
-            float s = -q - r;
-            int rq = (int)MathF.Round(q), rr = (int)MathF.Round(r), rs = (int)MathF.Round(s);
-            float dq = MathF.Abs(rq - q), dr = MathF.Abs(rr - r), ds = MathF.Abs(rs - s);
-            if (dq > dr && dq > ds) rq = -rr - rs;
-            else if (dr > ds) rr = -rq - rs;
-            return new HexCoord(rq, rr);
+            float fractionalS = -fractionalQ - fractionalR;
+            int roundedQ = (int)MathF.Round(fractionalQ);
+            int roundedR = (int)MathF.Round(fractionalR);
+            int roundedS = (int)MathF.Round(fractionalS);
+            float diffQ = MathF.Abs(roundedQ - fractionalQ);
+            float diffR = MathF.Abs(roundedR - fractionalR);
+            float diffS = MathF.Abs(roundedS - fractionalS);
+            if (diffQ > diffR && diffQ > diffS) roundedQ = -roundedR - roundedS;
+            else if (diffR > diffS) roundedR = -roundedQ - roundedS;
+            return new HexCoord(roundedQ, roundedR);
         }
 
         public bool Equals(HexCoord other) => Q == other.Q && R == other.R;
-        public override bool Equals(object obj) => obj is HexCoord h && Equals(h);
+        public override bool Equals(object obj) => obj is HexCoord hexCoord && Equals(hexCoord);
         public override int GetHashCode() => HashCode.Combine(Q, R);
         public static bool operator ==(HexCoord a, HexCoord b) => a.Equals(b);
         public static bool operator !=(HexCoord a, HexCoord b) => !a.Equals(b);

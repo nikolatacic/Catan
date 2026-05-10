@@ -21,7 +21,7 @@
 | Phase | Title | Status | Notes |
 |---|---|---|---|
 | 1 | Scaffold all classes | **Done** | 98 files; all types exist as compilable stubs |
-| 2 | Infrastructure (EventBus + StateMachine) | **Partially done** | `EventBus` and `StateMachine<T>` implemented; unit tests not yet written |
+| 2 | Infrastructure (EventBus + StateMachine) | **Done** | Naming fixed, StateMachine publishes events, EditMode tests written |
 | 3 | Core data (Board, Player, Resources) | **Partially done** | `HexCoord` math done, `ResourceBundle` + `ResourceInventory` done; `HexGrid.GetVertices/GetEdges` stubbed |
 | 4 | Catan board & pieces | Not started | `CatanBoardGenerator`, `CatanHexTile.ProduceResources`, `PortSystem` all stubbed |
 | 5 | Turn system & dice | Not started | `CatanTurnManager`, `RobberSystem`, `DiceManager.Roll` all stubbed |
@@ -37,7 +37,7 @@
 |---|---|
 | `com.gamecore.events/Runtime/EventBus.cs` | Complete — subscribe, unsubscribe, publish with per-handler exception isolation |
 | `com.gamecore.events/Runtime/GameEventChannel.cs` | Complete |
-| `com.gamecore.statemachine/Runtime/StateMachine.cs` | Complete — Enter/Execute/Exit lifecycle |
+| `com.gamecore.statemachine/Runtime/StateMachine.cs` | Complete — Enter/Execute/Exit lifecycle, publishes StateEntered/StateExited/TransitionFired events |
 | `com.gamecore.board/Runtime/HexCoord.cs` | Complete — axial math, neighbors, distance, world↔axial round-trip |
 | `com.gamecore.resources/Runtime/ResourceBundle.cs` | Complete — immutable, `+` operator, `CanAfford` |
 | `com.gamecore.resources/Runtime/ResourceInventory.cs` | Complete — TryAdd/TryRemove with event publishing |
@@ -132,3 +132,4 @@ Assets/Documentation/
 | 2026-05-10 | Created ActionPlan.md (8-phase roadmap) |
 | 2026-05-10 | Phase 1: scaffolded all 98 files — 10 packages + Assets/Catan/ layer + manifest.json |
 | 2026-05-10 | Created per-package READMEs, PackagesReadme.md, Specification.md (this file) |
+| 2026-05-10 | Phase 2: fixed naming violations (camelCase + full descriptive names), completed StateMachine event publishing, wrote EditMode tests for EventBus, GameEventChannel, StateMachine, HexCoord |
