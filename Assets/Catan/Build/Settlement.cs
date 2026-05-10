@@ -22,10 +22,19 @@ namespace Catan
 
         // IPlaceable
         public string PlaceableId => IsCity ? "city" : "settlement";
-        public ResourceBundle BuildCost => throw new System.NotImplementedException();
+
+        public ResourceBundle BuildCost => IsCity
+            ? new ResourceBundle()
+                .Add(CatanResources.Wheat, 2)
+                .Add(CatanResources.Ore, 3)
+            : new ResourceBundle()
+                .Add(CatanResources.Wood, 1)
+                .Add(CatanResources.Brick, 1)
+                .Add(CatanResources.Sheep, 1)
+                .Add(CatanResources.Wheat, 1);
 
         // IBuildLocation
-        public string LocationId => $"settlement_{Location?.GetHashCode()}";
+        public string LocationId => $"vertex_{Location?.GetHashCode()}";
         public bool IsOccupied => IsCity;
         public IPlaceable OccupiedBy => IsCity ? this : null;
     }

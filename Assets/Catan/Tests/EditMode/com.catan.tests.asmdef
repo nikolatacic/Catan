@@ -1,0 +1,34 @@
+{
+  "name": "com.catan.tests",
+  "rootNamespace": "Catan.Tests",
+  "references": [
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner",
+    "com.gamecore.events",
+    "com.gamecore.player",
+    "com.gamecore.board",
+    "com.gamecore.resources",
+    "com.gamecore.cards",
+    "com.gamecore.build",
+    "com.gamecore.score",
+    "com.gamecore.turn",
+    "com.gamecore.trade",
+    "com.gamecore.statemachine",
+    "Catan"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "nunit.framework.dll"
+  ],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

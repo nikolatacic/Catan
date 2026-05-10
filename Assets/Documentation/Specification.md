@@ -23,7 +23,7 @@
 | 1 | Scaffold all classes | **Done** | 98 files; all types exist as compilable stubs |
 | 2 | Infrastructure (EventBus + StateMachine) | **Done** | Naming fixed, StateMachine publishes events, EditMode tests written |
 | 3 | Core data (Board, Player, Resources) | **Done** | `HexGrid.BuildTopology` implemented; `PlayerManager` complete; tests written for ResourceBundle, ResourceInventory, PlayerManager, HexGrid |
-| 4 | Catan board & pieces | Not started | `CatanBoardGenerator`, `CatanHexTile.ProduceResources`, `PortSystem` all stubbed |
+| 4 | Catan board & pieces | **Done** | `CatanBoardGenerator` (19 tiles, 6/8 constraint, ports), `CatanHexTile.ProduceResources`, `CatanBoard`, `PortSystem.GetTradeRatio` all implemented; EditMode tests written |
 | 5 | Turn system & dice | Not started | `CatanTurnManager`, `RobberSystem`, `DiceManager.Roll` all stubbed |
 | 6 | Rules & game logic | Not started | `CatanBuildRule`, `CatanTradeRule`, dev cards, score trackers all stubbed |
 | 7 | Unity scene & UI | Not started | No scene, no MonoBehaviour views yet |
@@ -46,6 +46,13 @@
 | `Assets/Catan/Score/CatanVictoryCondition.cs` | `CalculatePoints` complete; `IsWinCondition` complete |
 | `Assets/Catan/Cards/VictoryPointCard.cs` | Complete |
 | `Assets/Catan/Cards/KnightCard.cs` | `OnPlay` complete; `IsPlayable` stubbed |
+| `Assets/Catan/Board/CatanResources.cs` | Complete — static registry, `Initialize()` + `Get(CatanResourceType)` |
+| `Assets/Catan/Board/CatanHexTile.cs` | Complete — `ProduceResources` distributes to settlements/cities, publishes `ResourceProducedEvent` |
+| `Assets/Catan/Board/CatanBoard.cs` | Complete — `MoveRobber`, `GetTilesForNumber`, `GetPlayersOnTile`, `ProduceResourcesForNumber` |
+| `Assets/Catan/Board/CatanBoardGenerator.cs` | Complete — 19-tile layout, tile type shuffle, 6/8 adjacency constraint (200 retries), port system |
+| `Assets/Catan/Board/PortSystem.cs` | Complete — `GetTradeRatio` returns best 2:1/3:1/4 ratio per player |
+| `Assets/Catan/Build/Settlement.cs` | Complete — `BuildCost`, `ProductionMultiplier`, `UpgradeToCity` |
+| `Assets/Catan/Build/Road.cs` | Complete — `BuildCost` |
 
 ---
 
@@ -134,3 +141,4 @@ Assets/Documentation/
 | 2026-05-10 | Created per-package READMEs, PackagesReadme.md, Specification.md (this file) |
 | 2026-05-10 | Phase 2: fixed naming violations (camelCase + full descriptive names), completed StateMachine event publishing, wrote EditMode tests for EventBus, GameEventChannel, StateMachine, HexCoord |
 | 2026-05-10 | Phase 3: implemented HexGrid.BuildTopology (3-pass: create edges/vertices, wire adjacency, build per-tile lookup); completed PlayerManager; wrote EditMode tests for ResourceBundle, ResourceInventory, PlayerManager, HexGrid topology |
+| 2026-05-10 | Phase 4: implemented CatanResources static registry, CatanHexTile.ProduceResources, CatanBoard (MoveRobber/GetTilesForNumber/GetPlayersOnTile/ProduceResourcesForNumber), CatanBoardGenerator (Fisher-Yates shuffle, 6/8 adjacency constraint, port system), PortSystem.GetTradeRatio, Settlement.BuildCost, Road.BuildCost; wrote EditMode tests for CatanBoardGenerator, CatanBoard, PortSystem |

@@ -17,6 +17,9 @@ namespace Catan
         }
 
         public string PlaceableId => "road";
-        public ResourceBundle BuildCost => throw new System.NotImplementedException();
+
+        public ResourceBundle BuildCost => new ResourceBundle()
+            .Add(CatanResources.Wood, 1)
+            .Add(CatanResources.Brick, 1);
     }
 }
