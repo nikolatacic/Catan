@@ -5,7 +5,7 @@ using GameCore.Resources;
 
 namespace Catan
 {
-    public class Road : IPlaceable
+    public class Road : IPlaceable, IBuildLocation
     {
         public IPlayer Owner { get; }
         public HexEdge Location { get; }
@@ -16,10 +16,16 @@ namespace Catan
             Location = location;
         }
 
+        // IPlaceable
         public string PlaceableId => "road";
 
         public ResourceBundle BuildCost => new ResourceBundle()
             .Add(CatanResources.Wood, 1)
             .Add(CatanResources.Brick, 1);
+
+        // IBuildLocation
+        public string LocationId => $"edge_{Location?.GetHashCode()}";
+        public bool IsOccupied => true; // a Road object's existence means the edge is occupied
+        public IPlaceable OccupiedBy => this;
     }
 }

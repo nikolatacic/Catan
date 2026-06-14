@@ -88,7 +88,7 @@ namespace Catan.UI
                            + resources.Get(CatanResources.Ore);
 
             if (TotalCardsLabel != null) TotalCardsLabel.text = $"Cards: {totalCards}";
-            if (DevCardsLabel != null) DevCardsLabel.text = $"Dev: {_player.DevelopmentCards.Count}";
+            if (DevCardsLabel != null) DevCardsLabel.text = $"Dev: {_player.DevelopmentCards.Cards.Count}";
 
             RefreshScore();
         }

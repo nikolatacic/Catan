@@ -37,7 +37,8 @@ namespace Catan
                 if (!allSettlements.TryGetValue(adjacentVertex, out var settlement)) continue;
 
                 var producedBundle = new ResourceBundle().Add(Resource, settlement.ProductionMultiplier);
-                settlement.Owner.Resources.TryAdd(producedBundle);
+                if (settlement.Owner is CatanPlayer catanPlayer)
+                    catanPlayer.Resources.TryAdd(producedBundle);
                 productionList.Add((settlement.Owner, producedBundle));
             }
 
