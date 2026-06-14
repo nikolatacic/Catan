@@ -28,11 +28,6 @@ namespace Catan.UI
         private readonly List<VertexView> _vertexViews = new();
         private readonly List<EdgeView> _edgeViews = new();
 
-        private void Start()
-        {
-            RenderBoard();
-        }
-
         public void RenderBoard()
         {
             var board = GameManager.Instance?.Board;
