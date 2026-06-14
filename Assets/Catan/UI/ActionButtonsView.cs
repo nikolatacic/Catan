@@ -77,8 +77,8 @@ namespace Catan.UI
 
             SetInteractable(RollDiceButton,         isRollPhase);
             SetInteractable(EndTurnButton,          canEndTurn);
-            SetInteractable(BuildSettlementButton,  canBuild && CanAffordSettlement(player));
-            SetInteractable(BuildRoadButton,        canBuild && CanAffordRoad(player));
+            SetInteractable(BuildSettlementButton,  canBuild && (isSetupPhase || CanAffordSettlement(player)));
+            SetInteractable(BuildRoadButton,        canBuild && (isSetupPhase || CanAffordRoad(player)));
             SetInteractable(BuildCityButton,        isBuildPhase && CanAffordCity(player));
             SetInteractable(BuyDevCardButton,       (isBuildPhase || isTradingPhase) && CanAffordDevCard(player));
             SetInteractable(CancelPlacementButton,  manager.CurrentPlacementMode != PlacementMode.None

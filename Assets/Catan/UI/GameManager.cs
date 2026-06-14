@@ -45,6 +45,7 @@ namespace Catan.UI
 
         [Header("Board")]
         public int BoardSeed = 0;
+        public BoardRenderer BoardRenderer;
 
         public CatanBoard Board { get; private set; }
         public List<CatanPlayer> Players { get; private set; } = new();
@@ -71,6 +72,7 @@ namespace Catan.UI
             WireSystems();
             SubscribeToEvents();
             _devCardDeck = CreateDevCardDeck();
+            BoardRenderer?.RenderBoard();
             TurnManager.StartGame();
         }
 
