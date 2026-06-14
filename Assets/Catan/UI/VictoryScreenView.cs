@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using GameCore.Events;
+using GameCore.Score;
 
 namespace Catan.UI
 {

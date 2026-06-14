@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Catan.sln"
+    "dotnet.defaultSolution": "Catan.sln",
+    "dotrush.roslyn.projectOrSolutionFiles": []
 }
