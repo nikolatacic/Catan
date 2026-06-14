@@ -13,7 +13,7 @@ namespace Catan.UI
         [Header("Renderers")]
         public SpriteRenderer TileRenderer;
         public SpriteRenderer RobberIconRenderer;
-        public TextMeshProUGUI NumberLabel;
+        public TextMeshPro NumberLabel;
 
         public CatanHexTile Tile { get; private set; }
 
