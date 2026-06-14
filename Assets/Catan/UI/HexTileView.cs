@@ -1,5 +1,6 @@
 using UnityEngine;
 using GameCore.Events;
+using TMPro;
 
 namespace Catan.UI
 {
@@ -12,7 +13,7 @@ namespace Catan.UI
         [Header("Renderers")]
         public SpriteRenderer TileRenderer;
         public SpriteRenderer RobberIconRenderer;
-        public TMPro.TextMeshPro NumberLabel;
+        public TextMeshProUGUI NumberLabel;
 
         public CatanHexTile Tile { get; private set; }
 

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Brick
   m_EditorClassIdentifier: Catan::Catan.CatanResource
   _type: 1
-  _icon: {fileID: 0}
+  _icon: {fileID: -2074254463413238400, guid: 20672c26e65b60640aa234f50fe5d342, type: 3}
