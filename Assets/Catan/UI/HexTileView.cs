@@ -1,19 +1,18 @@
 using UnityEngine;
 using GameCore.Events;
-using TMPro;
 
 namespace Catan.UI
 {
     // ── Editor wiring required ─────────────────────────────────────────────────
-    // Spawned at runtime by BoardRenderer. No manual scene placement needed.
+    // Spawned at runtime by BoardRenderer. Requires a Collider2D for mouse clicks.
+    // RobberView is a separate singleton GameObject; this tile only handles clicks.
     // ──────────────────────────────────────────────────────────────────────────
 
     public class HexTileView : MonoBehaviour
     {
         [Header("Renderers")]
         public SpriteRenderer TileRenderer;
-        public SpriteRenderer RobberIconRenderer;
-        public TextMeshPro NumberLabel;
+        public TMPro.TextMeshPro NumberLabel;
 
         public CatanHexTile Tile { get; private set; }
 
@@ -38,33 +37,14 @@ namespace Catan.UI
                     NumberLabel.gameObject.SetActive(false);
                 }
             }
-
-            RefreshRobber();
         }
 
-        private void OnEnable()
+        private void OnMouseDown()
         {
-            EventBus.Subscribe<RobberMovedEvent>(OnRobberMoved);
-        }
+            if (GameManager.Instance == null || Tile == null) return;
 
-        private void OnDisable()
-        {
-            EventBus.Unsubscribe<RobberMovedEvent>(OnRobberMoved);
-        }
-
-        private void OnRobberMoved(RobberMovedEvent gameEvent)
-        {
-            RefreshRobber();
-        }
-
-        private void RefreshRobber()
-        {
-            if (RobberIconRenderer == null || Tile == null) return;
-
-            var board = GameManager.Instance?.Board;
-            if (board == null) return;
-
-            RobberIconRenderer.enabled = board.RobberPosition.Equals(Tile.Coord);
+            if (GameManager.Instance.CurrentPlacementMode == PlacementMode.MoveRobber)
+                GameManager.Instance.TryMoveRobber(Tile.Coord);
         }
     }
 }
