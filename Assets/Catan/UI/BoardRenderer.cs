@@ -6,8 +6,8 @@ namespace Catan.UI
     // ── Editor wiring required ─────────────────────────────────────────────────
     // Attach to a child GameObject of GameManager ("BoardRenderer").
     // Assign HexTilePrefab, VertexPrefab, EdgePrefab.
-    // Assign TileSprites array indexed by CatanTileType enum value.
-    // Call RenderBoard() after GameManager initializes the Board.
+    // Assign TileSprites array indexed by CatanResourceType enum value.
+    // GameManager calls RenderBoard() after the board is generated.
     // ──────────────────────────────────────────────────────────────────────────
 
     public class BoardRenderer : MonoBehaviour
@@ -42,16 +42,20 @@ namespace Catan.UI
             {
                 SpawnTile(tile);
 
-                foreach (var vertex in board.Grid.GetVertices(tile.Coord))
+                var tileVertices = board.Grid.GetVertices(tile.Coord);
+                for (int cornerIndex = 0; cornerIndex < tileVertices.Count; cornerIndex++)
                 {
+                    var vertex = tileVertices[cornerIndex];
                     if (!spawnedVertices.Add(vertex)) continue;
-                    SpawnVertex(vertex, tile.Coord);
+                    SpawnVertex(vertex, tile.Coord, cornerIndex);
                 }
 
-                foreach (var edge in board.Grid.GetEdges(tile.Coord))
+                var tileEdges = board.Grid.GetEdges(tile.Coord);
+                for (int edgeIndex = 0; edgeIndex < tileEdges.Count; edgeIndex++)
                 {
+                    var edge = tileEdges[edgeIndex];
                     if (!spawnedEdges.Add(edge)) continue;
-                    SpawnEdge(edge, tile.Coord);
+                    SpawnEdge(edge, tile.Coord, edgeIndex);
                 }
             }
         }
@@ -67,16 +71,16 @@ namespace Catan.UI
             var tileView = go.GetComponent<HexTileView>();
             if (tileView == null) return;
 
-            var sprite = GetTileSprite(tile.ResourceType);
-            tileView.Initialize(tile, sprite);
+            tileView.Initialize(tile, GetTileSprite(tile.ResourceType));
             _tileViews.Add(tileView);
         }
 
-        private void SpawnVertex(GameCore.Board.HexVertex vertex, GameCore.Board.HexCoord tileCoord)
+        private void SpawnVertex(GameCore.Board.HexVertex vertex,
+            GameCore.Board.HexCoord tileCoord, int cornerIndex)
         {
             if (VertexPrefab == null) return;
 
-            var worldPos = VertexWorldPosition(vertex, tileCoord);
+            var worldPos = CornerWorldPosition(tileCoord, cornerIndex);
             var go = Instantiate(VertexPrefab, worldPos, Quaternion.identity, transform);
             go.name = $"Vertex_{vertex.GetHashCode()}";
 
@@ -87,14 +91,19 @@ namespace Catan.UI
             _vertexViews.Add(vertexView);
         }
 
-        private void SpawnEdge(GameCore.Board.HexEdge edge, GameCore.Board.HexCoord tileCoord)
+        private void SpawnEdge(GameCore.Board.HexEdge edge,
+            GameCore.Board.HexCoord tileCoord, int edgeIndex)
         {
             if (EdgePrefab == null) return;
 
-            if (edge.AdjacentVertices == null || edge.AdjacentVertices.Length < 2) return;
+            // Edge at index i connects corners (i-1)%6 and i.
+            var posA = CornerWorldPosition(tileCoord, (edgeIndex + 5) % 6);
+            var posB = CornerWorldPosition(tileCoord, edgeIndex);
+            var worldPos = (posA + posB) * 0.5f;
 
-            var worldPos = EdgeWorldPosition(edge, tileCoord);
-            var go = Instantiate(EdgePrefab, worldPos, Quaternion.identity, transform);
+            // Long axis of edge i is at -60*(i+1) degrees from horizontal.
+            var rotation = Quaternion.Euler(0f, 0f, -60f * (edgeIndex + 1));
+            var go = Instantiate(EdgePrefab, worldPos, rotation, transform);
             go.name = $"Edge_{edge.GetHashCode()}";
 
             var edgeView = go.GetComponent<EdgeView>();
@@ -129,31 +138,16 @@ namespace Catan.UI
             return new Vector3(x, y, 0f);
         }
 
-        private Vector3 VertexWorldPosition(GameCore.Board.HexVertex vertex, GameCore.Board.HexCoord tileCoord)
+        // Returns the world position of corner `cornerIndex` of the hex at `tileCoord`.
+        // For flat-top hexes, corner 0 is at the right (0°), then every 60° clockwise:
+        //   0 = right, 1 = lower-right, 2 = lower-left, 3 = left, 4 = upper-left, 5 = upper-right.
+        // This is correct for every vertex — interior and border alike — because it uses
+        // only the tile center and the known hex geometry, not neighbouring tile positions.
+        private Vector3 CornerWorldPosition(GameCore.Board.HexCoord tileCoord, int cornerIndex)
         {
-            // Average the world positions of all tiles adjacent to this vertex,
-            // then push outward from the primary tile center in that direction.
-            if (vertex.AdjacentTiles == null || vertex.AdjacentTiles.Length == 0)
-                return HexToWorld(tileCoord);
-
-            var centroid = Vector3.zero;
-            foreach (var adjacentCoord in vertex.AdjacentTiles)
-                centroid += HexToWorld(adjacentCoord);
-            centroid /= vertex.AdjacentTiles.Length;
-
-            // The vertex sits at the centroid of its adjacent tile centres,
-            // which is exactly the hex corner shared by those tiles.
-            return centroid;
-        }
-
-        private Vector3 EdgeWorldPosition(GameCore.Board.HexEdge edge, GameCore.Board.HexCoord tileCoord)
-        {
-            if (edge.AdjacentVertices == null || edge.AdjacentVertices.Length < 2)
-                return HexToWorld(tileCoord);
-
-            var posA = VertexWorldPosition(edge.AdjacentVertices[0], tileCoord);
-            var posB = VertexWorldPosition(edge.AdjacentVertices[1], tileCoord);
-            return (posA + posB) * 0.5f; // midpoint of the two endpoint vertices
+            var center = HexToWorld(tileCoord);
+            float angleRad = -60f * cornerIndex * Mathf.Deg2Rad;
+            return center + new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad), 0f) * HexSize;
         }
 
         private Sprite GetTileSprite(CatanResourceType? resourceType)
