@@ -120,7 +120,10 @@ namespace Catan.UI
 
         private static void SetInteractable(Button button, bool interactable)
         {
-            if (button != null) button.interactable = interactable;
+            if (button != null) 
+            {
+                button.interactable = interactable;
+            }
         }
 
         private static void SetAllInteractable(bool interactable)
