@@ -10,7 +10,6 @@ namespace Catan.UI
 
     public class RobberView : MonoBehaviour
     {
-        public BoardRenderer BoardRendererReference;
         public float HexSize = 1.0f;
 
         private void OnEnable()
@@ -23,17 +22,12 @@ namespace Catan.UI
             EventBus.Unsubscribe<RobberMovedEvent>(OnRobberMoved);
         }
 
-        private void Start()
-        {
-            SnapToCurrentPosition();
-        }
-
         private void OnRobberMoved(RobberMovedEvent gameEvent)
         {
             transform.position = HexToWorld(gameEvent.To);
         }
 
-        private void SnapToCurrentPosition()
+        public void SnapToCurrentPosition()
         {
             var board = GameManager.Instance?.Board;
             if (board == null) return;
