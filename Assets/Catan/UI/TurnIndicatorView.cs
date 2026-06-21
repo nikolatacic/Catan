@@ -15,24 +15,38 @@ namespace Catan.UI
         public TextMeshProUGUI ActivePlayerLabel;
         public TextMeshProUGUI PhaseLabel;
         public TextMeshProUGUI TurnNumberLabel;
+        public TextMeshProUGUI DiceResultLabel;
         public Image PlayerColorIndicator;
 
         private void OnEnable()
         {
             EventBus.Subscribe<GameCore.Turn.TurnStartedEvent>(OnTurnStarted);
             EventBus.Subscribe<CatanPhaseChangedEvent>(OnPhaseChanged);
+            EventBus.Subscribe<DiceRolledEvent>(OnDiceRolled);
         }
 
         private void OnDisable()
         {
             EventBus.Unsubscribe<GameCore.Turn.TurnStartedEvent>(OnTurnStarted);
             EventBus.Unsubscribe<CatanPhaseChangedEvent>(OnPhaseChanged);
+            EventBus.Unsubscribe<DiceRolledEvent>(OnDiceRolled);
         }
 
         private void Start() => Refresh();
 
-        private void OnTurnStarted(GameCore.Turn.TurnStartedEvent gameEvent) => Refresh();
+        private void OnTurnStarted(GameCore.Turn.TurnStartedEvent gameEvent)
+        {
+            if (DiceResultLabel != null) DiceResultLabel.text = "";
+            Refresh();
+        }
+
         private void OnPhaseChanged(CatanPhaseChangedEvent gameEvent) => RefreshPhase(gameEvent.To);
+
+        private void OnDiceRolled(DiceRolledEvent gameEvent)
+        {
+            if (DiceResultLabel != null)
+                DiceResultLabel.text = $"{gameEvent.D1} + {gameEvent.D2} = {gameEvent.Total}";
+        }
 
         private void Refresh()
         {

@@ -161,7 +161,8 @@ namespace Catan.UI
         public void EndTurn()
         {
             if (TurnManager.CurrentCatanPhase != CatanTurnPhase.Building
-                && TurnManager.CurrentCatanPhase != CatanTurnPhase.EndTurn) return;
+                && TurnManager.CurrentCatanPhase != CatanTurnPhase.EndTurn
+                && TurnManager.CurrentCatanPhase != CatanTurnPhase.Trading) return;
 
             CurrentPlacementMode = PlacementMode.None;
             _devCardPlayedThisTurn = false;
@@ -178,18 +179,24 @@ namespace Catan.UI
             var player = ActivePlayer;
             if (player == null) return;
 
+            bool isSetupPhase = TurnManager.CurrentCatanPhase == CatanTurnPhase.SetupPlacement;
+
+            // Set flag BEFORE TryPlace so BuildSucceededEvent sees correct state when
+            // ActionButtonsView.RefreshButtons() fires synchronously inside TryPlace.
+            if (isSetupPhase) SetupSettlementPlaced = true;
+
             var settlement = new Settlement(player, vertex);
-            if (!BuildManager.TryPlace(settlement, settlement, player)) return;
+            if (!BuildManager.TryPlace(settlement, settlement, player))
+            {
+                if (isSetupPhase) SetupSettlementPlaced = false;
+                return;
+            }
 
             Board.Settlements[vertex] = settlement;
             player.Settlements.Add(settlement);
 
-            bool isSetupPhase = TurnManager.CurrentCatanPhase == CatanTurnPhase.SetupPlacement;
             if (isSetupPhase)
-            {
-                SetupSettlementPlaced = true;
                 CurrentPlacementMode = PlacementMode.Road;
-            }
             else
             {
                 player.Resources.TryRemove(settlement.BuildCost);
