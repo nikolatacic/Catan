@@ -75,8 +75,8 @@ namespace Catan.UI
             bool isTradingPhase  = phase == CatanTurnPhase.Trading;
             bool isEndTurnPhase  = phase == CatanTurnPhase.EndTurn;
             bool isSetupPhase    = phase == CatanTurnPhase.SetupPlacement;
-            bool canBuild        = isBuildPhase || isSetupPhase;
-            bool canEndTurn      = isBuildPhase || isEndTurnPhase;
+            bool canBuild        = isBuildPhase || isTradingPhase || isSetupPhase;
+            bool canEndTurn      = isBuildPhase || isTradingPhase || isEndTurnPhase;
 
             SetInteractable(RollDiceButton,         isRollPhase);
             SetInteractable(EndTurnButton,          canEndTurn);
