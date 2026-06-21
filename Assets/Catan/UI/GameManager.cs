@@ -52,6 +52,8 @@ namespace Catan.UI
         public CatanPlayer ActivePlayer => TurnManager.CurrentActor as CatanPlayer;
         public PlacementMode CurrentPlacementMode { get; set; } = PlacementMode.None;
 
+        public bool SetupSettlementPlaced { get; private set; }
+
         private CardDeck<DevelopmentCard> _devCardDeck;
         private LargestArmyTracker _largestArmyTracker;
         private LongestRoadTracker _longestRoadTracker;
@@ -183,10 +185,17 @@ namespace Catan.UI
             player.Settlements.Add(settlement);
 
             bool isSetupPhase = TurnManager.CurrentCatanPhase == CatanTurnPhase.SetupPlacement;
-            if (!isSetupPhase)
+            if (isSetupPhase)
+            {
+                SetupSettlementPlaced = true;
+                CurrentPlacementMode = PlacementMode.Road;
+            }
+            else
+            {
                 player.Resources.TryRemove(settlement.BuildCost);
+                CurrentPlacementMode = PlacementMode.None;
+            }
 
-            CurrentPlacementMode = PlacementMode.None;
             ScoreManager.RecalculateAll();
         }
 
@@ -202,12 +211,19 @@ namespace Catan.UI
             player.Roads.Add(road);
 
             bool isSetupPhase = TurnManager.CurrentCatanPhase == CatanTurnPhase.SetupPlacement;
-            if (!isSetupPhase)
+            if (isSetupPhase)
+            {
+                SetupSettlementPlaced = false;
+                CurrentPlacementMode = PlacementMode.None;
+                TurnManager.NextTurn();
+            }
+            else
+            {
                 player.Resources.TryRemove(road.BuildCost);
-
-            CurrentPlacementMode = PlacementMode.None;
-            _longestRoadTracker.Recalculate(Board);
-            ScoreManager.RecalculateAll();
+                CurrentPlacementMode = PlacementMode.None;
+                _longestRoadTracker.Recalculate(Board);
+                ScoreManager.RecalculateAll();
+            }
         }
 
         public void TryUpgradeCity(GameCore.Board.HexVertex vertex)
@@ -314,6 +330,7 @@ namespace Catan.UI
         private void OnTurnStarted(GameCore.Turn.TurnStartedEvent gameEvent)
         {
             _devCardPlayedThisTurn = false;
+            SetupSettlementPlaced = false;
             CurrentPlacementMode = PlacementMode.None;
         }
     }
