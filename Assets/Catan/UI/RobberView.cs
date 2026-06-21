@@ -38,7 +38,7 @@ namespace Catan.UI
         {
             float x = HexSize * (1.5f * coord.Q);
             float y = HexSize * (Mathf.Sqrt(3) * (coord.R + coord.Q * 0.5f));
-            return new Vector3(x, y, 0.5f);
+            return new Vector3(x, y, 0f);
         }
     }
 }

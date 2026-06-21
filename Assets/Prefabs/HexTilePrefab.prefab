@@ -79,7 +79,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 27
+  m_SortingOrder: 4
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2074254463413238400, guid: 20672c26e65b60640aa234f50fe5d342, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -403,7 +403,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Catan::Catan.UI.HexTileView
   TileRenderer: {fileID: 5630138055537523881}
-  RobberIconRenderer: {fileID: 8288001773388358702}
   NumberLabel: {fileID: 9198436174523120488}
 --- !u!1 &6746363852580830875
 GameObject:
