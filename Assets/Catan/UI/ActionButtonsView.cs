@@ -26,18 +26,21 @@ namespace Catan.UI
         {
             EventBus.Subscribe<CatanPhaseChangedEvent>(OnPhaseChanged);
             EventBus.Subscribe<GameCore.Turn.TurnStartedEvent>(OnTurnStarted);
+            EventBus.Subscribe<GameCore.Build.BuildSucceededEvent>(OnBuildSucceeded);
         }
 
         private void OnDisable()
         {
             EventBus.Unsubscribe<CatanPhaseChangedEvent>(OnPhaseChanged);
             EventBus.Unsubscribe<GameCore.Turn.TurnStartedEvent>(OnTurnStarted);
+            EventBus.Unsubscribe<GameCore.Build.BuildSucceededEvent>(OnBuildSucceeded);
         }
 
         private void Start() => RefreshButtons();
 
         private void OnPhaseChanged(CatanPhaseChangedEvent gameEvent) => RefreshButtons();
         private void OnTurnStarted(GameCore.Turn.TurnStartedEvent gameEvent) => RefreshButtons();
+        private void OnBuildSucceeded(GameCore.Build.BuildSucceededEvent gameEvent) => RefreshButtons();
 
         // ── Button callbacks ───────────────────────────────────────────────────
 
