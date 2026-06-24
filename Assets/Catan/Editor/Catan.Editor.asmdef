@@ -1,0 +1,12 @@
+{
+  "name": "Catan.Editor",
+  "references": [
+    "Catan",
+    "Unity.TextMeshPro"
+  ],
+  "includePlatforms": ["Editor"],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "autoReferenced": false
+}
