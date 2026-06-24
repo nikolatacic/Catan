@@ -11,6 +11,18 @@ namespace Catan.UI.Editor
         private const string CardPrefabPath  = PrefabFolder + "/DiscardCard.prefab";
         private const string PanelPrefabPath = PrefabFolder + "/DiscardPanel.prefab";
 
+        [MenuItem("Catan/Create All UI Prefabs")]
+        public static void CreateAllPrefabs()
+        {
+            EnsureFolder(PrefabFolder);
+            CreateCardPrefab();
+            CreatePanelPrefab();
+            CreateBankTradePanelPrefab();
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Debug.Log($"[Catan] All UI prefabs saved to {PrefabFolder}");
+        }
+
         [MenuItem("Catan/Create Discard Prefabs")]
         public static void CreateDiscardPrefabs()
         {
@@ -158,6 +170,136 @@ namespace Catan.UI.Editor
 
             SavePrefab(root, PanelPrefabPath);
             Object.DestroyImmediate(root);
+        }
+
+        // ── Bank trade panel prefab ────────────────────────────────────────────
+
+        private static void CreateBankTradePanelPrefab()
+        {
+            // Root — full-screen overlay
+            var root = new GameObject("BankTradePanel");
+            StretchFull(root.AddComponent<RectTransform>());
+            root.AddComponent<CanvasGroup>().blocksRaycasts = true;
+            var panelView = root.AddComponent<BankTradePanelView>();
+
+            // Dark background
+            var bgGo = CreateChild(root, "Background");
+            StretchFull(bgGo.GetComponent<RectTransform>());
+            var bgImg = bgGo.AddComponent<Image>();
+            bgImg.color = new Color(0f, 0f, 0f, 0.6f);
+            bgImg.raycastTarget = true;
+
+            // Inner panel
+            var inner = CreateChild(root, "InnerPanel");
+            SetAnchorCenter(inner.GetComponent<RectTransform>(), 700, 480);
+            inner.AddComponent<Image>().color = new Color(0.15f, 0.15f, 0.15f);
+            var vlg = inner.AddComponent<VerticalLayoutGroup>();
+            vlg.padding  = new RectOffset(20, 20, 20, 20);
+            vlg.spacing  = 14;
+            vlg.childControlWidth      = true;
+            vlg.childControlHeight     = false;
+            vlg.childForceExpandWidth  = true;
+            vlg.childForceExpandHeight = false;
+
+            // Title
+            CreateTMPLabel(inner, "Title", "Bank Trade", 22, FontStyles.Bold, 44);
+
+            // Give row
+            CreateTMPLabel(inner, "GiveLabel", "Give (select one)", 14, FontStyles.Normal, 28);
+            var giveRow = CreateResourceButtonRow(inner, "GiveRow", out var giveButtons);
+
+            // Receive row
+            CreateTMPLabel(inner, "ReceiveLabel", "Receive (select one)", 14, FontStyles.Normal, 28);
+            var receiveRow = CreateResourceButtonRow(inner, "ReceiveRow", out var receiveButtons);
+
+            // Feedback
+            var feedbackGo = CreateChild(inner, "FeedbackLabel");
+            SetLayoutElement(feedbackGo, preferredHeight: 28);
+            var feedbackTmp = feedbackGo.AddComponent<TextMeshProUGUI>();
+            feedbackTmp.fontSize  = 14;
+            feedbackTmp.alignment = TextAlignmentOptions.Center;
+            feedbackTmp.color     = new Color(0.9f, 0.9f, 0.3f);
+
+            // Buttons row
+            var buttonRow = CreateChild(inner, "ButtonRow");
+            SetLayoutElement(buttonRow, preferredHeight: 50);
+            var hlg = buttonRow.AddComponent<HorizontalLayoutGroup>();
+            hlg.spacing             = 12;
+            hlg.childControlWidth   = true;
+            hlg.childControlHeight  = true;
+            hlg.childForceExpandWidth  = true;
+            hlg.childForceExpandHeight = true;
+
+            var cancelBtn = CreateTextButton(buttonRow, "CancelButton", "Cancel",
+                new Color(0.6f, 0.2f, 0.2f));
+            var confirmBtn = CreateTextButton(buttonRow, "ConfirmButton", "Confirm Trade",
+                new Color(0.2f, 0.6f, 0.3f));
+
+            // Wire fields
+            panelView.GiveButtons    = giveButtons;
+            panelView.ReceiveButtons = receiveButtons;
+            panelView.ConfirmButton  = confirmBtn;
+            panelView.CancelButton   = cancelBtn;
+            panelView.FeedbackLabel  = feedbackTmp;
+
+            // Note: CancelButton.OnClick → BankTradePanelView.Close()
+            //       ConfirmButton.OnClick → BankTradePanelView.OnConfirm()
+            // Must be wired in Inspector (cross-object UnityEvent binding).
+
+            const string path = PrefabFolder + "/BankTradePanel.prefab";
+            SavePrefab(root, path);
+            Object.DestroyImmediate(root);
+        }
+
+        private static GameObject CreateResourceButtonRow(GameObject parent, string name,
+            out Button[] buttons)
+        {
+            var row = CreateChild(parent, name);
+            SetLayoutElement(row, preferredHeight: 90);
+            var hlg = row.AddComponent<HorizontalLayoutGroup>();
+            hlg.spacing              = 8;
+            hlg.childControlWidth    = true;
+            hlg.childControlHeight   = true;
+            hlg.childForceExpandWidth  = true;
+            hlg.childForceExpandHeight = true;
+
+            string[] resourceNames = { "Wood", "Brick", "Sheep", "Wheat", "Ore" };
+            Color[] resourceColors =
+            {
+                new Color(0.40f, 0.25f, 0.10f),
+                new Color(0.80f, 0.30f, 0.10f),
+                new Color(0.55f, 0.85f, 0.35f),
+                new Color(0.95f, 0.85f, 0.20f),
+                new Color(0.50f, 0.50f, 0.60f),
+            };
+
+            buttons = new Button[5];
+            for (int i = 0; i < 5; i++)
+                buttons[i] = CreateTextButton(row, $"{resourceNames[i]}Btn",
+                    resourceNames[i], resourceColors[i]);
+
+            return row;
+        }
+
+        private static Button CreateTextButton(GameObject parent, string name,
+            string label, Color color)
+        {
+            var go = CreateChild(parent, name);
+            var img = go.AddComponent<Image>();
+            img.color = color;
+            var btn = go.AddComponent<Button>();
+            btn.targetGraphic = img;
+
+            var labelGo = CreateChild(go, "Label");
+            StretchFull(labelGo.GetComponent<RectTransform>());
+            var tmp = labelGo.AddComponent<TextMeshProUGUI>();
+            tmp.text      = label;
+            tmp.fontSize  = 13;
+            tmp.fontStyle = FontStyles.Bold;
+            tmp.alignment = TextAlignmentOptions.Center;
+            tmp.color     = Color.white;
+
+            return btn;
         }
 
         // ── Helpers ────────────────────────────────────────────────────────────

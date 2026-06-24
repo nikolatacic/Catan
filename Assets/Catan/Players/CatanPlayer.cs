@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using GameCore.Cards;
 using GameCore.Player;
@@ -41,6 +42,16 @@ namespace Catan
             => Resources.CanAfford(piece.BuildCost) && HasPiecesRemaining(piece);
 
         private bool HasPiecesRemaining(GameCore.Build.IPlaceable piece)
-            => throw new System.NotImplementedException();
+        {
+            if (piece is Road)
+                return Roads.Count < MaxRoads;
+
+            if (piece is Settlement settlement)
+                return settlement.IsCity
+                    ? Settlements.Count(s => s.IsCity) < MaxCities
+                    : Settlements.Count(s => !s.IsCity) < MaxSettlements;
+
+            return true;
+        }
     }
 }
