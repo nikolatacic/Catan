@@ -45,14 +45,10 @@ namespace Catan.UI
         private void Awake()
         {
             gameObject.SetActive(false);
-        }
-
-        private void OnEnable()
-        {
             EventBus.Subscribe<DiscardRequiredEvent>(OnDiscardRequired);
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             EventBus.Unsubscribe<DiscardRequiredEvent>(OnDiscardRequired);
         }
