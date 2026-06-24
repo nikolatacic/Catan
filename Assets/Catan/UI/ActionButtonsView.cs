@@ -22,6 +22,10 @@ namespace Catan.UI
         public Button BuyDevCardButton;
         public Button CancelPlacementButton;
 
+        [Header("Bank trade")]
+        public Button BankTradeButton;
+        public BankTradePanelView BankTradePanel;
+
         private void OnEnable()
         {
             EventBus.Subscribe<CatanPhaseChangedEvent>(OnPhaseChanged);
@@ -56,6 +60,8 @@ namespace Catan.UI
             GameManager.Instance?.TryPurchaseDevCard();
         }
 
+        public void OnBankTrade() => BankTradePanel?.Open();
+
         // ── Interactability ────────────────────────────────────────────────────
 
         private void RefreshButtons()
@@ -87,6 +93,7 @@ namespace Catan.UI
             SetInteractable(BuyDevCardButton,       (isBuildPhase || isTradingPhase) && CanAffordDevCard(player));
             SetInteractable(CancelPlacementButton,  manager.CurrentPlacementMode != PlacementMode.None
                                                     && manager.CurrentPlacementMode != PlacementMode.MoveRobber);
+            SetInteractable(BankTradeButton,        isBuildPhase || isTradingPhase);
         }
 
         private static bool CanAffordSettlement(CatanPlayer player)

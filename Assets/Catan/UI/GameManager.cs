@@ -296,6 +296,41 @@ namespace Catan.UI
             return true;
         }
 
+        public int GetBankTradeRatio(IResource resource)
+        {
+            var player = ActivePlayer;
+            if (player == null) return 4;
+            var resourceType = ResourceToType(resource);
+            return resourceType.HasValue ? Board.Ports.GetTradeRatio(player, resourceType.Value) : 4;
+        }
+
+        public bool TryBankTrade(IResource give, IResource receive)
+        {
+            var player = ActivePlayer;
+            if (player == null) return false;
+
+            int ratio = GetBankTradeRatio(give);
+            var offering   = new ResourceBundle().Add(give, ratio);
+            var requesting = new ResourceBundle().Add(receive, 1);
+
+            var offer = TradeManager.ProposeTradeToBank(player, offering, requesting);
+            if (!TradeManager.AcceptTrade(offer, null)) return false;
+
+            player.Resources.TryRemove(offering);
+            player.Resources.TryAdd(requesting);
+            return true;
+        }
+
+        private static CatanResourceType? ResourceToType(IResource resource)
+        {
+            if (resource == CatanResources.Wood)  return CatanResourceType.Wood;
+            if (resource == CatanResources.Brick) return CatanResourceType.Brick;
+            if (resource == CatanResources.Sheep) return CatanResourceType.Sheep;
+            if (resource == CatanResources.Wheat) return CatanResourceType.Wheat;
+            if (resource == CatanResources.Ore)   return CatanResourceType.Ore;
+            return null;
+        }
+
         public bool TryPlayDevCard(DevelopmentCard card)
         {
             if (_devCardPlayedThisTurn && card is not VictoryPointCard) return false;
