@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Catan.Commands;
 using GameCore.Resources;
 
 namespace Catan.UI
@@ -101,8 +102,16 @@ namespace Catan.UI
             var giveResource    = AllResources[_giveIndex];
             var receiveResource = AllResources[_receiveIndex];
 
-            bool success = GameManager.Instance != null
-                && GameManager.Instance.TryBankTrade(giveResource, receiveResource);
+            // Snapshot resource counts so we can detect success after the
+            // command runs (works for local hotseat and forward-compatible
+            // with multiplayer where the trade is async).
+            var player = GameManager.Instance?.ActivePlayer;
+            int giveBefore = player?.Resources.Current.Get(giveResource) ?? 0;
+
+            CommandDispatcher.Send(new BankTradeCommand { Give = giveResource, Receive = receiveResource });
+
+            int giveAfter = player?.Resources.Current.Get(giveResource) ?? 0;
+            bool success = giveAfter < giveBefore;
 
             if (FeedbackLabel != null)
                 FeedbackLabel.text = success ? "Trade complete!" : "Trade failed.";

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Catan.Commands;
 using GameCore.Player;
 
 namespace Catan.UI
@@ -60,7 +61,7 @@ namespace Catan.UI
         private void OnVictimSelected(IPlayer victim)
         {
             gameObject.SetActive(false);
-            GameManager.Instance?.CompleteRobberMove(_pendingCoord, victim);
+            CommandDispatcher.Send(new CompleteRobberMoveCommand { Coord = _pendingCoord, Victim = victim });
         }
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using Catan.Commands;
 using GameCore.Events;
 
 namespace Catan.UI
@@ -52,7 +53,7 @@ namespace Catan.UI
             if (GameManager.Instance == null) return;
 
             if (GameManager.Instance.CurrentPlacementMode == PlacementMode.Road)
-                GameManager.Instance.TryPlaceRoad(Edge);
+                CommandDispatcher.Send(new PlaceRoadCommand { Edge = Edge });
 
             Refresh();
         }

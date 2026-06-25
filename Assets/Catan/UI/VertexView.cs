@@ -1,4 +1,5 @@
 using UnityEngine;
+using Catan.Commands;
 using GameCore.Events;
 
 namespace Catan.UI
@@ -58,9 +59,9 @@ namespace Catan.UI
 
             var mode = GameManager.Instance.CurrentPlacementMode;
             if (mode == PlacementMode.Settlement)
-                GameManager.Instance.TryPlaceSettlement(Vertex);
+                CommandDispatcher.Send(new PlaceSettlementCommand { Vertex = Vertex });
             else if (mode == PlacementMode.City)
-                GameManager.Instance.TryUpgradeCity(Vertex);
+                CommandDispatcher.Send(new UpgradeCityCommand { Vertex = Vertex });
 
             Refresh();
         }

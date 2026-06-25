@@ -51,14 +51,9 @@ namespace Catan.UI
         public RobberView RobberView;
         public StealTargetPanelView StealTargetPanel;
 
-        [Header("Victory")]
-        [SerializeField] private int _victoryPointsToWin = 10;
-        public int VictoryPointsToWin => _victoryPointsToWin;
-
         public CatanBoard Board { get; private set; }
         public List<CatanPlayer> Players { get; private set; } = new();
         public CatanPlayer ActivePlayer => TurnManager.CurrentActor as CatanPlayer;
-        public bool IsGameOver { get; private set; }
 
         private PlacementMode _currentPlacementMode = PlacementMode.None;
         public PlacementMode CurrentPlacementMode
@@ -104,7 +99,6 @@ namespace Catan.UI
             EventBus.Unsubscribe<GameCore.Build.BuildSucceededEvent>(OnBuildSucceeded);
             EventBus.Unsubscribe<CatanPhaseChangedEvent>(OnPhaseChanged);
             EventBus.Unsubscribe<GameCore.Turn.TurnStartedEvent>(OnTurnStarted);
-            EventBus.Unsubscribe<GameCore.Score.VictoryAchievedEvent>(OnVictoryAchieved);
         }
 
         // ── Initialisation ─────────────────────────────────────────────────────
@@ -148,7 +142,7 @@ namespace Catan.UI
             BuildManager.Rule = new CatanBuildRule(Board, TurnManager);
             TradeManager.Rule = new CatanTradeRule(TurnManager, Board.Ports);
 
-            var victoryCondition = new CatanVictoryCondition(Board, _victoryPointsToWin);
+            var victoryCondition = new CatanVictoryCondition(Board);
             ScoreManager.Conditions.Add(victoryCondition);
             ScoreManager.Players.AddRange(allPlayers);
 
@@ -162,7 +156,6 @@ namespace Catan.UI
             EventBus.Subscribe<GameCore.Build.BuildSucceededEvent>(OnBuildSucceeded);
             EventBus.Subscribe<CatanPhaseChangedEvent>(OnPhaseChanged);
             EventBus.Subscribe<GameCore.Turn.TurnStartedEvent>(OnTurnStarted);
-            EventBus.Subscribe<GameCore.Score.VictoryAchievedEvent>(OnVictoryAchieved);
         }
 
         private static CardDeck<DevelopmentCard> CreateDevCardDeck()
@@ -181,14 +174,12 @@ namespace Catan.UI
 
         public void RequestRoll()
         {
-            if (IsGameOver) return;
             if (TurnManager.CurrentCatanPhase != CatanTurnPhase.RollDice) return;
             TurnManager.RequestRoll();
         }
 
         public void EndTurn()
         {
-            if (IsGameOver) return;
             if (TurnManager.CurrentCatanPhase != CatanTurnPhase.Building
                 && TurnManager.CurrentCatanPhase != CatanTurnPhase.EndTurn
                 && TurnManager.CurrentCatanPhase != CatanTurnPhase.Trading) return;
@@ -198,14 +189,13 @@ namespace Catan.UI
             TurnManager.NextTurn();
         }
 
-        public void BeginPlaceSettlement() { if (!IsGameOver) CurrentPlacementMode = PlacementMode.Settlement; }
-        public void BeginPlaceRoad()       { if (!IsGameOver) CurrentPlacementMode = PlacementMode.Road; }
-        public void BeginUpgradeCity()     { if (!IsGameOver) CurrentPlacementMode = PlacementMode.City; }
+        public void BeginPlaceSettlement() => CurrentPlacementMode = PlacementMode.Settlement;
+        public void BeginPlaceRoad()       => CurrentPlacementMode = PlacementMode.Road;
+        public void BeginUpgradeCity()     => CurrentPlacementMode = PlacementMode.City;
         public void CancelPlacement()      => CurrentPlacementMode = PlacementMode.None;
 
         public void TryPlaceSettlement(GameCore.Board.HexVertex vertex)
         {
-            if (IsGameOver) return;
             var player = ActivePlayer;
             if (player == null) return;
 
@@ -237,12 +227,11 @@ namespace Catan.UI
                 CurrentPlacementMode = PlacementMode.None;
             }
 
-            RecalculateScoresAndCheckVictory();
+            ScoreManager.RecalculateAll();
         }
 
         public void TryPlaceRoad(GameCore.Board.HexEdge edge)
         {
-            if (IsGameOver) return;
             var player = ActivePlayer;
             if (player == null) return;
 
@@ -264,34 +253,26 @@ namespace Catan.UI
                 player.Resources.TryRemove(road.BuildCost);
                 CurrentPlacementMode = PlacementMode.None;
                 _longestRoadTracker.Recalculate(Board);
-                RecalculateScoresAndCheckVictory();
+                ScoreManager.RecalculateAll();
             }
         }
 
         public void TryUpgradeCity(GameCore.Board.HexVertex vertex)
         {
-            if (IsGameOver) return;
             var player = ActivePlayer;
             if (player == null) return;
-            if (!Board.Settlements.TryGetValue(vertex, out var settlement)) return;
-            if (settlement.Owner != player || settlement.IsCity) return;
+            if (!Board.Settlements.TryGetValue(vertex, out var existingSettlement)) return;
 
-            settlement.UpgradeToCity();
-            if (!BuildManager.TryPlace(settlement, settlement, player))
-            {
-                // Roll back the upgrade on failure
-                settlement.UpgradeToCity(); // not reversible — log warning instead
-                Debug.LogWarning("City upgrade failed after UpgradeToCity was called.");
-                return;
-            }
+            var upgrade = new CityUpgrade(player, vertex);
+            if (!BuildManager.TryPlace(upgrade, upgrade, player)) return;
 
-            player.Resources.TryRemove(settlement.BuildCost);
-            RecalculateScoresAndCheckVictory();
+            existingSettlement.UpgradeToCity();
+            player.Resources.TryRemove(upgrade.BuildCost);
+            ScoreManager.RecalculateAll();
         }
 
         public void TryMoveRobber(GameCore.Board.HexCoord coord)
         {
-            if (IsGameOver) return;
             if (TurnManager.CurrentCatanPhase != CatanTurnPhase.Robber) return;
 
             var eligibleVictims = Board.GetPlayersOnTile(coord)
@@ -309,7 +290,6 @@ namespace Catan.UI
 
         public void CompleteRobberMove(GameCore.Board.HexCoord coord, GameCore.Player.IPlayer victim)
         {
-            if (IsGameOver) return;
             TurnManager.RobberSystem.MoveRobber(coord, ActivePlayer, victim);
             CurrentPlacementMode = PlacementMode.None;
             TurnManager.AdvancePhase();
@@ -317,7 +297,6 @@ namespace Catan.UI
 
         public bool TryPurchaseDevCard()
         {
-            if (IsGameOver) return false;
             var player = ActivePlayer;
             if (player == null || _devCardDeck.Count == 0) return false;
             if (TurnManager.CurrentCatanPhase != CatanTurnPhase.Building
@@ -338,7 +317,9 @@ namespace Catan.UI
 
             EventBus.Publish(new DevCardPurchasedEvent { Player = player });
 
-            RecalculateScoresAndCheckVictory();
+            if (card is VictoryPointCard)
+                ScoreManager.RecalculateAll();
+
             return true;
         }
 
@@ -362,7 +343,6 @@ namespace Catan.UI
 
         public bool TryBankTrade(IResource give, IResource receive)
         {
-            if (IsGameOver) return false;
             var player = ActivePlayer;
             if (player == null) return false;
 
@@ -375,7 +355,6 @@ namespace Catan.UI
 
             player.Resources.TryRemove(offering);
             player.Resources.TryAdd(requesting);
-            RecalculateScoresAndCheckVictory();
             return true;
         }
 
@@ -391,7 +370,6 @@ namespace Catan.UI
 
         public bool TryPlayDevCard(DevelopmentCard card)
         {
-            if (IsGameOver) return false;
             if (_devCardPlayedThisTurn && card is not VictoryPointCard) return false;
 
             var context = new CatanGameContext(
@@ -404,7 +382,7 @@ namespace Catan.UI
             if (card is not VictoryPointCard)
                 _devCardPlayedThisTurn = true;
 
-            RecalculateScoresAndCheckVictory();
+            ScoreManager.RecalculateAll();
             return true;
         }
 
@@ -414,31 +392,14 @@ namespace Catan.UI
         {
             if (gameEvent.Player is CatanPlayer catanPlayer)
                 _largestArmyTracker.Update(catanPlayer, catanPlayer.KnightsPlayed);
-            RecalculateScoresAndCheckVictory();
+            ScoreManager.RecalculateAll();
         }
 
         private void OnBuildSucceeded(GameCore.Build.BuildSucceededEvent gameEvent)
         {
             if (gameEvent.Piece is Road)
                 _longestRoadTracker.Recalculate(Board);
-            RecalculateScoresAndCheckVictory();
-        }
-
-        private void OnVictoryAchieved(GameCore.Score.VictoryAchievedEvent gameEvent)
-        {
-            IsGameOver = true;
-        }
-
-        private void RecalculateScoresAndCheckVictory()
-        {
             ScoreManager.RecalculateAll();
-            if (!IsGameOver)
-                ScoreManager.CheckVictory();
-
-            // Published after all state for this action has settled (placement mode,
-            // resources, score, IsGameOver) so UI views refresh against final values
-            // instead of the mid-action state visible during BuildSucceededEvent.
-            EventBus.Publish(new GameStateChangedEvent());
         }
 
         private void OnPhaseChanged(CatanPhaseChangedEvent gameEvent)
