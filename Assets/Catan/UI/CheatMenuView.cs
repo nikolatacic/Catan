@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Catan.Commands;
 using GameCore.Resources;
 
 namespace Catan.UI
@@ -92,9 +93,7 @@ namespace Catan.UI
 
         private void CheatSkipToEndTurn()
         {
-            var manager = GameManager.Instance;
-            if (manager == null) return;
-            manager.EndTurn();
+            CommandDispatcher.Send(new EndTurnCommand());
             Debug.Log("[CheatMenu] Skipped to end turn");
         }
     }

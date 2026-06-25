@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Catan.Commands;
 
 namespace Catan.UI
 {
@@ -46,8 +47,8 @@ namespace Catan.UI
 
         private void OnPlayClicked()
         {
-            if (_card == null || GameManager.Instance == null) return;
-            GameManager.Instance.TryPlayDevCard(_card);
+            if (_card == null) return;
+            CommandDispatcher.Send(new PlayDevCardCommand { Card = _card });
         }
     }
 }

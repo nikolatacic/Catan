@@ -1,4 +1,5 @@
 using UnityEngine;
+using Catan.Commands;
 using GameCore.Events;
 
 namespace Catan.UI
@@ -48,7 +49,7 @@ namespace Catan.UI
             if (GameManager.Instance == null || Tile == null) return;
 
             if (GameManager.Instance.CurrentPlacementMode == PlacementMode.MoveRobber)
-                GameManager.Instance.TryMoveRobber(Tile.Coord);
+                CommandDispatcher.Send(new MoveRobberCommand { Coord = Tile.Coord });
         }
     }
 }

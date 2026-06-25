@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Catan.Commands;
 using GameCore.Events;
 
 namespace Catan.UI
@@ -48,17 +49,16 @@ namespace Catan.UI
 
         // ── Button callbacks ───────────────────────────────────────────────────
 
-        public void OnRollDice()      => GameManager.Instance?.RequestRoll();
-        public void OnEndTurn()       => GameManager.Instance?.EndTurn();
+        // Local-only UI-mode toggles (no network — see NetworkBoundaryAudit.md)
         public void OnBuildSettlement() => GameManager.Instance?.BeginPlaceSettlement();
-        public void OnBuildRoad()     => GameManager.Instance?.BeginPlaceRoad();
-        public void OnBuildCity()     => GameManager.Instance?.BeginUpgradeCity();
+        public void OnBuildRoad()       => GameManager.Instance?.BeginPlaceRoad();
+        public void OnBuildCity()       => GameManager.Instance?.BeginUpgradeCity();
         public void OnCancelPlacement() => GameManager.Instance?.CancelPlacement();
 
-        public void OnBuyDevCard()
-        {
-            GameManager.Instance?.TryPurchaseDevCard();
-        }
+        // Player intents that go through the command dispatcher
+        public void OnRollDice()   => CommandDispatcher.Send(new RequestRollCommand());
+        public void OnEndTurn()    => CommandDispatcher.Send(new EndTurnCommand());
+        public void OnBuyDevCard() => CommandDispatcher.Send(new PurchaseDevCardCommand());
 
         public void OnBankTrade() => BankTradePanel?.Open();
 
