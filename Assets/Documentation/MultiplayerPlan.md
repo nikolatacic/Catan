@@ -87,29 +87,37 @@ After 5a: hosting / joining works end-to-end at the Relay/transport level —
 peers connect, scenes load together via NGO's NetworkSceneManager. But game
 state changes from clients don't reach the host yet.
 
-### Phase 5b — Command routing through RPCs 👈 NEXT
+### Phase 5b — Command routing through RPCs ✅ DONE
 
-- `GameManager` becomes a `NetworkBehaviour` (or sibling `NetworkBridge`)
-- Each `IGameCommand` gets a serializable on-wire form (HexCoord, HexVertex,
-  HexEdge, IPlayer-by-id, IResource-by-type)
-- `CommandDispatcher.Send` on a client serializes + calls `ServerRpc` on the host
-- Host applies the command exactly as today; outgoing events propagate to clients
-  via the EventBus wrapper (see below)
-- `EventBus.Publish` on the host triggers a `ClientRpc` so all clients see the
-  same event (UI subscribers are already passive and need no changes)
+- `NetworkCommandBridge` (in-scene `NetworkBehaviour`) — sibling to GameManager.
+  10 `ServerRpc` methods, one per command.
+- Vertices / edges encoded as `(HexCoord tile, byte index 0-5)` — topology is
+  deterministic from board size so the same key resolves to the same object on
+  every peer. Tile *contents* still differ until 5c lands.
+- `IGameCommand` extended with `SendOverNetwork(bridge)`; each command serializes
+  its own payload and invokes the matching ServerRpc.
+- `CommandDispatcher` routes through the bridge when `IsClient`.
+- Editor tool: `Catan → Add Network Command Bridge to MainScene`.
+
+What still needs 5c:
+- Host-side event fan-out via `ClientRpc` (UI subscribers are passive and need
+  no code changes — they just need the events to fire)
 - Three flagged events get redacted per-client:
   `ResourceProducedEvent`, `ResourceAddedEvent`, `ResourceStolenEvent`
 - `DiceManager` RNG runs only on the host; `DiceRolledEvent` fans out
 
-### Phase 5c — State sync + lobby player picker
+### Phase 5c — State sync + lobby player picker 👈 NEXT
 
 - Initial board snapshot to joining clients (`OnNetworkSpawn` on host writes
   a serialized `CatanBoard` payload; clients reconstruct)
+- EventBus fan-out: host's `EventBus.Publish` mirrored via `ClientRpc` to every
+  client; UI views are already passive subscribers and need no changes
+- Hidden state filtering: only the owning client sees its full dev card hand
+  and specific resource cards; everyone else sees counts only
+- `DiceManager` RNG runs only on host
 - Per-player UI: `PlayerHandView` follows `NetworkSession.LocalPlayerId` instead
   of `TurnStartedEvent.Actor` when networked
 - Real player picker in the lobby — replaces `SetDefault2PlayerHotseat()`
-- Hidden state filtering: only the owning client sees its full dev card hand
-  and specific resource cards; everyone else sees counts
 
 ## Phase 6 — Per-device UI
 
@@ -129,8 +137,8 @@ state changes from clients don't reach the host yet.
 | ✅ Done | 3 — Boundary audit (no code) | ~1 session |
 | ✅ Done | 4 — Command pattern | ~1 session |
 | ✅ Done | 5a — Lobby scaffolding | ~1 session |
-| 👈 Next | 5b — Command routing through RPCs | ~1 session |
-| Queued  | 5c — State sync + lobby player picker | ~1 session |
+| ✅ Done | 5b — Command routing through RPCs | ~1 session |
+| 👈 Next | 5c — State sync + lobby player picker | ~1 session |
 | Polish  | 6 — Per-device UI | ~1 session |
 
 ---
