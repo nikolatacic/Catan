@@ -309,11 +309,8 @@ namespace Catan.UI.Editor
         private static void CreatePlayerSummaryRowPrefab()
         {
             var root = new GameObject("PlayerSummaryRow");
-            SetLayoutElement(root.AddComponent<RectTransform>() == null ? root.AddComponent<LayoutElement>() : root.GetComponent<LayoutElement>(),
-                preferredHeight: 60);
-
-            // Force LayoutElement correctly
-            var le = root.GetComponent<LayoutElement>() ?? root.AddComponent<LayoutElement>();
+            root.AddComponent<RectTransform>();
+            var le = root.AddComponent<LayoutElement>();
             le.preferredHeight = 60;
 
             var rootImg = root.AddComponent<Image>();
