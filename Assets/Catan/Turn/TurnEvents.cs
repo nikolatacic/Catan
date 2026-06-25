@@ -13,4 +13,10 @@ namespace Catan
     public struct KnightPlayedEvent : IGameEvent { public IPlayer Player; }
     public struct DevCardPurchasedEvent : IGameEvent { public IPlayer Player; }
     public struct CatanPhaseChangedEvent : IGameEvent { public CatanTurnPhase From; public CatanTurnPhase To; }
+
+    // Published after GameManager finishes mutating game state at the end of an
+    // action. UI views that need to see the FINAL state (placement mode,
+    // resources, score, IsGameOver) should subscribe to this rather than
+    // BuildSucceededEvent, which fires mid-action before state has settled.
+    public struct GameStateChangedEvent : IGameEvent { }
 }
