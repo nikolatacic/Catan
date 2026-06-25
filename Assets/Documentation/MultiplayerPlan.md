@@ -106,18 +106,32 @@ What still needs 5c:
   `ResourceProducedEvent`, `ResourceAddedEvent`, `ResourceStolenEvent`
 - `DiceManager` RNG runs only on the host; `DiceRolledEvent` fans out
 
-### Phase 5c — State sync + lobby player picker 👈 NEXT
+### Phase 5c — Seed sync + EventBus fan-out ✅ DONE
 
-- Initial board snapshot to joining clients (`OnNetworkSpawn` on host writes
-  a serialized `CatanBoard` payload; clients reconstruct)
-- EventBus fan-out: host's `EventBus.Publish` mirrored via `ClientRpc` to every
-  client; UI views are already passive subscribers and need no changes
-- Hidden state filtering: only the owning client sees its full dev card hand
-  and specific resource cards; everyone else sees counts only
-- `DiceManager` RNG runs only on host
-- Per-player UI: `PlayerHandView` follows `NetworkSession.LocalPlayerId` instead
-  of `TurnStartedEvent.Actor` when networked
-- Real player picker in the lobby — replaces `SetDefault2PlayerHotseat()`
+- `GameManager` defers full initialization on client until the host's seed
+  arrives via `NetworkEventBridge`. Both peers then generate identical boards
+  from the same seed.
+- `NetworkEventBridge` (in-scene `NetworkBehaviour`, sibling of
+  `NetworkCommandBridge`): subscribes to 12 host events and re-emits each via
+  `ClientRpc`. Clients publish locally so the existing UI subscribers react.
+- `BuildSucceeded` ClientRpc mirrors the host's board mutation on every client
+  so subsequent rule evaluations match.
+- Editor tool now adds both bridges to GameHotseat in one click.
+
+### Phase 5d — Hidden state, lobby, per-device UI 👈 NEXT
+
+- **Hidden state filtering**: redact `ResourceAdded` / `ResourceRemoved` /
+  `ResourceStolen` for non-owners — they see only count deltas, not which
+  resource. Same for `DevCardPurchasedEvent` carrying a specific card type.
+- **Real lobby player picker**: replaces `SetDefault2PlayerHotseat()`. Host
+  configures players in the lobby; sends the roster to clients on join.
+- **Per-device UI**: `PlayerHandView` and `DevHandView` follow
+  `NetworkSession.LocalPlayerId` when networked instead of the active player
+  from `TurnStartedEvent`. Hotseat behavior preserved.
+- **Late-join support**: server tracks "first-state" snapshot (seed, current
+  scores, board mutations so far) and replays it to clients on connect.
+- **`DiceManager` host-only**: guard RNG calls with `IsServer`; clients receive
+  the result through `DiceRolledEvent`.
 
 ## Phase 6 — Per-device UI
 
@@ -138,8 +152,9 @@ What still needs 5c:
 | ✅ Done | 4 — Command pattern | ~1 session |
 | ✅ Done | 5a — Lobby scaffolding | ~1 session |
 | ✅ Done | 5b — Command routing through RPCs | ~1 session |
-| 👈 Next | 5c — State sync + lobby player picker | ~1 session |
-| Polish  | 6 — Per-device UI | ~1 session |
+| ✅ Done | 5c — Seed sync + EventBus fan-out | ~1 session |
+| 👈 Next | 5d — Hidden state + lobby + per-device UI | ~1-2 sessions |
+| Polish  | 6 — Final polish / multiplayer edge cases | ~1 session |
 
 ---
 
