@@ -47,6 +47,7 @@ namespace Catan.UI
         public int BoardSeed = 0;
         public BoardRenderer BoardRenderer;
         public RobberView RobberView;
+        public StealTargetPanelView StealTargetPanel;
 
         public CatanBoard Board { get; private set; }
         public List<CatanPlayer> Players { get; private set; } = new();
@@ -263,13 +264,22 @@ namespace Catan.UI
         {
             if (TurnManager.CurrentCatanPhase != CatanTurnPhase.Robber) return;
 
-            var playersOnTile = Board.GetPlayersOnTile(coord)
+            var eligibleVictims = Board.GetPlayersOnTile(coord)
                 .Where(player => player != ActivePlayer)
                 .ToList();
 
-            GameCore.Player.IPlayer victim = playersOnTile.Count > 0 ? playersOnTile[0] : null;
-            TurnManager.RobberSystem.MoveRobber(coord, ActivePlayer, victim);
+            if (eligibleVictims.Count > 1)
+            {
+                StealTargetPanel?.Show(coord, eligibleVictims);
+                return;
+            }
 
+            CompleteRobberMove(coord, eligibleVictims.Count == 1 ? eligibleVictims[0] : null);
+        }
+
+        public void CompleteRobberMove(GameCore.Board.HexCoord coord, GameCore.Player.IPlayer victim)
+        {
+            TurnManager.RobberSystem.MoveRobber(coord, ActivePlayer, victim);
             CurrentPlacementMode = PlacementMode.None;
             TurnManager.AdvancePhase();
         }
