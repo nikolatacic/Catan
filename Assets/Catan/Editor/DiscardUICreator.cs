@@ -19,6 +19,7 @@ namespace Catan.UI.Editor
             CreatePanelPrefab();
             CreateBankTradePanelPrefab();
             CreateStealTargetPanelPrefab();
+            CreatePlayerSummaryRowPrefab();
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             Debug.Log($"[Catan] All UI prefabs saved to {PrefabFolder}");
@@ -301,6 +302,125 @@ namespace Catan.UI.Editor
             tmp.color     = Color.white;
 
             return btn;
+        }
+
+        // ── Player summary row prefab ──────────────────────────────────────────
+
+        private static void CreatePlayerSummaryRowPrefab()
+        {
+            var root = new GameObject("PlayerSummaryRow");
+            SetLayoutElement(root.AddComponent<RectTransform>() == null ? root.AddComponent<LayoutElement>() : root.GetComponent<LayoutElement>(),
+                preferredHeight: 60);
+
+            // Force LayoutElement correctly
+            var le = root.GetComponent<LayoutElement>() ?? root.AddComponent<LayoutElement>();
+            le.preferredHeight = 60;
+
+            var rootImg = root.AddComponent<Image>();
+            rootImg.color = new Color(0.12f, 0.12f, 0.12f);
+
+            var hlg = root.AddComponent<HorizontalLayoutGroup>();
+            hlg.padding             = new RectOffset(6, 6, 6, 6);
+            hlg.spacing             = 8;
+            hlg.childControlHeight  = true;
+            hlg.childControlWidth   = false;
+            hlg.childForceExpandHeight = true;
+            hlg.childForceExpandWidth  = false;
+
+            var row = root.AddComponent<PlayerSummaryRowView>();
+
+            // Active indicator — left edge colour bar
+            var activeIndicatorGo = CreateChild(root, "ActiveIndicator");
+            var activeIndicatorRect = activeIndicatorGo.GetComponent<RectTransform>();
+            activeIndicatorRect.sizeDelta = new Vector2(4, 0);
+            var activeImg = activeIndicatorGo.AddComponent<Image>();
+            activeImg.color = Color.yellow;
+            activeImg.enabled = false;
+            row.ActiveIndicator = activeImg;
+
+            // Colour bar
+            var colorBarGo = CreateChild(root, "ColorBar");
+            colorBarGo.GetComponent<RectTransform>().sizeDelta = new Vector2(18, 0);
+            var colorBarImg = colorBarGo.AddComponent<Image>();
+            colorBarImg.color = Color.white;
+            row.ColorBar = colorBarImg;
+
+            // Name
+            var nameGo = CreateChild(root, "NameLabel");
+            nameGo.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 0);
+            var nameTmp = nameGo.AddComponent<TextMeshProUGUI>();
+            nameTmp.text      = "Player";
+            nameTmp.fontSize  = 13;
+            nameTmp.fontStyle = FontStyles.Bold;
+            nameTmp.color     = Color.white;
+            nameTmp.alignment = TextAlignmentOptions.MidlineLeft;
+            row.NameLabel = nameTmp;
+
+            // VP
+            var vpGo = CreateChild(root, "VPLabel");
+            vpGo.GetComponent<RectTransform>().sizeDelta = new Vector2(50, 0);
+            var vpTmp = vpGo.AddComponent<TextMeshProUGUI>();
+            vpTmp.text      = "0 VP";
+            vpTmp.fontSize  = 12;
+            vpTmp.color     = new Color(1f, 0.9f, 0.3f);
+            vpTmp.alignment = TextAlignmentOptions.Center;
+            row.VPLabel = vpTmp;
+
+            // Cards
+            var cardsGo = CreateChild(root, "CardsLabel");
+            cardsGo.GetComponent<RectTransform>().sizeDelta = new Vector2(60, 0);
+            var cardsTmp = cardsGo.AddComponent<TextMeshProUGUI>();
+            cardsTmp.text      = "0 cards";
+            cardsTmp.fontSize  = 12;
+            cardsTmp.color     = Color.white;
+            cardsTmp.alignment = TextAlignmentOptions.Center;
+            row.CardsLabel = cardsTmp;
+
+            // Knights
+            var knightsGo = CreateChild(root, "KnightsLabel");
+            knightsGo.GetComponent<RectTransform>().sizeDelta = new Vector2(60, 0);
+            var knightsTmp = knightsGo.AddComponent<TextMeshProUGUI>();
+            knightsTmp.text      = "0 knights";
+            knightsTmp.fontSize  = 11;
+            knightsTmp.color     = new Color(0.7f, 0.7f, 1f);
+            knightsTmp.alignment = TextAlignmentOptions.Center;
+            row.KnightsLabel = knightsTmp;
+
+            // Longest road badge
+            var lrGo = CreateChild(root, "LongestRoadBadge");
+            lrGo.GetComponent<RectTransform>().sizeDelta = new Vector2(36, 0);
+            var lrImg = lrGo.AddComponent<Image>();
+            lrImg.color = new Color(0.2f, 0.8f, 0.3f);
+            var lrLabel = CreateChild(lrGo, "Label");
+            StretchFull(lrLabel.GetComponent<RectTransform>());
+            var lrTmp = lrLabel.AddComponent<TextMeshProUGUI>();
+            lrTmp.text      = "LR";
+            lrTmp.fontSize  = 10;
+            lrTmp.fontStyle = FontStyles.Bold;
+            lrTmp.alignment = TextAlignmentOptions.Center;
+            lrTmp.color     = Color.white;
+            lrGo.SetActive(false);
+            row.LongestRoadBadge = lrGo;
+
+            // Largest army badge
+            var laGo = CreateChild(root, "LargestArmyBadge");
+            laGo.GetComponent<RectTransform>().sizeDelta = new Vector2(36, 0);
+            var laImg = laGo.AddComponent<Image>();
+            laImg.color = new Color(0.8f, 0.3f, 0.3f);
+            var laLabel = CreateChild(laGo, "Label");
+            StretchFull(laLabel.GetComponent<RectTransform>());
+            var laTmp = laLabel.AddComponent<TextMeshProUGUI>();
+            laTmp.text      = "LA";
+            laTmp.fontSize  = 10;
+            laTmp.fontStyle = FontStyles.Bold;
+            laTmp.alignment = TextAlignmentOptions.Center;
+            laTmp.color     = Color.white;
+            laGo.SetActive(false);
+            row.LargestArmyBadge = laGo;
+
+            const string path = PrefabFolder + "/PlayerSummaryRow.prefab";
+            SavePrefab(root, path);
+            Object.DestroyImmediate(root);
         }
 
         // ── Steal target panel prefab ──────────────────────────────────────────
