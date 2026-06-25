@@ -40,7 +40,9 @@ namespace Catan.UI
         public CatanResource WheatResource;
         public CatanResource OreResource;
 
-        [Header("Players (2–4 entries)")]
+        [Header("Players (fallback when GameSession is empty)")]
+        [Tooltip("Used only when the scene is opened directly without MainMenu. " +
+                 "If GameSession.HasPlayers is true, that list wins.")]
         public List<PlayerConfig> PlayerConfigs = new();
 
         [Header("Board")]
@@ -116,7 +118,12 @@ namespace Catan.UI
         private void CreatePlayers()
         {
             Players.Clear();
-            foreach (var config in PlayerConfigs)
+
+            var configs = GameSession.HasPlayers
+                ? (IReadOnlyList<PlayerConfig>)GameSession.Players
+                : PlayerConfigs;
+
+            foreach (var config in configs)
             {
                 var player = new CatanPlayer(config.PlayerName, config.PlayerName, config.PlayerColor);
                 Players.Add(player);
