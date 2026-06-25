@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Catan::Catan.CatanResource
   _type: 3
   _icon: {fileID: -380726878111496845, guid: 20672c26e65b60640aa234f50fe5d342, type: 3}
+  _color: {r: 0.8599042, g: 0.8679245, b: 0.036845837, a: 1}

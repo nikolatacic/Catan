@@ -9070,7 +9070,7 @@ MonoBehaviour:
   OreResource: {fileID: 11400000, guid: 4a57ad3f4758a41888bd4aedb4c7dbf0, type: 2}
   PlayerConfigs:
   - PlayerName: P1
-    PlayerColor: {r: 0.40392157, g: 0, b: 0, a: 1}
+    PlayerColor: {r: 0.9245283, g: 0.6061766, b: 0.6061766, a: 1}
   - PlayerName: P2
     PlayerColor: {r: 0.13830544, g: 0.23599645, b: 0.7924528, a: 1}
   BoardSeed: 0

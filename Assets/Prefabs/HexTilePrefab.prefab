@@ -403,6 +403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Catan::Catan.UI.HexTileView
   TileRenderer: {fileID: 5630138055537523881}
+  HexBackgroundRenderer: {fileID: 6305996198687725142}
   NumberLabel: {fileID: 9198436174523120488}
 --- !u!1 &6746363852580830875
 GameObject:
