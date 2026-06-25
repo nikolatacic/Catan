@@ -32,11 +32,12 @@ namespace Catan.UI
         public Button CancelButton;
         public TextMeshProUGUI FeedbackLabel;
 
-        private static readonly IResource[] AllResources =
-        {
-            CatanResources.Wood, CatanResources.Brick, CatanResources.Sheep,
-            CatanResources.Wheat, CatanResources.Ore
-        };
+        private static IResource[] AllResources =>
+            new IResource[]
+            {
+                CatanResources.Wood, CatanResources.Brick, CatanResources.Sheep,
+                CatanResources.Wheat, CatanResources.Ore
+            };
 
         private static readonly Color[] ResourceColors =
         {
