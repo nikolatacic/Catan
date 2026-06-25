@@ -118,20 +118,31 @@ What still needs 5c:
   so subsequent rule evaluations match.
 - Editor tool now adds both bridges to GameHotseat in one click.
 
-### Phase 5d — Hidden state, lobby, per-device UI 👈 NEXT
+### Phase 5d — Per-device UI + index assignment ✅ DONE (partial)
+
+- `NetworkSession.LocalPlayerIndex` — set by host when a peer connects.
+  Host = 0, first joiner = 1, etc.
+- `NetworkEventBridge.AssignPlayerIndexClientRpc` (targeted) tells each peer
+  their index; publishes `LocalPlayerAssignedEvent` on receipt.
+- `PlayerHandView` / `DevHandView`: in hotseat follow active player as before;
+  in networked mode always show the local player's hand.
+- `ActionButtonsView`: disables every button when networked and the local
+  player is not the active player. Host plays normally on its own turn;
+  clients see disabled buttons until it's their turn.
+- Late-joiner seed broadcast: targeted seed RPC sent at index-assignment
+  time so a late client builds its board before any other event lands.
+
+### Phase 5e — Hidden state + lobby player picker 👈 NEXT
 
 - **Hidden state filtering**: redact `ResourceAdded` / `ResourceRemoved` /
   `ResourceStolen` for non-owners — they see only count deltas, not which
-  resource. Same for `DevCardPurchasedEvent` carrying a specific card type.
+  resource. Same for `DevCardPurchasedEvent`.
 - **Real lobby player picker**: replaces `SetDefault2PlayerHotseat()`. Host
   configures players in the lobby; sends the roster to clients on join.
-- **Per-device UI**: `PlayerHandView` and `DevHandView` follow
-  `NetworkSession.LocalPlayerId` when networked instead of the active player
-  from `TurnStartedEvent`. Hotseat behavior preserved.
-- **Late-join support**: server tracks "first-state" snapshot (seed, current
-  scores, board mutations so far) and replays it to clients on connect.
-- **`DiceManager` host-only**: guard RNG calls with `IsServer`; clients receive
-  the result through `DiceRolledEvent`.
+- **StealTargetPanel for 3+ players**: currently the panel only opens on the
+  host. Active player on any device should see it.
+- **`DiceManager` host-only**: guard with `IsServer` for safety (currently
+  only reached via host-side command path, but worth defense-in-depth).
 
 ## Phase 6 — Per-device UI
 
@@ -153,7 +164,8 @@ What still needs 5c:
 | ✅ Done | 5a — Lobby scaffolding | ~1 session |
 | ✅ Done | 5b — Command routing through RPCs | ~1 session |
 | ✅ Done | 5c — Seed sync + EventBus fan-out | ~1 session |
-| 👈 Next | 5d — Hidden state + lobby + per-device UI | ~1-2 sessions |
+| ✅ Done | 5d — Per-device UI + index assignment | ~1 session |
+| 👈 Next | 5e — Hidden state + lobby player picker | ~1 session |
 | Polish  | 6 — Final polish / multiplayer edge cases | ~1 session |
 
 ---
