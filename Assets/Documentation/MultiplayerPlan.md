@@ -28,22 +28,21 @@ This is the seam where the future lobby screen and (later) the multiplayer
 connection handshake will write player configs. The game scene doesn't care
 where the data came from.
 
-## Phase 3 — Identify the network boundary 👈 NEXT
+## Phase 3 — Identify the network boundary ✅ DONE
 
-Audit every system and label it:
+Full audit lives in [`NetworkBoundaryAudit.md`](NetworkBoundaryAudit.md). Summary:
 
-| Label | Meaning |
-|---|---|
-| **Authority** | Only the host runs this |
-| **Replica** | All clients need a read-only copy |
-| **RPC** | Becomes a remote call from client → host |
-
-Known assignments:
-- Authority: `CatanTurnManager`, `CatanBuildRule`, `RobberSystem`, `ScoreManager`, all `GameManager` action methods
-- Replica: `BoardRenderer`, `VertexView`, `EdgeView`, `PlayerHandView`, `DevHandView`, all other UI
-- RPC: `TryPlaceSettlement`, `TryPlaceRoad`, `TryUpgradeCity`, `TryMoveRobber`, `TryBankTrade`, `TryPlayDevCard`, `EndTurn`
-
-No code changes yet — just annotate and align on the boundary.
+- **Authority** (host-only): `CatanBoard`, `CatanPlayer.*`, `CatanTurnManager`,
+  `RobberSystem`, `DiceManager`, `ScoreManager`, dev-card deck, all rules
+- **Commands** (client → host RPC): every `Try*` method on `GameManager`
+  (13 total)
+- **Local-only**: `Begin*Placement`/`CancelPlacement` (UI-mode toggles)
+- **Events**: 18 events catalogued; flagged 3 that leak hidden info
+  (`ResourceProducedEvent`, `ResourceAddedEvent`, `ResourceStolenEvent`) and
+  must be redacted for non-recipients in multiplayer
+- **Refactors needed before networking**: `Settlement.UpgradeToCity()` is
+  mutation-before-validation (hotseat hack); `CheatMenuView` mutates directly;
+  `EventBus.Publish` needs a network-aware wrapper; dice RNG must run on host
 
 ## Phase 4 — Command pattern for game actions
 
@@ -80,8 +79,8 @@ This is the largest architecture change and the prerequisite for Phase 5.
 |---|---|---|
 | ✅ Done | 1 — MainMenu scene + Play button | ~20 min |
 | ✅ Done | 2 — GameSession data carrier | ~1 session |
-| 👈 Next | 3 — Boundary audit (no code) | ~1 session |
-| Before networking | 4 — Command pattern | ~2 sessions |
+| ✅ Done | 3 — Boundary audit (no code) | ~1 session |
+| 👈 Next | 4 — Command pattern | ~2 sessions |
 | When ready | 5 — Relay + NGO | multiple sessions |
 | Polish | 6 — Per-device UI | ~1 session |
 
