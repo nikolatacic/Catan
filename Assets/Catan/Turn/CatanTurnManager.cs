@@ -15,6 +15,10 @@ namespace Catan
         private CatanBoard _board;
         private bool _inSetupPhase;
         private Queue<ITurnActor> _setupQueue;
+        private int _setupTurnsCompleted;
+        private CatanTurnPhase _phaseAfterRobber = CatanTurnPhase.Building;
+
+        public bool IsSecondSetupRound { get; private set; }
 
         // Call before StartGame. Optional overrides allow injecting test doubles.
         // An injected RobberSystem must already be initialized with the board and player list.
@@ -71,12 +75,21 @@ namespace Catan
             DiceManager.Roll();
         }
 
+        // Switches to Robber phase when a Knight card is played, remembering the phase
+        // to return to after the robber is moved (instead of always going to Building).
+        public void BeginKnightRobberPhase()
+        {
+            _phaseAfterRobber = CurrentCatanPhase;
+            SetCatanPhase(CatanTurnPhase.Robber);
+        }
+
         // Processes the dice result. Called automatically via DiceRolledEvent subscription,
         // but also available directly for testing.
         public void HandleDiceRoll(int total)
         {
             if (total == 7)
             {
+                _phaseAfterRobber = CatanTurnPhase.Building;
                 SetCatanPhase(CatanTurnPhase.Robber);
                 RobberSystem.Activate(CurrentActor as IPlayer);
             }
@@ -94,6 +107,9 @@ namespace Catan
 
             if (_inSetupPhase)
             {
+                _setupTurnsCompleted++;
+                IsSecondSetupRound = _setupTurnsCompleted >= Actors.Count;
+
                 if (_setupQueue != null && _setupQueue.Count > 0)
                 {
                     CurrentActor = _setupQueue.Dequeue();
@@ -127,8 +143,8 @@ namespace Catan
             CatanTurnPhase nextPhase = CurrentCatanPhase switch
             {
                 CatanTurnPhase.RollDice => CatanTurnPhase.Trading,
-                CatanTurnPhase.Robber => CatanTurnPhase.Building,
-                CatanTurnPhase.Trading => CatanTurnPhase.Building,
+                CatanTurnPhase.Robber   => _phaseAfterRobber,
+                CatanTurnPhase.Trading  => CatanTurnPhase.Building,
                 CatanTurnPhase.Building => CatanTurnPhase.EndTurn,
                 CatanTurnPhase.EndTurn => CatanTurnPhase.RollDice,
                 _ => CatanTurnPhase.RollDice
