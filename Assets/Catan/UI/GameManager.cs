@@ -320,28 +320,6 @@ namespace Catan.UI
             return true;
         }
 
-        public bool IsValidSettlementSpot(GameCore.Board.HexVertex vertex)
-        {
-            var player = ActivePlayer;
-            if (player == null) return false;
-            var tempSettlement = new Settlement(player, vertex);
-            return BuildManager.Rule?.CanPlace(tempSettlement, null, player) ?? false;
-        }
-
-        public bool IsValidCitySpot(GameCore.Board.HexVertex vertex)
-        {
-            if (!Board.Settlements.TryGetValue(vertex, out var settlement)) return false;
-            return settlement.Owner == ActivePlayer && !settlement.IsCity;
-        }
-
-        public bool IsValidRoadSpot(GameCore.Board.HexEdge edge)
-        {
-            var player = ActivePlayer;
-            if (player == null) return false;
-            var tempRoad = new Road(player, edge);
-            return BuildManager.Rule?.CanPlace(tempRoad, null, player) ?? false;
-        }
-
         private void GrantAdjacentResources(CatanPlayer player, GameCore.Board.HexVertex vertex)
         {
             foreach (var tileCoord in vertex.AdjacentTiles)

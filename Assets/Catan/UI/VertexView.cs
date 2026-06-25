@@ -5,8 +5,11 @@ namespace Catan.UI
 {
     // ── Editor wiring required ─────────────────────────────────────────────────
     // Spawned at runtime by BoardRenderer. Uses a CircleCollider2D for clicks.
-    // Add a child GameObject "Highlight" with a circle SpriteRenderer and assign
-    // it to HighlightRenderer. The highlight shows valid placement spots.
+    //
+    // Highlight setup (two options, either works):
+    //   A) Add a child GameObject named exactly "Highlight" with a SpriteRenderer.
+    //      It will be found automatically at startup.
+    //   B) Assign any SpriteRenderer to the HighlightRenderer field in the prefab.
     // ──────────────────────────────────────────────────────────────────────────
 
     public class VertexView : MonoBehaviour
@@ -21,6 +24,16 @@ namespace Catan.UI
         public Sprite[] PlayerCitySprites;
 
         public GameCore.Board.HexVertex Vertex { get; private set; }
+
+        private void Awake()
+        {
+            if (HighlightRenderer == null)
+            {
+                var highlightTransform = transform.Find("Highlight");
+                if (highlightTransform != null)
+                    HighlightRenderer = highlightTransform.GetComponent<SpriteRenderer>();
+            }
+        }
 
         private void OnEnable()
         {
@@ -66,17 +79,23 @@ namespace Catan.UI
                 return;
             }
 
+            var board = manager.Board;
+            var player = manager.ActivePlayer;
+
             switch (mode)
             {
                 case PlacementMode.Settlement:
-                    bool validSettlement = manager.IsValidSettlementSpot(Vertex);
-                    var baseColor = manager.ActivePlayer?.Color ?? Color.white;
-                    SetHighlight(validSettlement, new Color(baseColor.r, baseColor.g, baseColor.b, 0.6f));
+                    bool spotEmpty = board != null && !board.Settlements.ContainsKey(Vertex);
+                    var settleColor = player != null ? player.Color : Color.white;
+                    SetHighlight(spotEmpty, new Color(settleColor.r, settleColor.g, settleColor.b, 0.6f));
                     break;
 
                 case PlacementMode.City:
-                    bool validCity = manager.IsValidCitySpot(Vertex);
-                    SetHighlight(validCity, new Color(1f, 0.85f, 0.1f, 0.8f));
+                    bool canUpgrade = board != null
+                        && board.Settlements.TryGetValue(Vertex, out var settlement)
+                        && settlement.Owner == player
+                        && !settlement.IsCity;
+                    SetHighlight(canUpgrade, new Color(1f, 0.85f, 0.1f, 0.8f));
                     break;
 
                 default:
