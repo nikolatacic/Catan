@@ -314,6 +314,8 @@ namespace Catan.UI
             card.TurnPurchased = TurnManager.TurnNumber;
             player.DevelopmentCards.Add(card);
 
+            EventBus.Publish(new DevCardPurchasedEvent { Player = player });
+
             if (card is VictoryPointCard)
                 ScoreManager.RecalculateAll();
 
