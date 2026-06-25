@@ -21,7 +21,11 @@ namespace Catan.UI
             Tile = tile;
 
             if (TileRenderer != null)
+            {
                 TileRenderer.sprite = tileSprite;
+                if (tile.Resource is CatanResource catanResource)
+                    TileRenderer.color = catanResource.Color;
+            }
 
             if (NumberLabel != null)
             {
