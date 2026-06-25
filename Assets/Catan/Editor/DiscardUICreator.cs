@@ -18,6 +18,7 @@ namespace Catan.UI.Editor
             CreateCardPrefab();
             CreatePanelPrefab();
             CreateBankTradePanelPrefab();
+            CreateStealTargetPanelPrefab();
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             Debug.Log($"[Catan] All UI prefabs saved to {PrefabFolder}");
@@ -300,6 +301,86 @@ namespace Catan.UI.Editor
             tmp.color     = Color.white;
 
             return btn;
+        }
+
+        // ── Steal target panel prefab ──────────────────────────────────────────
+
+        private static void CreateStealTargetPanelPrefab()
+        {
+            // Root — full-screen overlay
+            var root = new GameObject("StealTargetPanel");
+            StretchFull(root.AddComponent<RectTransform>());
+            root.AddComponent<CanvasGroup>().blocksRaycasts = true;
+            var panelView = root.AddComponent<StealTargetPanelView>();
+
+            // Dark background
+            var bgGo = CreateChild(root, "Background");
+            StretchFull(bgGo.GetComponent<RectTransform>());
+            var bgImg = bgGo.AddComponent<Image>();
+            bgImg.color = new Color(0f, 0f, 0f, 0.6f);
+            bgImg.raycastTarget = true;
+
+            // Inner panel — compact, centred
+            var inner = CreateChild(root, "InnerPanel");
+            SetAnchorCenter(inner.GetComponent<RectTransform>(), 400, 300);
+            inner.AddComponent<Image>().color = new Color(0.15f, 0.15f, 0.15f);
+            var vlg = inner.AddComponent<VerticalLayoutGroup>();
+            vlg.padding  = new RectOffset(20, 20, 20, 20);
+            vlg.spacing  = 14;
+            vlg.childControlWidth      = true;
+            vlg.childControlHeight     = false;
+            vlg.childForceExpandWidth  = true;
+            vlg.childForceExpandHeight = false;
+
+            // Title
+            var titleLabel = CreateTMPLabel(inner, "TitleLabel",
+                "Choose a player to steal from", 16, FontStyles.Bold, 40);
+            panelView.TitleLabel = titleLabel;
+
+            // Button container
+            var container = CreateChild(inner, "ButtonContainer");
+            SetLayoutElement(container, preferredHeight: 200, flexibleHeight: 1);
+            var containerVlg = container.AddComponent<VerticalLayoutGroup>();
+            containerVlg.spacing              = 10;
+            containerVlg.childControlWidth    = true;
+            containerVlg.childControlHeight   = false;
+            containerVlg.childForceExpandWidth  = true;
+            containerVlg.childForceExpandHeight = false;
+            panelView.ButtonContainer = container.transform;
+
+            // Player button prefab — saved separately
+            var playerBtn = CreatePlayerButtonPrefab();
+            panelView.PlayerButtonPrefab = playerBtn;
+
+            const string path = PrefabFolder + "/StealTargetPanel.prefab";
+            SavePrefab(root, path);
+            Object.DestroyImmediate(root);
+        }
+
+        private static GameObject CreatePlayerButtonPrefab()
+        {
+            var go = new GameObject("PlayerButton");
+            go.AddComponent<RectTransform>();
+            SetLayoutElement(go, preferredHeight: 54);
+            var img = go.AddComponent<Image>();
+            img.color = new Color(0.3f, 0.3f, 0.8f);
+            var btn = go.AddComponent<Button>();
+            btn.targetGraphic = img;
+
+            var labelGo = CreateChild(go, "Label");
+            StretchFull(labelGo.GetComponent<RectTransform>());
+            var tmp = labelGo.AddComponent<TextMeshProUGUI>();
+            tmp.text      = "Player";
+            tmp.fontSize  = 18;
+            tmp.fontStyle = FontStyles.Bold;
+            tmp.alignment = TextAlignmentOptions.Center;
+            tmp.color     = Color.white;
+
+            const string path = PrefabFolder + "/PlayerButton.prefab";
+            var saved = PrefabUtility.SaveAsPrefabAsset(go, path);
+            Object.DestroyImmediate(go);
+            Debug.Log($"[Catan] Created {path}");
+            return saved;
         }
 
         // ── Helpers ────────────────────────────────────────────────────────────
