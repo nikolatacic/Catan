@@ -5,20 +5,30 @@ Stack: **Unity Relay + Netcode for GameObjects (NGO)**, host-client model (one p
 
 ---
 
-## Phase 1 — Scene separation ✅ IN PROGRESS
+## Phase 1 — Scene separation ✅ DONE
 
 - `MainMenu` scene: logo + Play button. Will later become the root for multiplayer lobby.
 - `MainScene` (the existing game scene): unchanged. Can be renamed to `GameHotseat` later.
 - Build Settings order: MainMenu (index 0), MainScene (index 1).
 - Play button → `SceneManager.LoadScene(1)` (index-based so renaming the game scene is safe).
 
-## Phase 2 — Decouple player configuration from the scene
+Editor tool: `Catan → Create Main Menu Scene` regenerates the scene if needed.
 
-Right now `GameManager.PlayerConfigs` is a serialized Inspector list baked into the scene.  
-Before multiplayer, introduce a `GameSession` carrier (ScriptableObject or static singleton) that the menu populates and the game scene reads on `Start`.  
-This is the clean handoff point where a future lobby screen sets player count, names, and colors.
+## Phase 2 — Decouple player configuration from the scene ✅ DONE
 
-## Phase 3 — Identify the network boundary
+`GameSession` (static class, `Assets/Catan/Session/GameSession.cs`) holds the
+player list across scene loads. `MainMenuView.OnPlay` populates it with
+`SetDefault2PlayerHotseat()` before loading the game scene.
+
+`GameManager.CreatePlayers` reads from `GameSession` when populated; otherwise
+falls back to the Inspector `PlayerConfigs` list. The game scene therefore
+still runs standalone for testing.
+
+This is the seam where the future lobby screen and (later) the multiplayer
+connection handshake will write player configs. The game scene doesn't care
+where the data came from.
+
+## Phase 3 — Identify the network boundary 👈 NEXT
 
 Audit every system and label it:
 
@@ -68,9 +78,9 @@ This is the largest architecture change and the prerequisite for Phase 5.
 
 | Step | Phase | Effort |
 |---|---|---|
-| ✅ Now | 1 — MainMenu scene + Play button | ~20 min |
-| Soon | 2 — GameSession data carrier | ~1 session |
-| Before networking | 3 — Boundary audit (no code) | ~1 session |
+| ✅ Done | 1 — MainMenu scene + Play button | ~20 min |
+| ✅ Done | 2 — GameSession data carrier | ~1 session |
+| 👈 Next | 3 — Boundary audit (no code) | ~1 session |
 | Before networking | 4 — Command pattern | ~2 sessions |
 | When ready | 5 — Relay + NGO | multiple sessions |
 | Polish | 6 — Per-device UI | ~1 session |
