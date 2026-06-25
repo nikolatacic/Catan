@@ -44,16 +44,22 @@ Full audit lives in [`NetworkBoundaryAudit.md`](NetworkBoundaryAudit.md). Summar
   mutation-before-validation (hotseat hack); `CheatMenuView` mutates directly;
   `EventBus.Publish` needs a network-aware wrapper; dice RNG must run on host
 
-## Phase 4 — Command pattern for game actions
+## Phase 4 — Command pattern for game actions ✅ DONE
 
-Current flow: UI → `GameManager.TryPlaceSettlement(vertex)` → executes immediately.  
-Required flow: UI → `Command` → host validates + executes → result fans out to all clients.
+`IGameCommand` interface + `CommandDispatcher` (static) + 10 concrete commands
+in `Assets/Catan/Commands/`. Every UI caller that used to invoke
+`GameManager.Instance.Try*` now dispatches a command instead.
 
-Introduce lightweight command structs (`PlaceSettlementCommand`, `PlaceRoadCommand`, etc.).  
-In hotseat mode they execute inline (no behaviour change).  
-In networked mode they serialize and become ServerRPCs.
+In hotseat the dispatcher executes locally (zero behaviour change). In Phase 5
+it branches: host executes directly, client serializes and sends a ServerRpc
+whose handler executes the same command on the host.
 
-This is the largest architecture change and the prerequisite for Phase 5.
+`Begin*Placement` / `CancelPlacement` remain direct calls — local UI-mode
+toggles that don't need to cross the network.
+
+One forward-compatible adjustment: `BankTradePanelView.OnConfirm` now detects
+success via a before/after resource snapshot instead of a synchronous return
+value — this works identically in hotseat and survives async RPC handling.
 
 ## Phase 5 — Unity Relay + NGO integration
 
@@ -80,8 +86,8 @@ This is the largest architecture change and the prerequisite for Phase 5.
 | ✅ Done | 1 — MainMenu scene + Play button | ~20 min |
 | ✅ Done | 2 — GameSession data carrier | ~1 session |
 | ✅ Done | 3 — Boundary audit (no code) | ~1 session |
-| 👈 Next | 4 — Command pattern | ~2 sessions |
-| When ready | 5 — Relay + NGO | multiple sessions |
+| ✅ Done | 4 — Command pattern | ~1 session |
+| 👈 Next | 5 — Relay + NGO | multiple sessions |
 | Polish | 6 — Per-device UI | ~1 session |
 
 ---
