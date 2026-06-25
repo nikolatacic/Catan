@@ -1,21 +1,36 @@
 using UnityEngine;
+using GameCore.Events;
 
 namespace Catan.UI
 {
     // ── Editor wiring required ─────────────────────────────────────────────────
     // Spawned at runtime by BoardRenderer. Uses a BoxCollider2D for clicks.
+    // Add a child GameObject "Highlight" with a SpriteRenderer and assign it to
+    // HighlightRenderer. The highlight shows valid road placement spots.
     // ──────────────────────────────────────────────────────────────────────────
 
     public class EdgeView : MonoBehaviour
     {
         [Header("Renderers")]
         public SpriteRenderer RoadRenderer;
+        public SpriteRenderer HighlightRenderer;
 
         public GameCore.Board.HexEdge Edge { get; private set; }
+
+        private void OnEnable()
+        {
+            EventBus.Subscribe<PlacementModeChangedEvent>(OnPlacementModeChanged);
+        }
+
+        private void OnDisable()
+        {
+            EventBus.Unsubscribe<PlacementModeChangedEvent>(OnPlacementModeChanged);
+        }
 
         public void Initialize(GameCore.Board.HexEdge edge)
         {
             Edge = edge;
+            SetHighlight(false, Color.clear);
             Refresh();
         }
 
@@ -27,6 +42,39 @@ namespace Catan.UI
                 GameManager.Instance.TryPlaceRoad(Edge);
 
             Refresh();
+        }
+
+        private void OnPlacementModeChanged(PlacementModeChangedEvent gameEvent)
+        {
+            UpdateHighlight(gameEvent.Mode);
+        }
+
+        private void UpdateHighlight(PlacementMode mode)
+        {
+            var manager = GameManager.Instance;
+            if (manager == null || Edge == null)
+            {
+                SetHighlight(false, Color.clear);
+                return;
+            }
+
+            if (mode == PlacementMode.Road)
+            {
+                bool validRoad = manager.IsValidRoadSpot(Edge);
+                var baseColor = manager.ActivePlayer?.Color ?? Color.white;
+                SetHighlight(validRoad, new Color(baseColor.r, baseColor.g, baseColor.b, 0.6f));
+            }
+            else
+            {
+                SetHighlight(false, Color.clear);
+            }
+        }
+
+        private void SetHighlight(bool visible, Color color)
+        {
+            if (HighlightRenderer == null) return;
+            HighlightRenderer.enabled = visible;
+            if (visible) HighlightRenderer.color = color;
         }
 
         public void Refresh()
