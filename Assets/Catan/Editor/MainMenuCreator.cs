@@ -33,8 +33,8 @@ namespace Catan.UI.Editor
 
             Debug.Log(
                 "[Catan] MainMenu scene created at " + ScenePath + "\n" +
-                "Build Settings updated: MainMenu=0, SampleScene=1.\n" +
-                "Rename SampleScene to 'GameHotseat' when ready " +
+                "Build Settings updated: MainMenu=0, MainScene=1.\n" +
+                "Rename MainScene to 'GameHotseat' later when you want it " +
                 "(Right-click in Project window → Rename).");
         }
 
@@ -142,7 +142,7 @@ namespace Catan.UI.Editor
             var scenes = new[]
             {
                 new EditorBuildSettingsScene(ScenePath, true),
-                new EditorBuildSettingsScene("Assets/Scenes/SampleScene.unity", true),
+                new EditorBuildSettingsScene("Assets/Scenes/MainScene.unity", true),
             };
             EditorBuildSettings.scenes = scenes;
         }

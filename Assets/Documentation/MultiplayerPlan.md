@@ -8,9 +8,9 @@ Stack: **Unity Relay + Netcode for GameObjects (NGO)**, host-client model (one p
 ## Phase 1 — Scene separation ✅ IN PROGRESS
 
 - `MainMenu` scene: logo + Play button. Will later become the root for multiplayer lobby.
-- `GameHotseat` scene: current game, unchanged.
-- Build Settings order: MainMenu (index 0), GameHotseat (index 1).
-- Play button → `SceneManager.LoadScene("GameHotseat")`.
+- `MainScene` (the existing game scene): unchanged. Can be renamed to `GameHotseat` later.
+- Build Settings order: MainMenu (index 0), MainScene (index 1).
+- Play button → `SceneManager.LoadScene(1)` (index-based so renaming the game scene is safe).
 
 ## Phase 2 — Decouple player configuration from the scene
 
