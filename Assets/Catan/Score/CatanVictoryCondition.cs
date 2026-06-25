@@ -7,9 +7,13 @@ namespace Catan
     public class CatanVictoryCondition : IVictoryCondition
     {
         private CatanBoard _board;
-        public int TargetPoints = 10;
+        public int TargetPoints { get; set; }
 
-        public CatanVictoryCondition(CatanBoard board) => _board = board;
+        public CatanVictoryCondition(CatanBoard board, int targetPoints = 10)
+        {
+            _board = board;
+            TargetPoints = targetPoints;
+        }
 
         public string Name => "Catan Victory";
 

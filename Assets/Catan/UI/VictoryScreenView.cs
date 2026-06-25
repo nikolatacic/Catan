@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -18,21 +19,18 @@ namespace Catan.UI
         public TextMeshProUGUI WinnerLabel;
         public Image WinnerColorIndicator;
         public TextMeshProUGUI VictoryPointsLabel;
+        public TextMeshProUGUI FinalStandingsLabel;
         public Button RestartButton;
-
-        private void OnEnable()
-        {
-            EventBus.Subscribe<VictoryAchievedEvent>(OnVictoryAchieved);
-        }
-
-        private void OnDisable()
-        {
-            EventBus.Unsubscribe<VictoryAchievedEvent>(OnVictoryAchieved);
-        }
 
         private void Awake()
         {
+            EventBus.Subscribe<VictoryAchievedEvent>(OnVictoryAchieved);
             gameObject.SetActive(false);
+        }
+
+        private void OnDestroy()
+        {
+            EventBus.Unsubscribe<VictoryAchievedEvent>(OnVictoryAchieved);
         }
 
         private void OnVictoryAchieved(VictoryAchievedEvent gameEvent)
@@ -45,14 +43,21 @@ namespace Catan.UI
             if (WinnerColorIndicator != null && gameEvent.Winner is CatanPlayer catanPlayer)
                 WinnerColorIndicator.color = catanPlayer.Color;
 
+            var gameManager = GameManager.Instance;
+            if (gameManager == null) return;
+
             if (VictoryPointsLabel != null)
             {
-                var manager = GameManager.Instance;
-                if (manager != null)
-                {
-                    int score = manager.ScoreManager.GetScore(gameEvent.Winner);
-                    VictoryPointsLabel.text = $"{score} Victory Points";
-                }
+                int score = gameManager.ScoreManager.GetScore(gameEvent.Winner);
+                VictoryPointsLabel.text = $"{score} Victory Points";
+            }
+
+            if (FinalStandingsLabel != null)
+            {
+                var standings = gameManager.Players
+                    .OrderByDescending(player => gameManager.ScoreManager.GetScore(player))
+                    .Select(player => $"{player.DisplayName}: {gameManager.ScoreManager.GetScore(player)} pts");
+                FinalStandingsLabel.text = string.Join("\n", standings);
             }
         }
 

@@ -3266,6 +3266,7 @@ MonoBehaviour:
   WinnerLabel: {fileID: 768513335}
   WinnerColorIndicator: {fileID: 192425542}
   VictoryPointsLabel: {fileID: 1653015191}
+  FinalStandingsLabel: {fileID: 0}
   RestartButton: {fileID: 619368717}
 --- !u!222 &676832910
 CanvasRenderer:
@@ -3469,7 +3470,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Victory
+  m_text: Victory!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4391,7 +4392,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2265722480256347956, guid: ff5f5636ffdb34d4ba269afb71fafa73, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -89.78264
+      value: -89.78265
       objectReference: {fileID: 0}
     - target: {fileID: 2265722480256347956, guid: ff5f5636ffdb34d4ba269afb71fafa73, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -6684,11 +6685,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5344806901647191773, guid: bb2341ad0e64541b298f350eedffe355, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 12.000002
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 5344806901647191773, guid: bb2341ad0e64541b298f350eedffe355, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -14.441279
+      value: -14.441193
       objectReference: {fileID: 0}
     - target: {fileID: 5344806901647191773, guid: bb2341ad0e64541b298f350eedffe355, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -9072,11 +9073,12 @@ MonoBehaviour:
   - PlayerName: P1
     PlayerColor: {r: 0.9245283, g: 0.6061766, b: 0.6061766, a: 1}
   - PlayerName: P2
-    PlayerColor: {r: 0.13830544, g: 0.23599645, b: 0.7924528, a: 1}
+    PlayerColor: {r: 0.5803922, g: 0, b: 0.8274511, a: 1}
   BoardSeed: 0
   BoardRenderer: {fileID: 2051086834}
   RobberView: {fileID: 988573462}
   StealTargetPanel: {fileID: 1360304092}
+  _victoryPointsToWin: 5
 --- !u!4 &1866403516
 Transform:
   m_ObjectHideFlags: 0

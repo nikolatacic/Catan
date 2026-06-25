@@ -31,6 +31,8 @@ namespace Catan.UI
             EventBus.Subscribe<CatanPhaseChangedEvent>(OnPhaseChanged);
             EventBus.Subscribe<GameCore.Turn.TurnStartedEvent>(OnTurnStarted);
             EventBus.Subscribe<GameCore.Build.BuildSucceededEvent>(OnBuildSucceeded);
+            EventBus.Subscribe<GameCore.Score.VictoryAchievedEvent>(OnVictoryAchieved);
+            EventBus.Subscribe<GameStateChangedEvent>(OnGameStateChanged);
         }
 
         private void OnDisable()
@@ -38,6 +40,8 @@ namespace Catan.UI
             EventBus.Unsubscribe<CatanPhaseChangedEvent>(OnPhaseChanged);
             EventBus.Unsubscribe<GameCore.Turn.TurnStartedEvent>(OnTurnStarted);
             EventBus.Unsubscribe<GameCore.Build.BuildSucceededEvent>(OnBuildSucceeded);
+            EventBus.Unsubscribe<GameCore.Score.VictoryAchievedEvent>(OnVictoryAchieved);
+            EventBus.Unsubscribe<GameStateChangedEvent>(OnGameStateChanged);
         }
 
         private void Start() => RefreshButtons();
@@ -45,6 +49,8 @@ namespace Catan.UI
         private void OnPhaseChanged(CatanPhaseChangedEvent gameEvent) => RefreshButtons();
         private void OnTurnStarted(GameCore.Turn.TurnStartedEvent gameEvent) => RefreshButtons();
         private void OnBuildSucceeded(GameCore.Build.BuildSucceededEvent gameEvent) => RefreshButtons();
+        private void OnVictoryAchieved(GameCore.Score.VictoryAchievedEvent gameEvent) => RefreshButtons();
+        private void OnGameStateChanged(GameStateChangedEvent gameEvent) => RefreshButtons();
 
         // ── Button callbacks ───────────────────────────────────────────────────
 
@@ -67,7 +73,7 @@ namespace Catan.UI
         private void RefreshButtons()
         {
             var manager = GameManager.Instance;
-            if (manager == null)
+            if (manager == null || manager.IsGameOver)
             {
                 SetAllInteractable(false);
                 return;
@@ -137,9 +143,16 @@ namespace Catan.UI
             }
         }
 
-        private static void SetAllInteractable(bool interactable)
+        private void SetAllInteractable(bool interactable)
         {
-            // No button references here; caller only invokes this when manager is null
+            SetInteractable(RollDiceButton, interactable);
+            SetInteractable(EndTurnButton, interactable);
+            SetInteractable(BuildSettlementButton, interactable);
+            SetInteractable(BuildRoadButton, interactable);
+            SetInteractable(BuildCityButton, interactable);
+            SetInteractable(BuyDevCardButton, interactable);
+            SetInteractable(CancelPlacementButton, interactable);
+            SetInteractable(BankTradeButton, interactable);
         }
     }
 }
