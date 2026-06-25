@@ -27,6 +27,7 @@ namespace Catan
             var catanPlayer = (CatanPlayer)context.ActivePlayer;
 
             catanPlayer.KnightsPlayed++;
+            catanContext.TurnManager.BeginKnightRobberPhase();
             catanContext.TurnManager.RobberSystem.Activate(context.ActivePlayer);
             EventBus.Publish(new KnightPlayedEvent { Player = context.ActivePlayer });
         }

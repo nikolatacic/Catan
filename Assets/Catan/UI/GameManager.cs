@@ -198,7 +198,11 @@ namespace Catan.UI
             player.Settlements.Add(settlement);
 
             if (isSetupPhase)
+            {
+                if (TurnManager.IsSecondSetupRound)
+                    GrantAdjacentResources(player, vertex);
                 CurrentPlacementMode = PlacementMode.Road;
+            }
             else
             {
                 player.Resources.TryRemove(settlement.BuildCost);
@@ -294,6 +298,16 @@ namespace Catan.UI
                 ScoreManager.RecalculateAll();
 
             return true;
+        }
+
+        private void GrantAdjacentResources(CatanPlayer player, GameCore.Board.HexVertex vertex)
+        {
+            foreach (var tileCoord in vertex.AdjacentTiles)
+            {
+                if (!Board.Grid.Tiles.TryGetValue(tileCoord, out var catanTile)) continue;
+                if (catanTile.Resource == null) continue;
+                player.Resources.TryAdd(new ResourceBundle().Add(catanTile.Resource, 1));
+            }
         }
 
         public int GetBankTradeRatio(IResource resource)
