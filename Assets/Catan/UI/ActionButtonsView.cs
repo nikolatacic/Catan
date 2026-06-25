@@ -89,7 +89,7 @@ namespace Catan.UI
             bool setupSettlementPlaced = manager.SetupSettlementPlaced;
             SetInteractable(BuildSettlementButton,  canBuild && (isSetupPhase ? !setupSettlementPlaced : CanAffordSettlement(player)));
             SetInteractable(BuildRoadButton,        canBuild && (isSetupPhase ? setupSettlementPlaced  : CanAffordRoad(player)));
-            SetInteractable(BuildCityButton,        isBuildPhase && CanAffordCity(player));
+            SetInteractable(BuildCityButton,        (isBuildPhase || isTradingPhase) && CanAffordCity(player));
             SetInteractable(BuyDevCardButton,       (isBuildPhase || isTradingPhase) && CanAffordDevCard(player));
             SetInteractable(CancelPlacementButton,  manager.CurrentPlacementMode != PlacementMode.None
                                                     && manager.CurrentPlacementMode != PlacementMode.MoveRobber);

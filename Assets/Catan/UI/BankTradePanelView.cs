@@ -39,15 +39,6 @@ namespace Catan.UI
                 CatanResources.Wheat, CatanResources.Ore
             };
 
-        private static readonly Color[] ResourceColors =
-        {
-            new Color(0.40f, 0.25f, 0.10f), // Wood
-            new Color(0.80f, 0.30f, 0.10f), // Brick
-            new Color(0.55f, 0.85f, 0.35f), // Sheep
-            new Color(0.95f, 0.85f, 0.20f), // Wheat
-            new Color(0.50f, 0.50f, 0.60f), // Ore
-        };
-
         private int _giveIndex    = -1;
         private int _receiveIndex = -1;
 
@@ -159,10 +150,11 @@ namespace Catan.UI
                 label.text = $"{resource.DisplayName}\n{count} (÷{ratio})";
 
             var image = button.GetComponent<Image>();
+            var resourceColor = (resource as CatanResource)?.Color ?? Color.white;
             if (image != null)
                 image.color = _giveIndex == index
                     ? Color.yellow
-                    : canGive ? ResourceColors[index] : new Color(0.25f, 0.25f, 0.25f);
+                    : canGive ? resourceColor : new Color(0.25f, 0.25f, 0.25f);
         }
 
         private void UpdateReceiveButton(int index, IResource resource)
@@ -180,7 +172,7 @@ namespace Catan.UI
             if (image != null)
                 image.color = _receiveIndex == index
                     ? Color.yellow
-                    : ResourceColors[index];
+                    : (resource as CatanResource)?.Color ?? Color.white;
         }
     }
 }

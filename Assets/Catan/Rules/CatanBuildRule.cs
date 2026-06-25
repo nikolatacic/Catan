@@ -80,9 +80,8 @@ namespace Catan
             if (existingSettlement.Owner != player)
                 return "Cannot upgrade another player's settlement.";
 
-            if (existingSettlement.IsCity)
-                return "This settlement is already a city.";
-
+            // IsCity is already true here because GameManager calls UpgradeToCity() before
+            // TryPlace to route through the switch. Double-upgrade is guarded in GameManager.
             if (!player.Resources.CanAfford(CityCost()))
                 return "Insufficient resources to build a city.";
 

@@ -52,7 +52,17 @@ namespace Catan.UI
         public CatanBoard Board { get; private set; }
         public List<CatanPlayer> Players { get; private set; } = new();
         public CatanPlayer ActivePlayer => TurnManager.CurrentActor as CatanPlayer;
-        public PlacementMode CurrentPlacementMode { get; set; } = PlacementMode.None;
+
+        private PlacementMode _currentPlacementMode = PlacementMode.None;
+        public PlacementMode CurrentPlacementMode
+        {
+            get => _currentPlacementMode;
+            set
+            {
+                _currentPlacementMode = value;
+                EventBus.Publish(new PlacementModeChangedEvent { Mode = value });
+            }
+        }
 
         public bool SetupSettlementPlaced { get; private set; }
 
@@ -308,6 +318,28 @@ namespace Catan.UI
                 ScoreManager.RecalculateAll();
 
             return true;
+        }
+
+        public bool IsValidSettlementSpot(GameCore.Board.HexVertex vertex)
+        {
+            var player = ActivePlayer;
+            if (player == null) return false;
+            var tempSettlement = new Settlement(player, vertex);
+            return BuildManager.Rule?.CanPlace(tempSettlement, null, player) ?? false;
+        }
+
+        public bool IsValidCitySpot(GameCore.Board.HexVertex vertex)
+        {
+            if (!Board.Settlements.TryGetValue(vertex, out var settlement)) return false;
+            return settlement.Owner == ActivePlayer && !settlement.IsCity;
+        }
+
+        public bool IsValidRoadSpot(GameCore.Board.HexEdge edge)
+        {
+            var player = ActivePlayer;
+            if (player == null) return false;
+            var tempRoad = new Road(player, edge);
+            return BuildManager.Rule?.CanPlace(tempRoad, null, player) ?? false;
         }
 
         private void GrantAdjacentResources(CatanPlayer player, GameCore.Board.HexVertex vertex)
