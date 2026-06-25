@@ -12,6 +12,7 @@ namespace Catan.UI
     {
         [Header("Renderers")]
         public SpriteRenderer TileRenderer;
+        public SpriteRenderer HexBackgroundRenderer;
         public TMPro.TextMeshPro NumberLabel;
 
         public CatanHexTile Tile { get; private set; }
@@ -22,6 +23,9 @@ namespace Catan.UI
 
             if (TileRenderer != null)
                 TileRenderer.sprite = tileSprite;
+
+            if (HexBackgroundRenderer != null && tile.Resource is CatanResource catanResource)
+                HexBackgroundRenderer.color = catanResource.Color;
 
             if (NumberLabel != null)
             {
