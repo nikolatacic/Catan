@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using GameCore.Events;
@@ -28,6 +29,10 @@ namespace Catan.Network
     {
         public static NetworkEventBridge Instance { get; private set; }
 
+        // Server-side: clientId → player index (host gets 0, first joiner 1, …).
+        private readonly Dictionary<ulong, int> _clientToPlayerIndex = new();
+        private int _nextPlayerIndex;
+
         public override void OnNetworkSpawn()
         {
             Instance = this;
@@ -37,13 +42,64 @@ namespace Catan.Network
                 SubscribeToHostEvents();
                 if (GameManager.Instance != null)
                     BroadcastSeedClientRpc(GameManager.Instance.BoardSeed);
+
+                // Assign player indices for already-connected clients (host itself
+                // is in this list as ServerClientId). Late joiners get assigned by
+                // the OnClientConnected callback below.
+                foreach (var clientId in NetworkManager.Singleton.ConnectedClientsIds)
+                    AssignNextIndexForClient(clientId);
+
+                NetworkManager.Singleton.OnClientConnectedCallback += AssignNextIndexForClient;
             }
         }
 
         public override void OnNetworkDespawn()
         {
             if (Instance == this) Instance = null;
-            if (IsServer) UnsubscribeFromHostEvents();
+            if (IsServer)
+            {
+                UnsubscribeFromHostEvents();
+                if (NetworkManager.Singleton != null)
+                    NetworkManager.Singleton.OnClientConnectedCallback -= AssignNextIndexForClient;
+            }
+        }
+
+        // ── Player index assignment ────────────────────────────────────────────
+
+        private void AssignNextIndexForClient(ulong clientId)
+        {
+            if (_clientToPlayerIndex.ContainsKey(clientId)) return;
+            int index = _nextPlayerIndex++;
+            _clientToPlayerIndex[clientId] = index;
+
+            // Late joiner needs the seed too so they can build the board before
+            // any other event lands. Targets only this one clientId.
+            var targetOnly = new ClientRpcParams
+            {
+                Send = new ClientRpcSendParams { TargetClientIds = new[] { clientId } }
+            };
+            if (GameManager.Instance != null)
+                BroadcastSeedToClientRpc(GameManager.Instance.BoardSeed, targetOnly);
+
+            AssignPlayerIndexClientRpc(index, targetOnly);
+        }
+
+        // Like BroadcastSeedClientRpc but targets a specific client (for late joiners).
+        [ClientRpc]
+        private void BroadcastSeedToClientRpc(int seed, ClientRpcParams rpc = default)
+        {
+            if (IsServer) return;
+            if (GameManager.Instance == null) return;
+            if (GameManager.Instance.Board != null) return; // already initialized
+            GameSession.SetDefault2PlayerHotseat();
+            GameManager.Instance.CompleteInitialization(seed);
+        }
+
+        [ClientRpc]
+        private void AssignPlayerIndexClientRpc(int index, ClientRpcParams rpc = default)
+        {
+            NetworkSession.SetLocalPlayerIndex(index);
+            EventBus.Publish(new LocalPlayerAssignedEvent { Index = index });
         }
 
         // ── Seed sync ──────────────────────────────────────────────────────────

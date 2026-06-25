@@ -23,6 +23,11 @@ namespace Catan
         public static string JoinCode { get; private set; }
         public static ulong LocalPlayerId { get; private set; }
 
+        // Index into GameManager.Players for the local human at this device.
+        // Set by the host via NetworkEventBridge when this peer connects.
+        // -1 means "not yet assigned" (hotseat or pre-assignment).
+        public static int LocalPlayerIndex { get; private set; } = -1;
+
         public static bool IsNetworked => Mode != NetworkMode.Hotseat;
         public static bool IsHost      => Mode == NetworkMode.Host;
         public static bool IsClient    => Mode == NetworkMode.Client;
@@ -32,6 +37,7 @@ namespace Catan
             Mode     = NetworkMode.Hotseat;
             JoinCode = null;
             LocalPlayerId = 0;
+            LocalPlayerIndex = -1;
         }
 
         public static void EnterHostMode(string joinCode)
@@ -49,6 +55,11 @@ namespace Catan
         public static void SetLocalPlayerId(ulong id)
         {
             LocalPlayerId = id;
+        }
+
+        public static void SetLocalPlayerIndex(int index)
+        {
+            LocalPlayerIndex = index;
         }
     }
 }

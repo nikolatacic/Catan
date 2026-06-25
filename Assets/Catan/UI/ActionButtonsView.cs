@@ -79,6 +79,21 @@ namespace Catan.UI
                 return;
             }
 
+            // Networked: only the device whose local player is also the active
+            // player gets functional buttons. Other peers see disabled buttons
+            // until it's their turn.
+            if (Catan.NetworkSession.IsNetworked)
+            {
+                int localIndex = Catan.NetworkSession.LocalPlayerIndex;
+                if (localIndex < 0 ||
+                    localIndex >= manager.Players.Count ||
+                    manager.ActivePlayer != manager.Players[localIndex])
+                {
+                    SetAllInteractable(false);
+                    return;
+                }
+            }
+
             var phase = manager.TurnManager.CurrentCatanPhase;
             var player = manager.ActivePlayer;
 

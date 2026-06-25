@@ -25,6 +25,7 @@ namespace Catan.UI
             EventBus.Subscribe<DevCardPurchasedEvent>(OnDevCardPurchased);
             EventBus.Subscribe<CardPlayedEvent<DevelopmentCard>>(OnCardPlayed);
             EventBus.Subscribe<CatanPhaseChangedEvent>(OnPhaseChanged);
+            EventBus.Subscribe<LocalPlayerAssignedEvent>(OnLocalPlayerAssigned);
         }
 
         private void OnDisable()
@@ -33,12 +34,35 @@ namespace Catan.UI
             EventBus.Unsubscribe<DevCardPurchasedEvent>(OnDevCardPurchased);
             EventBus.Unsubscribe<CardPlayedEvent<DevelopmentCard>>(OnCardPlayed);
             EventBus.Unsubscribe<CatanPhaseChangedEvent>(OnPhaseChanged);
+            EventBus.Unsubscribe<LocalPlayerAssignedEvent>(OnLocalPlayerAssigned);
         }
 
         private void OnTurnStarted(GameCore.Turn.TurnStartedEvent gameEvent)
         {
-            _player = gameEvent.Actor as CatanPlayer;
+            ResolvePlayer(gameEvent.Actor as CatanPlayer);
             Rebuild();
+        }
+
+        private void OnLocalPlayerAssigned(LocalPlayerAssignedEvent gameEvent)
+        {
+            ResolvePlayer(activePlayer: null);
+            Rebuild();
+        }
+
+        // Hotseat: track the active player. Networked: track the local player.
+        private void ResolvePlayer(CatanPlayer activePlayer)
+        {
+            if (Catan.NetworkSession.IsNetworked)
+            {
+                var manager = GameManager.Instance;
+                int index = Catan.NetworkSession.LocalPlayerIndex;
+                if (manager != null && index >= 0 && index < manager.Players.Count)
+                    _player = manager.Players[index];
+            }
+            else
+            {
+                _player = activePlayer ?? _player;
+            }
         }
 
         private void OnDevCardPurchased(DevCardPurchasedEvent gameEvent)

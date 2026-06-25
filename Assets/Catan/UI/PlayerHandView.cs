@@ -8,8 +8,11 @@ using GameCore.Score;
 namespace Catan.UI
 {
     // ── Scene setup ────────────────────────────────────────────────────────────
-    // One instance on Canvas. Automatically follows the active player via
-    // TurnStartedEvent — no PlayerIndex needed.
+    // One instance on Canvas.
+    //
+    // Hotseat: follows the active player (whoever's turn it is) via TurnStartedEvent.
+    // Networked: follows the LOCAL player at this device via NetworkSession.
+    //            Local player index is set by NetworkEventBridge on connect.
     //
     // Wire 5 ResourceCardSlotView children (Wood/Brick/Sheep/Wheat/Ore) to the
     // corresponding slot fields. Each slot has its CatanResource assigned in
@@ -38,6 +41,7 @@ namespace Catan.UI
             EventBus.Subscribe<ResourceRemovedEvent>(OnResourceRemoved);
             EventBus.Subscribe<ScoreChangedEvent>(OnScoreChanged);
             EventBus.Subscribe<GameCore.Turn.TurnStartedEvent>(OnTurnStarted);
+            EventBus.Subscribe<LocalPlayerAssignedEvent>(OnLocalPlayerAssigned);
         }
 
         private void OnDisable()
@@ -46,12 +50,36 @@ namespace Catan.UI
             EventBus.Unsubscribe<ResourceRemovedEvent>(OnResourceRemoved);
             EventBus.Unsubscribe<ScoreChangedEvent>(OnScoreChanged);
             EventBus.Unsubscribe<GameCore.Turn.TurnStartedEvent>(OnTurnStarted);
+            EventBus.Unsubscribe<LocalPlayerAssignedEvent>(OnLocalPlayerAssigned);
         }
 
         private void OnTurnStarted(GameCore.Turn.TurnStartedEvent gameEvent)
         {
-            _player = gameEvent.Actor as CatanPlayer;
+            ResolvePlayer(gameEvent.Actor as CatanPlayer);
             Refresh();
+        }
+
+        private void OnLocalPlayerAssigned(LocalPlayerAssignedEvent gameEvent)
+        {
+            ResolvePlayer(activePlayer: null);
+            Refresh();
+        }
+
+        // Hotseat: track whoever's turn it is.
+        // Networked: always track the local player at this device.
+        private void ResolvePlayer(CatanPlayer activePlayer)
+        {
+            if (Catan.NetworkSession.IsNetworked)
+            {
+                var manager = GameManager.Instance;
+                int index = Catan.NetworkSession.LocalPlayerIndex;
+                if (manager != null && index >= 0 && index < manager.Players.Count)
+                    _player = manager.Players[index];
+            }
+            else
+            {
+                _player = activePlayer ?? _player;
+            }
         }
 
         private void OnResourceAdded(ResourceAddedEvent gameEvent)

@@ -18,4 +18,9 @@ namespace Catan
     // (placement mode, resources, score, IsGameOver). UI views should refresh on this
     // rather than on BuildSucceededEvent, which fires mid-action before state settles.
     public struct GameStateChangedEvent : IGameEvent { }
+
+    // Published by NetworkEventBridge on every peer once the host has assigned a
+    // local player index for this device. UI views switch from "follow active
+    // player" (hotseat) to "follow local player" (networked) on this signal.
+    public struct LocalPlayerAssignedEvent : IGameEvent { public int Index; }
 }
