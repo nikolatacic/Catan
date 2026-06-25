@@ -1,7 +1,9 @@
 {
   "name": "Catan.Editor",
   "references": [
-    "Catan"
+    "Catan",
+    "Unity.TextMeshPro",
+    "UnityEngine.UI"
   ],
   "includePlatforms": ["Editor"],
   "excludePlatforms": [],

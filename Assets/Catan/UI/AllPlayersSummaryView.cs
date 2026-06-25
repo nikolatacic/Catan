@@ -3,6 +3,7 @@ using UnityEngine;
 using GameCore.Events;
 using GameCore.Resources;
 using GameCore.Turn;
+using GameCore.Score;
 
 namespace Catan.UI
 {
