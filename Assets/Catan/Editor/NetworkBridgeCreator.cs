@@ -8,37 +8,47 @@ namespace Catan.UI.Editor
 {
     public static class NetworkBridgeCreator
     {
-        private const string MainScenePath = "Assets/Scenes/MainScene.unity";
+        private const string GameScenePath = "Assets/Scenes/GameHotseat.unity";
 
-        [MenuItem("Catan/Add Network Command Bridge to MainScene")]
-        public static void AddBridgeToMainScene()
+        [MenuItem("Catan/Add Network Bridges to GameHotseat")]
+        public static void AddBridgesToGameHotseat()
         {
-            if (!System.IO.File.Exists(MainScenePath))
+            if (!System.IO.File.Exists(GameScenePath))
             {
-                EditorUtility.DisplayDialog("MainScene missing",
-                    $"Could not find {MainScenePath}.", "OK");
+                EditorUtility.DisplayDialog("GameHotseat missing",
+                    $"Could not find {GameScenePath}.", "OK");
                 return;
             }
 
-            var scene = EditorSceneManager.OpenScene(MainScenePath, OpenSceneMode.Single);
+            var scene = EditorSceneManager.OpenScene(GameScenePath, OpenSceneMode.Single);
 
-            if (Object.FindObjectOfType<NetworkCommandBridge>() != null)
+            var existing = Object.FindObjectOfType<NetworkCommandBridge>();
+            GameObject host;
+            if (existing != null)
             {
-                EditorUtility.DisplayDialog("Already present",
-                    "NetworkCommandBridge already exists in MainScene.", "OK");
-                return;
+                host = existing.gameObject;
+                Debug.Log("[Catan] NetworkCommandBridge already present; reusing GameObject.");
+            }
+            else
+            {
+                host = new GameObject("NetworkBridges");
+                host.AddComponent<NetworkObject>();
+                host.AddComponent<NetworkCommandBridge>();
+                Debug.Log("[Catan] Created NetworkBridges GameObject with NetworkCommandBridge.");
             }
 
-            var go = new GameObject("NetworkCommandBridge");
-            go.AddComponent<NetworkObject>();
-            go.AddComponent<NetworkCommandBridge>();
+            if (host.GetComponent<NetworkEventBridge>() == null)
+            {
+                host.AddComponent<NetworkEventBridge>();
+                Debug.Log("[Catan] Added NetworkEventBridge to NetworkBridges.");
+            }
 
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
 
             Debug.Log(
-                "[Catan] NetworkCommandBridge added to MainScene.\n" +
-                "Clients now route their commands to the host via ServerRpc.");
+                "[Catan] Network bridges ready in GameHotseat.\n" +
+                "Clients now route commands to the host AND receive host events back.");
         }
     }
 }

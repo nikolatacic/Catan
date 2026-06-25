@@ -88,6 +88,25 @@ namespace Catan.UI
         private void Start()
         {
             InitializeResources();
+
+            if (NetworkSession.IsClient)
+            {
+                // Defer board generation until the host sends its seed via
+                // NetworkEventBridge. Until then the scene is empty of game state.
+                return;
+            }
+
+            CompleteInitialization(BoardSeed);
+        }
+
+        // Called by NetworkEventBridge on the client once the host's seed arrives.
+        // Also called from Start() on hotseat / host with the local BoardSeed.
+        public void CompleteInitialization(int seed)
+        {
+            // Convert "0 = random" into a concrete seed so the host can share it
+            // with clients via NetworkEventBridge.
+            if (seed == 0) seed = new System.Random().Next(1, int.MaxValue);
+            BoardSeed = seed;
             GenerateBoard();
             CreatePlayers();
             WireSystems();
@@ -95,7 +114,11 @@ namespace Catan.UI
             _devCardDeck = CreateDevCardDeck();
             BoardRenderer?.RenderBoard();
             RobberView?.SnapToCurrentPosition();
-            TurnManager.StartGame();
+
+            // Only the host actually drives the turn machine. Clients receive
+            // turn changes via TurnStartedEvent fan-out.
+            if (!NetworkSession.IsClient)
+                TurnManager.StartGame();
         }
 
         private void OnDestroy()
@@ -116,8 +139,9 @@ namespace Catan.UI
 
         private void GenerateBoard()
         {
-            var random = BoardSeed == 0 ? new System.Random() : new System.Random(BoardSeed);
-            var generator = new CatanBoardGenerator(random);
+            // BoardSeed is always concrete by this point (CompleteInitialization
+            // resolves 0 to a random non-zero value).
+            var generator = new CatanBoardGenerator(new System.Random(BoardSeed));
             Board = generator.GenerateBoard();
         }
 

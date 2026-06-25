@@ -151,7 +151,7 @@ namespace Catan.UI
             }
 
             SetStatus("Loading game…");
-            NetworkManager.Singleton.SceneManager.LoadScene("MainScene", LoadSceneMode.Single);
+            NetworkManager.Singleton.SceneManager.LoadScene("GameHotseat", LoadSceneMode.Single);
         }
 
         // ── Client flow ────────────────────────────────────────────────────────
@@ -182,7 +182,7 @@ namespace Catan.UI
             {
                 throw new InvalidOperationException("NetworkManager.StartClient returned false.");
             }
-            // Host will load MainScene via NetworkManager.SceneManager; the client
+            // Host will load GameHotseat via NetworkManager.SceneManager; the client
             // follows automatically. Nothing more to do here.
         }
 

@@ -153,7 +153,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -444.00003, y: -143}
+  m_AnchoredPosition: {x: -444, y: -143}
   m_SizeDelta: {x: -766.3987, y: -454.0174}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1341198
@@ -423,7 +423,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -444.00003, y: -143}
+  m_AnchoredPosition: {x: -444, y: -143}
   m_SizeDelta: {x: -766.3987, y: -454.0174}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &24301464
@@ -901,6 +901,78 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4180408755224024493, guid: 4ef58ce0598764c73a12ced6916ce950, type: 3}
   m_PrefabInstance: {fileID: 85038682}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &116896548
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 116896550}
+  - component: {fileID: 116896549}
+  - component: {fileID: 116896551}
+  m_Layer: 0
+  m_Name: NetworkCommandBridge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &116896549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116896548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 2740436982
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  <InScenePlaced>k__BackingField: 0
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
+--- !u!4 &116896550
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116896548}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &116896551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116896548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52ecb72dd1964280ac6ef47f877e353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Catan::Catan.Network.NetworkCommandBridge
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &127041042
 GameObject:
   m_ObjectHideFlags: 0
@@ -2612,7 +2684,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -444.00003, y: -143}
+  m_AnchoredPosition: {x: -444, y: -143}
   m_SizeDelta: {x: -766.3987, y: -454.0174}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &520512570
@@ -3765,7 +3837,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -306.00003, y: -143}
+  m_AnchoredPosition: {x: -306, y: -143}
   m_SizeDelta: {x: -766.3987, y: -454.0174}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &749483464
@@ -6782,7 +6854,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -306.00003, y: -143}
+  m_AnchoredPosition: {x: -306, y: -143}
   m_SizeDelta: {x: -766.3987, y: -454.0174}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1198799375
@@ -6919,7 +6991,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -291.00003, y: 260}
+  m_AnchoredPosition: {x: -291, y: 260}
   m_SizeDelta: {x: -766.3987, y: -454.0174}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1317504141
@@ -8986,7 +9058,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -434.00003, y: 253}
+  m_AnchoredPosition: {x: -434, y: 253}
   m_SizeDelta: {x: -766.3987, y: -454.0174}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1646702664
@@ -9260,7 +9332,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -218.00003, y: 254}
+  m_AnchoredPosition: {x: -218, y: 254}
   m_SizeDelta: {x: -766.3987, y: -454.0174}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1653345096
@@ -10574,7 +10646,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -306.00003, y: -143}
+  m_AnchoredPosition: {x: -306, y: -143}
   m_SizeDelta: {x: -766.3987, y: -454.0174}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2105030614
@@ -11040,3 +11112,4 @@ SceneRoots:
   - {fileID: 394901418}
   - {fileID: 217618982}
   - {fileID: 1990961226}
+  - {fileID: 116896550}
