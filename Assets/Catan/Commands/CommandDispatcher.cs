@@ -1,12 +1,12 @@
 using UnityEngine;
+using Catan.Network;
 
 namespace Catan.Commands
 {
     // ── Single entry point for all player-intent commands ─────────────────────
-    // Hotseat    → execute locally
-    // Host       → execute locally (host IS the authority)
-    // Client     → Phase 5b: serialize + ServerRpc to host
-    //              Phase 5a (now): no-op + warning
+    // Hotseat → execute locally
+    // Host    → execute locally (host IS the authority)
+    // Client  → SendOverNetwork → bridge ServerRpc → host executes
     // ──────────────────────────────────────────────────────────────────────────
 
     public static class CommandDispatcher
@@ -23,9 +23,15 @@ namespace Catan.Commands
 
             if (NetworkSession.IsClient)
             {
-                Debug.LogWarning(
-                    $"[CommandDispatcher] {command.GetType().Name} from a client is " +
-                    "not yet routed over the network. Phase 5b will add RPC routing.");
+                var bridge = NetworkCommandBridge.Instance;
+                if (bridge == null)
+                {
+                    Debug.LogWarning(
+                        "[CommandDispatcher] Client tried to send a command but the " +
+                        "NetworkCommandBridge isn't spawned yet.");
+                    return;
+                }
+                command.SendOverNetwork(bridge);
                 return;
             }
 
