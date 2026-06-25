@@ -8,22 +8,27 @@ using GameCore.Score;
 namespace Catan.UI
 {
     // ── Scene setup ────────────────────────────────────────────────────────────
-    // One instance on Canvas. No PlayerIndex needed — automatically follows
-    // whoever's turn it is via TurnStartedEvent.
+    // One instance on Canvas. Automatically follows the active player via
+    // TurnStartedEvent — no PlayerIndex needed.
+    //
+    // Wire 5 ResourceCardSlotView children (Wood/Brick/Sheep/Wheat/Ore) to the
+    // corresponding slot fields. Each slot has its CatanResource assigned in
+    // the slot's own Inspector.
     // ──────────────────────────────────────────────────────────────────────────
 
     public class PlayerHandView : MonoBehaviour
     {
-        [Header("Labels")]
+        [Header("Player info")]
         public TextMeshProUGUI PlayerNameLabel;
-        public TextMeshProUGUI WoodLabel;
-        public TextMeshProUGUI BrickLabel;
-        public TextMeshProUGUI SheepLabel;
-        public TextMeshProUGUI WheatLabel;
-        public TextMeshProUGUI OreLabel;
         public TextMeshProUGUI TotalCardsLabel;
         public TextMeshProUGUI VictoryPointsLabel;
-        public TextMeshProUGUI DevCardsLabel;
+
+        [Header("Resource card slots (one per type)")]
+        public ResourceCardSlotView WoodSlot;
+        public ResourceCardSlotView BrickSlot;
+        public ResourceCardSlotView SheepSlot;
+        public ResourceCardSlotView WheatSlot;
+        public ResourceCardSlotView OreSlot;
 
         private CatanPlayer _player;
 
@@ -72,11 +77,12 @@ namespace Catan.UI
                 PlayerNameLabel.text = _player.DisplayName;
 
             var resources = _player.Resources.Current;
-            if (WoodLabel  != null) WoodLabel.text  = resources.Get(CatanResources.Wood).ToString();
-            if (BrickLabel != null) BrickLabel.text = resources.Get(CatanResources.Brick).ToString();
-            if (SheepLabel != null) SheepLabel.text = resources.Get(CatanResources.Sheep).ToString();
-            if (WheatLabel != null) WheatLabel.text = resources.Get(CatanResources.Wheat).ToString();
-            if (OreLabel   != null) OreLabel.text   = resources.Get(CatanResources.Ore).ToString();
+
+            WoodSlot?.Refresh(resources.Get(CatanResources.Wood));
+            BrickSlot?.Refresh(resources.Get(CatanResources.Brick));
+            SheepSlot?.Refresh(resources.Get(CatanResources.Sheep));
+            WheatSlot?.Refresh(resources.Get(CatanResources.Wheat));
+            OreSlot?.Refresh(resources.Get(CatanResources.Ore));
 
             int totalCards = resources.Get(CatanResources.Wood)
                            + resources.Get(CatanResources.Brick)
@@ -84,8 +90,8 @@ namespace Catan.UI
                            + resources.Get(CatanResources.Wheat)
                            + resources.Get(CatanResources.Ore);
 
-            if (TotalCardsLabel != null) TotalCardsLabel.text = $"Cards: {totalCards}";
-            if (DevCardsLabel   != null) DevCardsLabel.text   = $"Dev: {_player.DevelopmentCards.Cards.Count}";
+            if (TotalCardsLabel != null)
+                TotalCardsLabel.text = $"Cards: {totalCards}";
 
             RefreshScore();
         }
