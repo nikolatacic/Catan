@@ -261,19 +261,13 @@ namespace Catan.UI
         {
             var player = ActivePlayer;
             if (player == null) return;
-            if (!Board.Settlements.TryGetValue(vertex, out var settlement)) return;
-            if (settlement.Owner != player || settlement.IsCity) return;
+            if (!Board.Settlements.TryGetValue(vertex, out var existingSettlement)) return;
 
-            settlement.UpgradeToCity();
-            if (!BuildManager.TryPlace(settlement, settlement, player))
-            {
-                // Roll back the upgrade on failure
-                settlement.UpgradeToCity(); // not reversible — log warning instead
-                Debug.LogWarning("City upgrade failed after UpgradeToCity was called.");
-                return;
-            }
+            var upgrade = new CityUpgrade(player, vertex);
+            if (!BuildManager.TryPlace(upgrade, upgrade, player)) return;
 
-            player.Resources.TryRemove(settlement.BuildCost);
+            existingSettlement.UpgradeToCity();
+            player.Resources.TryRemove(upgrade.BuildCost);
             ScoreManager.RecalculateAll();
         }
 

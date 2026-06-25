@@ -127,18 +127,17 @@ namespace Catan.Tests
             _board.Settlements[vertex] = settlement;
             _player.Settlements.Add(settlement);
             GiveCityResources();
-            settlement.UpgradeToCity();
-            Assert.IsTrue(_rule.CanPlace(settlement, settlement, _player));
+            var upgrade = new CityUpgrade(_player, vertex);
+            Assert.IsTrue(_rule.CanPlace(upgrade, upgrade, _player));
         }
 
         [Test]
         public void CanPlace_City_NoSettlementAtVertex_ReturnsFalse()
         {
             var vertex = FreeVertex();
-            var settlement = new Settlement(_player, vertex);
-            settlement.UpgradeToCity();
             GiveCityResources();
-            Assert.IsFalse(_rule.CanPlace(settlement, settlement, _player));
+            var upgrade = new CityUpgrade(_player, vertex);
+            Assert.IsFalse(_rule.CanPlace(upgrade, upgrade, _player));
         }
 
         // ── Road placement ─────────────────────────────────────────────────────
