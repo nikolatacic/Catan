@@ -63,12 +63,53 @@ value — this works identically in hotseat and survives async RPC handling.
 
 ## Phase 5 — Unity Relay + NGO integration
 
-- Add packages: `com.unity.netcode.gameobjects`, `com.unity.services.relay`.
-- Menu gets Host / Join flow (join code copied or shown as QR for mobile ease).
-- `GameManager` runs authority logic only on host (`IsServer` guard).
-- Commands from Phase 4 become `ServerRpc` methods.
-- Shared state (`Board`, player resources, settlements, scores) synced via `NetworkVariable` or `ClientRpc` after each state change.
-- `EventBus.Publish` on host → equivalent fan-out to all clients.
+Split into three sub-phases because the work is too large for a single session.
+
+### Phase 5a — Lobby scaffolding ✅ DONE
+
+- Added packages: `com.unity.netcode.gameobjects`, `com.unity.transport`,
+  `com.unity.services.core`, `com.unity.services.authentication`, `com.unity.services.relay`
+- `NetworkSession` (static) — mirrors `GameSession` for connection state
+  (`Hotseat` / `Host` / `Client`, `JoinCode`, `LocalPlayerId`)
+- `LobbyView` — Relay create/join + StartHost/StartClient + scene load
+- `MainMenuView` — added `OnHost` / `OnJoin` alongside existing `OnPlay`
+- `CommandDispatcher` is now NetworkSession-aware (clients no-op + warn until 5b)
+- Editor tool: `Catan → Add Multiplayer Lobby to Main Menu` adds NetworkManager
+  + UnityTransport + a wired LobbyPanel to the existing MainMenu scene
+
+Manual one-time Unity setup:
+1. Let Unity import the new packages on first open
+2. Edit → Project Settings → Services → link this project to a Unity Cloud
+   project (required for Relay + Authentication)
+3. Run `Catan → Add Multiplayer Lobby to Main Menu`
+
+After 5a: hosting / joining works end-to-end at the Relay/transport level —
+peers connect, scenes load together via NGO's NetworkSceneManager. But game
+state changes from clients don't reach the host yet.
+
+### Phase 5b — Command routing through RPCs 👈 NEXT
+
+- `GameManager` becomes a `NetworkBehaviour` (or sibling `NetworkBridge`)
+- Each `IGameCommand` gets a serializable on-wire form (HexCoord, HexVertex,
+  HexEdge, IPlayer-by-id, IResource-by-type)
+- `CommandDispatcher.Send` on a client serializes + calls `ServerRpc` on the host
+- Host applies the command exactly as today; outgoing events propagate to clients
+  via the EventBus wrapper (see below)
+- `EventBus.Publish` on the host triggers a `ClientRpc` so all clients see the
+  same event (UI subscribers are already passive and need no changes)
+- Three flagged events get redacted per-client:
+  `ResourceProducedEvent`, `ResourceAddedEvent`, `ResourceStolenEvent`
+- `DiceManager` RNG runs only on the host; `DiceRolledEvent` fans out
+
+### Phase 5c — State sync + lobby player picker
+
+- Initial board snapshot to joining clients (`OnNetworkSpawn` on host writes
+  a serialized `CatanBoard` payload; clients reconstruct)
+- Per-player UI: `PlayerHandView` follows `NetworkSession.LocalPlayerId` instead
+  of `TurnStartedEvent.Actor` when networked
+- Real player picker in the lobby — replaces `SetDefault2PlayerHotseat()`
+- Hidden state filtering: only the owning client sees its full dev card hand
+  and specific resource cards; everyone else sees counts
 
 ## Phase 6 — Per-device UI
 
@@ -87,8 +128,10 @@ value — this works identically in hotseat and survives async RPC handling.
 | ✅ Done | 2 — GameSession data carrier | ~1 session |
 | ✅ Done | 3 — Boundary audit (no code) | ~1 session |
 | ✅ Done | 4 — Command pattern | ~1 session |
-| 👈 Next | 5 — Relay + NGO | multiple sessions |
-| Polish | 6 — Per-device UI | ~1 session |
+| ✅ Done | 5a — Lobby scaffolding | ~1 session |
+| 👈 Next | 5b — Command routing through RPCs | ~1 session |
+| Queued  | 5c — State sync + lobby player picker | ~1 session |
+| Polish  | 6 — Per-device UI | ~1 session |
 
 ---
 
