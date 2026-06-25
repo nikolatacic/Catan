@@ -5,8 +5,11 @@ namespace Catan.UI
 {
     // ── Editor wiring required ─────────────────────────────────────────────────
     // Spawned at runtime by BoardRenderer. Uses a BoxCollider2D for clicks.
-    // Add a child GameObject "Highlight" with a SpriteRenderer and assign it to
-    // HighlightRenderer. The highlight shows valid road placement spots.
+    //
+    // Highlight setup (two options, either works):
+    //   A) Add a child GameObject named exactly "Highlight" with a SpriteRenderer.
+    //      It will be found automatically at startup.
+    //   B) Assign any SpriteRenderer to the HighlightRenderer field in the prefab.
     // ──────────────────────────────────────────────────────────────────────────
 
     public class EdgeView : MonoBehaviour
@@ -16,6 +19,16 @@ namespace Catan.UI
         public SpriteRenderer HighlightRenderer;
 
         public GameCore.Board.HexEdge Edge { get; private set; }
+
+        private void Awake()
+        {
+            if (HighlightRenderer == null)
+            {
+                var highlightTransform = transform.Find("Highlight");
+                if (highlightTransform != null)
+                    HighlightRenderer = highlightTransform.GetComponent<SpriteRenderer>();
+            }
+        }
 
         private void OnEnable()
         {
@@ -60,9 +73,10 @@ namespace Catan.UI
 
             if (mode == PlacementMode.Road)
             {
-                bool validRoad = manager.IsValidRoadSpot(Edge);
-                var baseColor = manager.ActivePlayer?.Color ?? Color.white;
-                SetHighlight(validRoad, new Color(baseColor.r, baseColor.g, baseColor.b, 0.6f));
+                bool edgeEmpty = manager.Board != null && !manager.Board.Roads.ContainsKey(Edge);
+                var player = manager.ActivePlayer;
+                var roadColor = player != null ? player.Color : Color.white;
+                SetHighlight(edgeEmpty, new Color(roadColor.r, roadColor.g, roadColor.b, 0.6f));
             }
             else
             {
