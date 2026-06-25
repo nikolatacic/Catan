@@ -3,7 +3,8 @@
   "references": [
     "Catan",
     "Unity.TextMeshPro",
-    "UnityEngine.UI"
+    "UnityEngine.UI",
+    "Unity.Netcode.Runtime"
   ],
   "includePlatforms": ["Editor"],
   "excludePlatforms": [],
