@@ -39,7 +39,7 @@ namespace Catan.UI
             if (resource is CatanResource catanResource)
             {
                 if (CardBackground != null)
-                    CardBackground.color = ResourceColor(catanResource.Type);
+                    CardBackground.color = catanResource.Color;
 
                 if (ResourceIcon != null)
                 {
@@ -57,15 +57,5 @@ namespace Catan.UI
         }
 
         public void OnClicked() => _onClick?.Invoke(this);
-
-        private static Color ResourceColor(CatanResourceType type) => type switch
-        {
-            CatanResourceType.Wood  => new Color(0.40f, 0.25f, 0.10f),
-            CatanResourceType.Brick => new Color(0.80f, 0.30f, 0.10f),
-            CatanResourceType.Sheep => new Color(0.55f, 0.85f, 0.35f),
-            CatanResourceType.Wheat => new Color(0.95f, 0.85f, 0.20f),
-            CatanResourceType.Ore   => new Color(0.50f, 0.50f, 0.60f),
-            _                       => Color.white
-        };
     }
 }
