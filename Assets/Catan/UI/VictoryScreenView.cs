@@ -10,7 +10,7 @@ namespace Catan.UI
     // ── Editor wiring required ─────────────────────────────────────────────────
     // Attach to a UI overlay panel (set inactive by default).
     // Assign WinnerLabel, WinnerColorIndicator, RestartButton.
-    // Wire RestartButton.OnClick to OnRestartClicked().
+    // RestartButton's OnClick is wired in code (Awake) — no manual Inspector wiring needed.
     // ──────────────────────────────────────────────────────────────────────────
 
     public class VictoryScreenView : MonoBehaviour
@@ -25,6 +25,7 @@ namespace Catan.UI
         private void Awake()
         {
             EventBus.Subscribe<VictoryAchievedEvent>(OnVictoryAchieved);
+            RestartButton?.onClick.AddListener(OnRestartClicked);
             gameObject.SetActive(false);
         }
 
