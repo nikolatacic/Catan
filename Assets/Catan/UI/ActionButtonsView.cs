@@ -88,8 +88,13 @@ namespace Catan.UI
             if (Catan.NetworkSession.IsNetworked)
             {
                 int localIndex = Catan.NetworkSession.LocalPlayerIndex;
-                if (localIndex < 0 ||
-                    localIndex >= manager.Players.Count ||
+                // If local index not yet assigned, or players haven't been created
+                // yet, wait — a TurnStartedEvent or LocalPlayerAssignedEvent will
+                // re-trigger this after initialization completes.
+                if (localIndex < 0 || manager.Players.Count == 0)
+                    return;
+
+                if (localIndex >= manager.Players.Count ||
                     manager.ActivePlayer != manager.Players[localIndex])
                 {
                     SetAllInteractable(false);

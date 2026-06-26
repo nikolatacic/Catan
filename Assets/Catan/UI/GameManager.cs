@@ -107,11 +107,13 @@ namespace Catan.UI
             // with clients via NetworkEventBridge.
             if (seed == 0) seed = new System.Random().Next(1, int.MaxValue);
             BoardSeed = seed;
+            Debug.Log($"[GameManager] CompleteInitialization seed={BoardSeed} IsClient={NetworkSession.IsClient}");
             GenerateBoard();
             CreatePlayers();
             WireSystems();
             SubscribeToEvents();
             _devCardDeck = CreateDevCardDeck();
+            Debug.Log($"[GameManager] Calling BoardRenderer.RenderBoard — renderer={(BoardRenderer != null ? "OK" : "NULL")}");
             BoardRenderer?.RenderBoard();
             RobberView?.SnapToCurrentPosition();
 
@@ -119,6 +121,8 @@ namespace Catan.UI
             // turn changes via TurnStartedEvent fan-out.
             if (!NetworkSession.IsClient)
                 TurnManager.StartGame();
+
+            Debug.Log($"[GameManager] CompleteInitialization done. Players={Players.Count} Board={(Board != null ? "OK" : "NULL")}");
         }
 
         private void OnDestroy()

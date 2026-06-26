@@ -39,12 +39,14 @@ namespace Catan.Network
 
             if (IsServer)
             {
+                Debug.Log("[NetworkEventBridge] Host OnNetworkSpawn — subscribing to events and assigning host index.");
                 SubscribeToHostEvents();
                 // Host: claim index 0 locally — no RPC needed (host IS the server).
                 AssignAndAnnounceLocally(NetworkManager.ServerClientId);
             }
             else
             {
+                Debug.Log("[NetworkEventBridge] Client OnNetworkSpawn — requesting initial state from host.");
                 // Client: ask the server for our initial state once our bridge is
                 // spawned. This is more reliable than the server pushing right at
                 // OnClientConnected — at that moment the client may not yet have
@@ -84,6 +86,7 @@ namespace Catan.Network
 
             var manager = GameManager.Instance;
             int seed = manager != null ? manager.BoardSeed : 0;
+            Debug.Log($"[NetworkEventBridge] Server received RequestInitialState from clientId={clientId} — assigning index={index} seed={seed} managerExists={manager != null}");
 
             int currentActorIndex = -1;
             int currentTurnNumber = 0;
@@ -112,8 +115,7 @@ namespace Catan.Network
             // ClientRpc plumbing. Host already initialized itself, so guard.
             if (IsServer) return;
 
-            NetworkSession.SetLocalPlayerIndex(index);
-            EventBus.Publish(new LocalPlayerAssignedEvent { Index = index });
+            Debug.Log($"[NetworkEventBridge] Client received initial state — seed={seed} index={index} actorIndex={currentActorIndex} turn={turnNumber} phase={phase}");
 
             var manager = GameManager.Instance;
             if (manager == null)
@@ -121,10 +123,24 @@ namespace Catan.Network
                 Debug.LogWarning("[NetworkEventBridge] Initial state arrived before GameManager existed.");
                 return;
             }
-            if (manager.Board != null) return; // already initialized
 
-            GameSession.SetDefault2PlayerHotseat();
-            manager.CompleteInitialization(seed);
+            // Initialize the board FIRST so Players list is populated before
+            // LocalPlayerAssignedEvent fires and RefreshButtons reads Players.Count.
+            if (manager.Board == null)
+            {
+                Debug.Log($"[NetworkEventBridge] Client calling CompleteInitialization with seed={seed}");
+                GameSession.SetDefault2PlayerHotseat();
+                manager.CompleteInitialization(seed);
+                Debug.Log($"[NetworkEventBridge] Client CompleteInitialization done. Players={manager.Players.Count} Board={(manager.Board != null ? "OK" : "NULL")}");
+            }
+            else
+            {
+                Debug.Log("[NetworkEventBridge] Board already initialized on client, skipping CompleteInitialization.");
+            }
+
+            // Set local player index and notify UI AFTER players exist.
+            NetworkSession.SetLocalPlayerIndex(index);
+            EventBus.Publish(new LocalPlayerAssignedEvent { Index = index });
 
             // Mirror the host's current turn state so client UI shows the right
             // active player and phase before any further events arrive.
@@ -143,6 +159,10 @@ namespace Catan.Network
                     From = (CatanTurnPhase)phase,
                     To = (CatanTurnPhase)phase,
                 });
+            }
+            else
+            {
+                Debug.LogWarning($"[NetworkEventBridge] Could not mirror turn state — actorIndex={currentActorIndex} playerCount={manager.Players.Count}");
             }
         }
 
