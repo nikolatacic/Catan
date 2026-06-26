@@ -161,6 +161,22 @@ namespace Catan
         // Hook called every time the Catan phase changes.
         protected virtual void OnPhaseStart(CatanTurnPhase phase) { }
 
+        // ── Network mirror (client-only) ───────────────────────────────────────
+        // Called by NetworkEventBridge on the client to mirror the host's
+        // authoritative turn state. The client's CatanTurnManager doesn't drive
+        // turn logic; it just reflects what the host says so UI gates work.
+
+        public void MirrorActor(ITurnActor actor, int turnNumber)
+        {
+            CurrentActor = actor;
+            TurnNumber = turnNumber;
+        }
+
+        public void MirrorPhase(CatanTurnPhase phase)
+        {
+            CurrentCatanPhase = phase;
+        }
+
         // ── Private helpers ────────────────────────────────────────────────────
 
         private void SetCatanPhase(CatanTurnPhase newPhase)

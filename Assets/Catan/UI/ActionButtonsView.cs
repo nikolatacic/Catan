@@ -34,6 +34,7 @@ namespace Catan.UI
             EventBus.Subscribe<GameCore.Build.BuildSucceededEvent>(OnBuildSucceeded);
             EventBus.Subscribe<GameCore.Score.VictoryAchievedEvent>(OnVictoryAchieved);
             EventBus.Subscribe<GameStateChangedEvent>(OnGameStateChanged);
+            EventBus.Subscribe<LocalPlayerAssignedEvent>(OnLocalPlayerAssigned);
         }
 
         private void OnDisable()
@@ -43,6 +44,7 @@ namespace Catan.UI
             EventBus.Unsubscribe<GameCore.Build.BuildSucceededEvent>(OnBuildSucceeded);
             EventBus.Unsubscribe<GameCore.Score.VictoryAchievedEvent>(OnVictoryAchieved);
             EventBus.Unsubscribe<GameStateChangedEvent>(OnGameStateChanged);
+            EventBus.Unsubscribe<LocalPlayerAssignedEvent>(OnLocalPlayerAssigned);
         }
 
         private void Start() => RefreshButtons();
@@ -52,6 +54,7 @@ namespace Catan.UI
         private void OnBuildSucceeded(GameCore.Build.BuildSucceededEvent gameEvent) => RefreshButtons();
         private void OnVictoryAchieved(GameCore.Score.VictoryAchievedEvent gameEvent) => RefreshButtons();
         private void OnGameStateChanged(GameStateChangedEvent gameEvent) => RefreshButtons();
+        private void OnLocalPlayerAssigned(LocalPlayerAssignedEvent gameEvent) => RefreshButtons();
 
         // ── Button callbacks ───────────────────────────────────────────────────
 

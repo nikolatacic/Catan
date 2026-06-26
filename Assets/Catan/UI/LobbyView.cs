@@ -52,6 +52,7 @@ namespace Catan.UI
 
         private bool _isHostMode;
         private bool _isBusy;
+        private bool _isHostAllocated;
 
         private void Awake()
         {
@@ -75,12 +76,13 @@ namespace Catan.UI
         public void ShowAsHost()
         {
             _isHostMode = true;
+            _isHostAllocated = false;
             Show();
             if (HostSection != null)   HostSection.SetActive(true);
             if (ClientSection != null) ClientSection.SetActive(false);
             if (JoinCodeDisplay != null) JoinCodeDisplay.text = "—";
-            SetStatus("Press Start to host a game.");
-            SetConfirmText("Start Game");
+            SetStatus("Click Create Room to get a join code.");
+            SetConfirmText("Create Room");
         }
 
         public void ShowAsClient()
@@ -120,34 +122,45 @@ namespace Catan.UI
         {
             if (_isBusy) return;
             if (Root != null) Root.SetActive(false);
+            _isHostAllocated = false;
             NetworkSession.EnterHotseatMode();
         }
 
         // ── Host flow ──────────────────────────────────────────────────────────
 
+        // Two-stage flow:
+        //   First click → allocate + start host. Code is shown and held visible.
+        //                 Button changes to "Start Game".
+        //   Second click → load the game scene (taking all connected clients with it).
         private async Task StartAsHostAsync()
         {
-            SetStatus("Signing in to Unity Services…");
-            await EnsureSignedInAsync();
-
-            SetStatus("Allocating relay…");
-            var allocation = await RelayService.Instance.CreateAllocationAsync(MaxClients);
-
-            SetStatus("Requesting join code…");
-            var joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
-            if (JoinCodeDisplay != null) JoinCodeDisplay.text = joinCode;
-
-            ConfigureTransportForHost(allocation);
-
-            NetworkSession.EnterHostMode(joinCode);
-            // Placeholder roster until Phase 5c gives the lobby a real player picker.
-            // Host fills in the players; clients receive this list from the host.
-            GameSession.SetDefault2PlayerHotseat();
-
-            SetStatus("Starting host…");
-            if (!NetworkManager.Singleton.StartHost())
+            if (!_isHostAllocated)
             {
-                throw new InvalidOperationException("NetworkManager.StartHost returned false.");
+                SetStatus("Signing in to Unity Services…");
+                await EnsureSignedInAsync();
+
+                SetStatus("Allocating relay…");
+                var allocation = await RelayService.Instance.CreateAllocationAsync(MaxClients);
+
+                SetStatus("Requesting join code…");
+                var joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
+                if (JoinCodeDisplay != null) JoinCodeDisplay.text = joinCode;
+
+                ConfigureTransportForHost(allocation);
+
+                NetworkSession.EnterHostMode(joinCode);
+                GameSession.SetDefault2PlayerHotseat();
+
+                SetStatus("Starting host…");
+                if (!NetworkManager.Singleton.StartHost())
+                    throw new InvalidOperationException("NetworkManager.StartHost returned false.");
+
+                _isHostAllocated = true;
+                SetStatus("Room is open — share the code, then click Start Game when ready.");
+                SetConfirmText("Start Game");
+                _isBusy = false;
+                SetConfirmInteractable(true);
+                return;
             }
 
             SetStatus("Loading game…");

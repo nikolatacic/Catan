@@ -40,85 +40,110 @@ namespace Catan.Network
             if (IsServer)
             {
                 SubscribeToHostEvents();
-                if (GameManager.Instance != null)
-                    BroadcastSeedClientRpc(GameManager.Instance.BoardSeed);
-
-                // Assign player indices for already-connected clients (host itself
-                // is in this list as ServerClientId). Late joiners get assigned by
-                // the OnClientConnected callback below.
-                foreach (var clientId in NetworkManager.Singleton.ConnectedClientsIds)
-                    AssignNextIndexForClient(clientId);
-
-                NetworkManager.Singleton.OnClientConnectedCallback += AssignNextIndexForClient;
+                // Host: claim index 0 locally — no RPC needed (host IS the server).
+                AssignAndAnnounceLocally(NetworkManager.ServerClientId);
+            }
+            else
+            {
+                // Client: ask the server for our initial state once our bridge is
+                // spawned. This is more reliable than the server pushing right at
+                // OnClientConnected — at that moment the client may not yet have
+                // the in-scene NetworkObject ready to receive the RPC.
+                RequestInitialStateServerRpc();
             }
         }
 
         public override void OnNetworkDespawn()
         {
             if (Instance == this) Instance = null;
-            if (IsServer)
-            {
-                UnsubscribeFromHostEvents();
-                if (NetworkManager.Singleton != null)
-                    NetworkManager.Singleton.OnClientConnectedCallback -= AssignNextIndexForClient;
-            }
+            if (IsServer) UnsubscribeFromHostEvents();
         }
 
         // ── Player index assignment ────────────────────────────────────────────
 
-        private void AssignNextIndexForClient(ulong clientId)
+        // Server-only: pick and remember an index for this client, set the local
+        // session (server-side, used by host UI), publish the local event.
+        private void AssignAndAnnounceLocally(ulong clientId)
         {
             if (_clientToPlayerIndex.ContainsKey(clientId)) return;
             int index = _nextPlayerIndex++;
             _clientToPlayerIndex[clientId] = index;
-
-            // Late joiner needs the seed too so they can build the board before
-            // any other event lands. Targets only this one clientId.
-            var targetOnly = new ClientRpcParams
-            {
-                Send = new ClientRpcSendParams { TargetClientIds = new[] { clientId } }
-            };
-            if (GameManager.Instance != null)
-                BroadcastSeedToClientRpc(GameManager.Instance.BoardSeed, targetOnly);
-
-            AssignPlayerIndexClientRpc(index, targetOnly);
-        }
-
-        // Like BroadcastSeedClientRpc but targets a specific client (for late joiners).
-        [ClientRpc]
-        private void BroadcastSeedToClientRpc(int seed, ClientRpcParams rpc = default)
-        {
-            if (IsServer) return;
-            if (GameManager.Instance == null) return;
-            if (GameManager.Instance.Board != null) return; // already initialized
-            GameSession.SetDefault2PlayerHotseat();
-            GameManager.Instance.CompleteInitialization(seed);
-        }
-
-        [ClientRpc]
-        private void AssignPlayerIndexClientRpc(int index, ClientRpcParams rpc = default)
-        {
             NetworkSession.SetLocalPlayerIndex(index);
             EventBus.Publish(new LocalPlayerAssignedEvent { Index = index });
         }
 
-        // ── Seed sync ──────────────────────────────────────────────────────────
+        [ServerRpc(RequireOwnership = false)]
+        private void RequestInitialStateServerRpc(ServerRpcParams rpc = default)
+        {
+            ulong clientId = rpc.Receive.SenderClientId;
+            if (!_clientToPlayerIndex.TryGetValue(clientId, out int index))
+            {
+                index = _nextPlayerIndex++;
+                _clientToPlayerIndex[clientId] = index;
+            }
+
+            var manager = GameManager.Instance;
+            int seed = manager != null ? manager.BoardSeed : 0;
+
+            int currentActorIndex = -1;
+            int currentTurnNumber = 0;
+            int currentPhase = (int)CatanTurnPhase.SetupPlacement;
+            if (manager != null && manager.TurnManager != null)
+            {
+                var current = manager.ActivePlayer;
+                if (current != null)
+                    currentActorIndex = manager.Players.IndexOf(current);
+                currentTurnNumber = manager.TurnManager.TurnNumber;
+                currentPhase = (int)manager.TurnManager.CurrentCatanPhase;
+            }
+
+            var targetOnly = new ClientRpcParams
+            {
+                Send = new ClientRpcSendParams { TargetClientIds = new[] { clientId } }
+            };
+            SendInitialStateClientRpc(seed, index, currentActorIndex, currentTurnNumber, currentPhase, targetOnly);
+        }
 
         [ClientRpc]
-        private void BroadcastSeedClientRpc(int seed)
+        private void SendInitialStateClientRpc(int seed, int index, int currentActorIndex,
+            int turnNumber, int phase, ClientRpcParams rpc = default)
         {
-            if (IsServer) return; // host already completed init at scene start
+            // Targeted RPC, but NGO still delivers locally on the host with the
+            // ClientRpc plumbing. Host already initialized itself, so guard.
+            if (IsServer) return;
+
+            NetworkSession.SetLocalPlayerIndex(index);
+            EventBus.Publish(new LocalPlayerAssignedEvent { Index = index });
+
             var manager = GameManager.Instance;
             if (manager == null)
             {
-                Debug.LogWarning("[NetworkEventBridge] Seed arrived before GameManager existed.");
+                Debug.LogWarning("[NetworkEventBridge] Initial state arrived before GameManager existed.");
                 return;
             }
-            // Match host's default 2-player roster until the lobby learns to send
-            // a real player list (Phase 5d). Resources are already initialized in
-            // GameManager.Start before the defer-on-client branch.
+            if (manager.Board != null) return; // already initialized
+
             GameSession.SetDefault2PlayerHotseat();
             manager.CompleteInitialization(seed);
+
+            // Mirror the host's current turn state so client UI shows the right
+            // active player and phase before any further events arrive.
+            if (currentActorIndex >= 0 && currentActorIndex < manager.Players.Count)
+            {
+                var actor = manager.Players[currentActorIndex];
+                manager.TurnManager.MirrorActor(actor, turnNumber);
+                manager.TurnManager.MirrorPhase((CatanTurnPhase)phase);
+                EventBus.Publish(new GameCore.Turn.TurnStartedEvent
+                {
+                    Actor = actor,
+                    TurnNumber = turnNumber,
+                });
+                EventBus.Publish(new CatanPhaseChangedEvent
+                {
+                    From = (CatanTurnPhase)phase,
+                    To = (CatanTurnPhase)phase,
+                });
+            }
         }
 
         // ── Host: subscribe to local events and fan out ────────────────────────
@@ -268,6 +293,7 @@ namespace Catan.Network
         private void PhaseChangedClientRpc(int from, int to)
         {
             if (IsServer) return;
+            GameManager.Instance?.TurnManager?.MirrorPhase((CatanTurnPhase)to);
             EventBus.Publish(new CatanPhaseChangedEvent
             {
                 From = (CatanTurnPhase)from,
@@ -288,6 +314,7 @@ namespace Catan.Network
             if (IsServer) return;
             var actor = PlayerAt(actorIndex) as GameCore.Turn.ITurnActor;
             if (actor == null) return;
+            GameManager.Instance?.TurnManager?.MirrorActor(actor, turnNumber);
             EventBus.Publish(new GameCore.Turn.TurnStartedEvent
             {
                 Actor = actor,
