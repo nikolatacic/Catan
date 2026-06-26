@@ -1,8 +1,8 @@
 # Catan Unity — Project Progress
 
-**Branch**: `claude/heuristic-boyd-e86391`  
-**Unity**: 6000.4.6f1, local hotseat 2–4 players  
-**Last updated**: 2026-06-25
+**Active branch**: `multiplayertest` (all current work here)  
+**Unity**: 6000.4.6f1 — hotseat + Unity Relay networked multiplayer  
+**Last updated**: 2026-06-26
 
 ---
 
@@ -14,6 +14,7 @@ Local hotseat Catan implementation built from scratch in Unity 6 using an event-
 
 ## Phase completion
 
+### Hotseat game (original)
 | Phase | Status | Description |
 |---|---|---|
 | 1 | Done | 98 files scaffolded across 10 packages |
@@ -24,6 +25,20 @@ Local hotseat Catan implementation built from scratch in Unity 6 using an event-
 | 6 | Done | CatanBuildRule, CatanTradeRule, BuildManager, TradeManager, ScoreManager, LargestArmyTracker, LongestRoadTracker, all dev cards, CatanGameContext, tests |
 | 7 | Done | All UI MonoBehaviours written and gameplay working |
 | 8 | In progress | Polish and edge cases — several items done, see below |
+
+### Multiplayer (Unity Relay + NGO, branch: `multiplayertest`)
+| Phase | Status | Description |
+|---|---|---|
+| MP-1 | Done | Scene separation: MainMenu + GameHotseat |
+| MP-2 | Done | GameSession static carrier for player configs across scenes |
+| MP-3 | Done | Network boundary audit (see NetworkBoundaryAudit.md) |
+| MP-4 | Done | Command pattern: IGameCommand + CommandDispatcher + 10 commands |
+| MP-5a | Done | Lobby scaffolding: LobbyView, NetworkSession, Relay allocation |
+| MP-5b | Done | NetworkCommandBridge: 10 ServerRpc methods, vertex/edge encoding |
+| MP-5c | Done | NetworkEventBridge: seed sync + EventBus fan-out to all clients |
+| MP-5d | Done | Per-device UI: index assignment, LocalPlayerAssignedEvent, MirrorActor/MirrorPhase |
+| MP-5e | Not started | Hidden state filtering, real lobby player picker, StealTargetPanel for clients |
+| MP-6 | Not started | Final polish, edge cases |
 
 ---
 
