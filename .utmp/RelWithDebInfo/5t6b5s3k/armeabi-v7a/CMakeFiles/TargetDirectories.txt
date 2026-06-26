@@ -1,0 +1,5 @@
+/Users/nikolatacic/Catan/.utmp/RelWithDebInfo/5t6b5s3k/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/nikolatacic/Catan/.utmp/RelWithDebInfo/5t6b5s3k/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+/Users/nikolatacic/Catan/.utmp/RelWithDebInfo/5t6b5s3k/armeabi-v7a/FramePacing/CMakeFiles/swappywrapper.dir
+/Users/nikolatacic/Catan/.utmp/RelWithDebInfo/5t6b5s3k/armeabi-v7a/FramePacing/CMakeFiles/edit_cache.dir
+/Users/nikolatacic/Catan/.utmp/RelWithDebInfo/5t6b5s3k/armeabi-v7a/FramePacing/CMakeFiles/rebuild_cache.dir
