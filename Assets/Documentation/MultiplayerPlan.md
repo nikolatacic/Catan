@@ -120,6 +120,16 @@ What still needs 5c:
 
 ### Phase 5d — Per-device UI + index assignment ✅ DONE (partial)
 
+Follow-up fixes after first end-to-end test (commit `660b0ae`):
+- LobbyView host flow is now two-stage (Create Room → Start Game) so the join
+  code stays on screen.
+- Index assignment + seed sync flipped from server-push to client-pull
+  (`RequestInitialStateServerRpc`) so late-spawned client bridges receive state.
+- `CatanTurnManager.MirrorActor` / `MirrorPhase` keep client's authoritative
+  fields in sync with host's events.
+- `ActionButtonsView` subscribes to `LocalPlayerAssignedEvent` so host buttons
+  enable once the index lands.
+
 - `NetworkSession.LocalPlayerIndex` — set by host when a peer connects.
   Host = 0, first joiner = 1, etc.
 - `NetworkEventBridge.AssignPlayerIndexClientRpc` (targeted) tells each peer
