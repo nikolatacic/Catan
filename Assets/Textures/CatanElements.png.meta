@@ -1,0 +1,1001 @@
+fileFormatVersion: 2
+guid: 1fd697f571768ac4496dbee8da5ee714
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7352173502298073465
+    second: CatanElements_0
+  - first:
+      213: 4257458840871683411
+    second: CatanElements_1
+  - first:
+      213: -34323195216768746
+    second: CatanElements_2
+  - first:
+      213: 5751645452255951020
+    second: CatanElements_3
+  - first:
+      213: 7821320336301065792
+    second: CatanElements_4
+  - first:
+      213: 6364977248867974805
+    second: CatanElements_5
+  - first:
+      213: 7896664584934623288
+    second: CatanElements_6
+  - first:
+      213: 7658103899002397098
+    second: CatanElements_7
+  - first:
+      213: -6597132423260445477
+    second: CatanElements_8
+  - first:
+      213: 7119511083895964361
+    second: CatanElements_9
+  - first:
+      213: -6620172601595713784
+    second: CatanElements_10
+  - first:
+      213: -939965994133293783
+    second: CatanElements_11
+  - first:
+      213: -1186432723537472368
+    second: CatanElements_12
+  - first:
+      213: -2287191663918038243
+    second: CatanElements_13
+  - first:
+      213: 1817851307997763286
+    second: CatanElements_14
+  - first:
+      213: -5957574030813461203
+    second: CatanElements_15
+  - first:
+      213: 7920106411835336220
+    second: CatanElements_16
+  - first:
+      213: 7670321284086787960
+    second: CatanElements_17
+  - first:
+      213: 7629610136878271465
+    second: CatanElements_18
+  - first:
+      213: 1406210486964019416
+    second: CatanElements_19
+  - first:
+      213: -5716121545426167292
+    second: CatanElements_20
+  - first:
+      213: -6635370118736363477
+    second: CatanElements_21
+  - first:
+      213: 6298248980272938637
+    second: CatanElements_22
+  - first:
+      213: 1089953460198422421
+    second: CatanElements_23
+  - first:
+      213: -5421782824720375859
+    second: CatanElements_24
+  - first:
+      213: 8335607242880860783
+    second: CatanElements_25
+  - first:
+      213: 5272219037728646743
+    second: CatanElements_26
+  - first:
+      213: -5100809756593437698
+    second: CatanElements_27
+  - first:
+      213: 3204558683114093736
+    second: CatanElements_28
+  - first:
+      213: 6179918090706146172
+    second: CatanElements_29
+  - first:
+      213: 1585719682702775968
+    second: CatanElements_30
+  - first:
+      213: -5288665589010421987
+    second: CatanElements_31
+  - first:
+      213: -2489265126405692410
+    second: CatanElements_32
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Wheat_Tile
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 1740
+        width: 246
+        height: 283
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 786db743725d7f990800000000000000
+      internalID: -7352173502298073465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood_Tile
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 1740
+        width: 246
+        height: 283
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 355c0004248851b30800000000000000
+      internalID: 4257458840871683411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sheep_Tile
+      rect:
+        serializedVersion: 2
+        x: 621
+        y: 1740
+        width: 246
+        height: 283
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6115c8d5c3f068ff0800000000000000
+      internalID: -34323195216768746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brick_Tile
+      rect:
+        serializedVersion: 2
+        x: 901
+        y: 1740
+        width: 246
+        height: 283
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca8f4b7b013f1df40800000000000000
+      internalID: 5751645452255951020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ore_Tile
+      rect:
+        serializedVersion: 2
+        x: 1181
+        y: 1740
+        width: 246
+        height: 283
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04683cf1869ea8c60800000000000000
+      internalID: 7821320336301065792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Desert_Tile
+      rect:
+        serializedVersion: 2
+        x: 1461
+        y: 1740
+        width: 246
+        height: 283
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59ef732b511f45850800000000000000
+      internalID: 6364977248867974805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Port_Tile
+      rect:
+        serializedVersion: 2
+        x: 1741
+        y: 1740
+        width: 246
+        height: 283
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8388f670a96969d60800000000000000
+      internalID: 7896664584934623288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_7
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 1464
+        width: 181
+        height: 252
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa16219fbec074a60800000000000000
+      internalID: 7658103899002397098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_8
+      rect:
+        serializedVersion: 2
+        x: 735
+        y: 1464
+        width: 181
+        height: 252
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd4695f93074274a0800000000000000
+      internalID: -6597132423260445477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_9
+      rect:
+        serializedVersion: 2
+        x: 934
+        y: 1464
+        width: 181
+        height: 252
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c2431a2c959dc260800000000000000
+      internalID: 7119511083895964361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_10
+      rect:
+        serializedVersion: 2
+        x: 1133
+        y: 1464
+        width: 181
+        height: 252
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8072d12181c6024a0800000000000000
+      internalID: -6620172601595713784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_11
+      rect:
+        serializedVersion: 2
+        x: 1332
+        y: 1464
+        width: 181
+        height: 252
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 925fcb298e194f2f0800000000000000
+      internalID: -939965994133293783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_12
+      rect:
+        serializedVersion: 2
+        x: 457
+        y: 1351
+        width: 94
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09456a359b1f88fe0800000000000000
+      internalID: -1186432723537472368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_13
+      rect:
+        serializedVersion: 2
+        x: 571
+        y: 1351
+        width: 94
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d134eeabc434240e0800000000000000
+      internalID: -2287191663918038243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_14
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 1351
+        width: 94
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d69fab122e4a3910800000000000000
+      internalID: 1817851307997763286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_15
+      rect:
+        serializedVersion: 2
+        x: 799
+        y: 1351
+        width: 94
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d25854acbf1725da0800000000000000
+      internalID: -5957574030813461203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_16
+      rect:
+        serializedVersion: 2
+        x: 913
+        y: 1344
+        width: 101
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c162dbca1ded9ed60800000000000000
+      internalID: 7920106411835336220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_17
+      rect:
+        serializedVersion: 2
+        x: 1034
+        y: 1344
+        width: 101
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87f6c1b9194727a60800000000000000
+      internalID: 7670321284086787960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_18
+      rect:
+        serializedVersion: 2
+        x: 1155
+        y: 1351
+        width: 94
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9eb495ffef1d1e960800000000000000
+      internalID: 7629610136878271465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_19
+      rect:
+        serializedVersion: 2
+        x: 1269
+        y: 1351
+        width: 94
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d06beaccfcd38310800000000000000
+      internalID: 1406210486964019416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_20
+      rect:
+        serializedVersion: 2
+        x: 1383
+        y: 1351
+        width: 94
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40a9aef5db14ca0b0800000000000000
+      internalID: -5716121545426167292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_21
+      rect:
+        serializedVersion: 2
+        x: 1497
+        y: 1351
+        width: 94
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b204a7f580e6ae3a0800000000000000
+      internalID: -6635370118736363477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_22
+      rect:
+        serializedVersion: 2
+        x: 724
+        y: 1129
+        width: 84
+        height: 79
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8e7228f310e76750800000000000000
+      internalID: 6298248980272938637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_23
+      rect:
+        serializedVersion: 2
+        x: 827
+        y: 1126
+        width: 106
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 597b5d0b5ea402f00800000000000000
+      internalID: 1089953460198422421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_24
+      rect:
+        serializedVersion: 2
+        x: 951
+        y: 1121
+        width: 113
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcf5a3b2f35f1c4b0800000000000000
+      internalID: -5421782824720375859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_25
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 1121
+        width: 68
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f62461b9f960ea370800000000000000
+      internalID: 8335607242880860783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_26
+      rect:
+        serializedVersion: 2
+        x: 1180
+        y: 1121
+        width: 145
+        height: 204
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7562ed9084faa2940800000000000000
+      internalID: 5272219037728646743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_27
+      rect:
+        serializedVersion: 2
+        x: 661
+        y: 997
+        width: 106
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef3c6673d884639b0800000000000000
+      internalID: -5100809756593437698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_28
+      rect:
+        serializedVersion: 2
+        x: 785
+        y: 997
+        width: 106
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8acb8e0d421e87c20800000000000000
+      internalID: 3204558683114093736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_29
+      rect:
+        serializedVersion: 2
+        x: 909
+        y: 997
+        width: 106
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c73dc89c2ca73c550800000000000000
+      internalID: 6179918090706146172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_30
+      rect:
+        serializedVersion: 2
+        x: 1033
+        y: 997
+        width: 106
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a618d066ab910610800000000000000
+      internalID: 1585719682702775968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_31
+      rect:
+        serializedVersion: 2
+        x: 1157
+        y: 997
+        width: 106
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d17a337daa2ea96b0800000000000000
+      internalID: -5288665589010421987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatanElements_32
+      rect:
+        serializedVersion: 2
+        x: 1281
+        y: 997
+        width: 106
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60422d46e8a547dd0800000000000000
+      internalID: -2489265126405692410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 348e9743a0d41a64087b21429326b9c5
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Brick_Tile: 5751645452255951020
+      CatanElements_10: -6620172601595713784
+      CatanElements_11: -939965994133293783
+      CatanElements_12: -1186432723537472368
+      CatanElements_13: -2287191663918038243
+      CatanElements_14: 1817851307997763286
+      CatanElements_15: -5957574030813461203
+      CatanElements_16: 7920106411835336220
+      CatanElements_17: 7670321284086787960
+      CatanElements_18: 7629610136878271465
+      CatanElements_19: 1406210486964019416
+      CatanElements_20: -5716121545426167292
+      CatanElements_21: -6635370118736363477
+      CatanElements_22: 6298248980272938637
+      CatanElements_23: 1089953460198422421
+      CatanElements_24: -5421782824720375859
+      CatanElements_25: 8335607242880860783
+      CatanElements_26: 5272219037728646743
+      CatanElements_27: -5100809756593437698
+      CatanElements_28: 3204558683114093736
+      CatanElements_29: 6179918090706146172
+      CatanElements_30: 1585719682702775968
+      CatanElements_31: -5288665589010421987
+      CatanElements_32: -2489265126405692410
+      CatanElements_7: 7658103899002397098
+      CatanElements_8: -6597132423260445477
+      CatanElements_9: 7119511083895964361
+      Desert_Tile: 6364977248867974805
+      Ore_Tile: 7821320336301065792
+      Port_Tile: 7896664584934623288
+      Sheep_Tile: -34323195216768746
+      Wheat_Tile: -7352173502298073465
+      Wood_Tile: 4257458840871683411
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

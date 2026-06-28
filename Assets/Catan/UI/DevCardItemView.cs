@@ -14,6 +14,7 @@ namespace Catan.UI
     {
         [Header("Visuals")]
         public Image CardBackground;
+        public Image Icon;
         public TextMeshProUGUI NameLabel;
         public Button PlayButton;
 
@@ -23,7 +24,7 @@ namespace Catan.UI
 
         private DevelopmentCard _card;
 
-        public void Initialize(DevelopmentCard card, bool isPlayable)
+        public void Initialize(DevelopmentCard card, bool isPlayable, Sprite icon)
         {
             _card = card;
 
@@ -32,6 +33,12 @@ namespace Catan.UI
 
             if (CardBackground != null)
                 CardBackground.color = isPlayable ? PlayableColor : UnplayableColor;
+
+            if (Icon != null)
+            {
+                Icon.sprite = icon;
+                Icon.enabled = icon != null;
+            }
 
             if (PlayButton != null)
             {

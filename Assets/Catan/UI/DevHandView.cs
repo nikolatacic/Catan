@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using GameCore.Cards;
@@ -9,13 +10,24 @@ namespace Catan.UI
     // Place anywhere on Canvas (side panel recommended).
     // Assign CardContainer (Transform) — a VerticalLayoutGroup works well.
     // Assign DevCardItemPrefab — a prefab with DevCardItemView component.
+    // Assign CardSprites — one entry per DevelopmentCard.CardId (e.g. "Knight").
     // Automatically follows the active player via TurnStartedEvent.
     // ──────────────────────────────────────────────────────────────────────────
 
     public class DevHandView : MonoBehaviour
     {
+        [Serializable]
+        public struct CardSpriteEntry
+        {
+            public string CardId;
+            public Sprite Sprite;
+        }
+
         public Transform CardContainer;
         public GameObject DevCardItemPrefab;
+
+        [Header("Card sprites (one per DevelopmentCard.CardId)")]
+        public List<CardSpriteEntry> CardSprites = new();
 
         private CatanPlayer _player;
 
@@ -101,8 +113,18 @@ namespace Catan.UI
                 if (itemView == null) continue;
 
                 bool isPlayable = context != null && card.IsPlayable(context);
-                itemView.Initialize(card, isPlayable);
+                itemView.Initialize(card, isPlayable, GetCardSprite(card.CardId));
             }
+        }
+
+        private Sprite GetCardSprite(string cardId)
+        {
+            foreach (var entry in CardSprites)
+            {
+                if (entry.CardId == cardId)
+                    return entry.Sprite;
+            }
+            return null;
         }
     }
 }

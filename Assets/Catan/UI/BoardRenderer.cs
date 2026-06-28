@@ -101,8 +101,8 @@ namespace Catan.UI
             var posB = CornerWorldPosition(tileCoord, edgeIndex);
             var worldPos = (posA + posB) * 0.5f;
 
-            // Long axis of edge i is at -60*(i+1) degrees from horizontal.
-            var rotation = Quaternion.Euler(0f, 0f, -60f * (edgeIndex + 1));
+            // Long axis of edge i is at -60*(i+1)+30 degrees from horizontal (pointy-top layout).
+            var rotation = Quaternion.Euler(0f, 0f, -60f * (edgeIndex + 1) + 30f);
             var go = Instantiate(EdgePrefab, worldPos, rotation, transform);
             go.name = $"Edge_{edge.GetHashCode()}";
 
@@ -133,20 +133,20 @@ namespace Catan.UI
 
         private Vector3 HexToWorld(GameCore.Board.HexCoord coord)
         {
-            float x = HexSize * (1.5f * coord.Q);
-            float y = HexSize * (Mathf.Sqrt(3) * (coord.R + coord.Q * 0.5f));
+            float x = HexSize * (Mathf.Sqrt(3) * (coord.Q + coord.R * 0.5f));
+            float y = HexSize * (1.5f * coord.R);
             return new Vector3(x, y, 0f);
         }
 
         // Returns the world position of corner `cornerIndex` of the hex at `tileCoord`.
-        // For flat-top hexes, corner 0 is at the right (0°), then every 60° clockwise:
-        //   0 = right, 1 = lower-right, 2 = lower-left, 3 = left, 4 = upper-left, 5 = upper-right.
+        // For pointy-top hexes, corner 0 is at 30° above horizontal, then every 60° clockwise:
+        //   0 = upper-right, 1 = right, 2 = lower-right, 3 = lower-left, 4 = left, 5 = upper-left.
         // This is correct for every vertex — interior and border alike — because it uses
         // only the tile center and the known hex geometry, not neighbouring tile positions.
         private Vector3 CornerWorldPosition(GameCore.Board.HexCoord tileCoord, int cornerIndex)
         {
             var center = HexToWorld(tileCoord);
-            float angleRad = -60f * cornerIndex * Mathf.Deg2Rad;
+            float angleRad = (-60f * cornerIndex + 30f) * Mathf.Deg2Rad;
             return center + new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad), 0f) * HexSize;
         }
 

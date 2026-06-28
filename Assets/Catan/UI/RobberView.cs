@@ -36,8 +36,8 @@ namespace Catan.UI
 
         private Vector3 HexToWorld(GameCore.Board.HexCoord coord)
         {
-            float x = HexSize * (1.5f * coord.Q);
-            float y = HexSize * (Mathf.Sqrt(3) * (coord.R + coord.Q * 0.5f));
+            float x = HexSize * (Mathf.Sqrt(3) * (coord.Q + coord.R * 0.5f));
+            float y = HexSize * (1.5f * coord.R);
             return new Vector3(x, y, 0f);
         }
     }
