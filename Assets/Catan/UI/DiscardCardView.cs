@@ -36,18 +36,6 @@ namespace Catan.UI
             if (ResourceLabel != null)
                 ResourceLabel.text = resource.DisplayName;
 
-            if (resource is CatanResource catanResource)
-            {
-                if (CardBackground != null)
-                    CardBackground.color = catanResource.Color;
-
-                if (ResourceIcon != null)
-                {
-                    ResourceIcon.sprite = catanResource.Icon;
-                    ResourceIcon.enabled = catanResource.Icon != null;
-                }
-            }
-
             GetComponent<Button>().onClick.AddListener(OnClicked);
         }
 

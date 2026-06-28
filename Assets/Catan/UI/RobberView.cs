@@ -10,7 +10,7 @@ namespace Catan.UI
 
     public class RobberView : MonoBehaviour
     {
-        public float HexSize = 1.0f;
+        public BoardRenderer BoardRenderer;
 
         private void OnEnable()
         {
@@ -24,21 +24,15 @@ namespace Catan.UI
 
         private void OnRobberMoved(RobberMovedEvent gameEvent)
         {
-            transform.position = HexToWorld(gameEvent.To);
+            if (BoardRenderer == null) return;
+            transform.position = BoardRenderer.GetHexWorldPosition(gameEvent.To);
         }
 
         public void SnapToCurrentPosition()
         {
             var board = GameManager.Instance?.Board;
-            if (board == null) return;
-            transform.position = HexToWorld(board.RobberPosition);
-        }
-
-        private Vector3 HexToWorld(GameCore.Board.HexCoord coord)
-        {
-            float x = HexSize * (Mathf.Sqrt(3) * (coord.Q + coord.R * 0.5f));
-            float y = HexSize * (1.5f * coord.R);
-            return new Vector3(x, y, 0f);
+            if (board == null || BoardRenderer == null) return;
+            transform.position = BoardRenderer.GetHexWorldPosition(board.RobberPosition);
         }
     }
 }

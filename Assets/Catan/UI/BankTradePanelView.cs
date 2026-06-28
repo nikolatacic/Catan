@@ -159,11 +159,10 @@ namespace Catan.UI
                 label.text = $"{resource.DisplayName}\n{count} (÷{ratio})";
 
             var image = button.GetComponent<Image>();
-            var resourceColor = (resource as CatanResource)?.Color ?? Color.white;
             if (image != null)
                 image.color = _giveIndex == index
                     ? Color.yellow
-                    : canGive ? resourceColor : new Color(0.25f, 0.25f, 0.25f);
+                    : canGive ? Color.white : new Color(0.25f, 0.25f, 0.25f);
         }
 
         private void UpdateReceiveButton(int index, IResource resource)
@@ -181,7 +180,7 @@ namespace Catan.UI
             if (image != null)
                 image.color = _receiveIndex == index
                     ? Color.yellow
-                    : (resource as CatanResource)?.Color ?? Color.white;
+                    : Color.white;
         }
     }
 }

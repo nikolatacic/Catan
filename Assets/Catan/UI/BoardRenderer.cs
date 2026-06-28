@@ -21,12 +21,14 @@ namespace Catan.UI
         public Sprite[] TileSprites;
         public Sprite DesertSprite;
 
-        [Header("Layout")]
-        public float HexSize = 1.0f;
-
         private readonly List<HexTileView> _tileViews = new();
         private readonly List<VertexView> _vertexViews = new();
         private readonly List<EdgeView> _edgeViews = new();
+
+        // Measured once from a reference tile sprite; every tile sprite is the same size.
+        private bool _hexSizeMeasured;
+        private float _hexWidth;
+        private float _hexHeight;
 
         public void RenderBoard()
         {
@@ -101,8 +103,9 @@ namespace Catan.UI
             var posB = CornerWorldPosition(tileCoord, edgeIndex);
             var worldPos = (posA + posB) * 0.5f;
 
-            // Long axis of edge i is at -60*(i+1)+30 degrees from horizontal (pointy-top layout).
-            var rotation = Quaternion.Euler(0f, 0f, -60f * (edgeIndex + 1) + 30f);
+            // Edge i faces neighbor direction i (angle -60*i); its long axis is the
+            // perpendicular line, at -60*i+90 degrees from horizontal.
+            var rotation = Quaternion.Euler(0f, 0f, -60f * edgeIndex + 90f);
             var go = Instantiate(EdgePrefab, worldPos, rotation, transform);
             go.name = $"Edge_{edge.GetHashCode()}";
 
@@ -131,24 +134,60 @@ namespace Catan.UI
 
         // ── Coordinate math ────────────────────────────────────────────────────
 
+        // Reads the rendered world-space size of a tile sprite. Sprite.bounds is in the
+        // sprite's own local space, which already accounts for its pixel dimensions and
+        // Pixels Per Unit — so this is the exact size the tile renders at, no guesswork.
+        private void EnsureHexSizeMeasured()
+        {
+            if (_hexSizeMeasured) return;
+
+            Sprite referenceSprite = DesertSprite;
+            if (referenceSprite == null && TileSprites != null)
+            {
+                foreach (var sprite in TileSprites)
+                {
+                    if (sprite == null) continue;
+                    referenceSprite = sprite;
+                    break;
+                }
+            }
+            if (referenceSprite == null) return;
+
+            var size = referenceSprite.bounds.size;
+            _hexWidth = size.x;
+            _hexHeight = size.y;
+            _hexSizeMeasured = true;
+        }
+
         private Vector3 HexToWorld(GameCore.Board.HexCoord coord)
         {
-            float x = HexSize * (Mathf.Sqrt(3) * (coord.Q + coord.R * 0.5f));
-            float y = HexSize * (1.5f * coord.R);
+            EnsureHexSizeMeasured();
+            float x = _hexWidth * (coord.Q + coord.R * 0.5f);
+            float y = _hexHeight * 0.75f * coord.R;
             return new Vector3(x, y, 0f);
         }
 
         // Returns the world position of corner `cornerIndex` of the hex at `tileCoord`.
-        // For pointy-top hexes, corner 0 is at 30° above horizontal, then every 60° clockwise:
-        //   0 = upper-right, 1 = right, 2 = lower-right, 3 = lower-left, 4 = left, 5 = upper-left.
+        // HexGrid.BuildTopology defines vertex i as lying between neighbor directions i and
+        // i+1 (Directions array), and those directions land at angle -60*i in this pointy-top
+        // mapping — so corner i sits at their bisector, -60*i-30:
+        //   0 = lower-right, 1 = lower-left, 2 = left, 3 = upper-left, 4 = upper-right, 5 = right.
+        // Radius is derived from the sprite's measured height (point-to-point distance),
+        // matching the actual rendered hex shape instead of an assumed constant.
         // This is correct for every vertex — interior and border alike — because it uses
         // only the tile center and the known hex geometry, not neighbouring tile positions.
         private Vector3 CornerWorldPosition(GameCore.Board.HexCoord tileCoord, int cornerIndex)
         {
+            EnsureHexSizeMeasured();
             var center = HexToWorld(tileCoord);
-            float angleRad = (-60f * cornerIndex + 30f) * Mathf.Deg2Rad;
-            return center + new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad), 0f) * HexSize;
+            float radius = _hexHeight * 0.5f;
+            float angleRad = (-60f * cornerIndex - 30f) * Mathf.Deg2Rad;
+            return center + new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad), 0f) * radius;
         }
+
+        // Exposes the measured hex size to other views (e.g. RobberView) so all
+        // world-space math stays driven by the actual sprite dimensions, not a duplicate constant.
+        public Vector3 GetHexWorldPosition(GameCore.Board.HexCoord coord) => HexToWorld(coord);
 
         private Sprite GetTileSprite(CatanResourceType? resourceType)
         {

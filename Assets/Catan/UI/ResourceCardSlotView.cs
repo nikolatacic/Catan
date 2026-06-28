@@ -13,7 +13,6 @@ namespace Catan.UI
     public class ResourceCardSlotView : MonoBehaviour
     {
         [Header("Visuals")]
-        public Image CardBackground;
         public Image ResourceIcon;
         public TextMeshProUGUI CountLabel;
 
@@ -29,12 +28,6 @@ namespace Catan.UI
         private void ApplyResourceStyle()
         {
             if (Resource == null) return;
-            if (CardBackground != null) CardBackground.color = Resource.Color;
-            if (ResourceIcon != null)
-            {
-                ResourceIcon.sprite = Resource.Icon;
-                ResourceIcon.enabled = Resource.Icon != null;
-            }
         }
 
         public void Refresh(int count)

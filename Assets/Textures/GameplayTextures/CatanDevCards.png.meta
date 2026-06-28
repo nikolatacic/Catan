@@ -1,28 +1,22 @@
 fileFormatVersion: 2
-guid: dbd293b2486d667478bb9464181a6dfd
+guid: b0b3958bb535fc846b9d886bbbb9b52d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -470374129937973913
-    second: CatanElementsRotated30_0
+      213: 2066255812781138114
+    second: CatanDevCards_0
   - first:
-      213: -5459122761722532568
-    second: CatanElementsRotated30_1
+      213: 1683695104228080976
+    second: CatanDevCards_1
   - first:
-      213: 776743480713123140
-    second: CatanElementsRotated30_2
+      213: -1174637775894536110
+    second: CatanDevCards_2
   - first:
-      213: 8132826631464542088
-    second: CatanElementsRotated30_3
+      213: 5591162711506532066
+    second: CatanDevCards_3
   - first:
-      213: 8964601462491669196
-    second: CatanElementsRotated30_4
-  - first:
-      213: -2279125185639685529
-    second: CatanElementsRotated30_5
-  - first:
-      213: -3865439855719456280
-    second: CatanElementsRotated30_6
+      213: -2449244019989667698
+    second: CatanDevCards_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -144,13 +138,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CatanElementsRotated30_0
+      name: CatanDevCards_0
       rect:
         serializedVersion: 2
-        x: 40
-        y: 77
-        width: 282
-        height: 246
+        x: 19
+        y: 19
+        width: 145
+        height: 204
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -159,20 +153,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 76d73819835e879f0800000000000000
-      internalID: -470374129937973913
+      spriteID: 2c0e7e7d6b0dcac10800000000000000
+      internalID: 2066255812781138114
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElementsRotated30_1
+      name: CatanDevCards_1
       rect:
         serializedVersion: 2
-        x: 402
-        y: 77
-        width: 282
-        height: 246
+        x: 182
+        y: 19
+        width: 145
+        height: 204
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -181,20 +175,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 82d674a95cc4d34b0800000000000000
-      internalID: -5459122761722532568
+      spriteID: 05d3495d6cfad5710800000000000000
+      internalID: 1683695104228080976
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElementsRotated30_2
+      name: CatanDevCards_2
       rect:
         serializedVersion: 2
-        x: 764
-        y: 77
-        width: 282
-        height: 246
+        x: 345
+        y: 19
+        width: 145
+        height: 204
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -203,20 +197,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4459181941c87ca00800000000000000
-      internalID: 776743480713123140
+      spriteID: 2502d049a29d2bfe0800000000000000
+      internalID: -1174637775894536110
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElementsRotated30_3
+      name: CatanDevCards_3
       rect:
         serializedVersion: 2
-        x: 1126
-        y: 77
-        width: 282
-        height: 246
+        x: 508
+        y: 19
+        width: 145
+        height: 204
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -225,20 +219,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 88fd7445bba9dd070800000000000000
-      internalID: 8132826631464542088
+      spriteID: 2e6b1c4ecdcc79d40800000000000000
+      internalID: 5591162711506532066
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElementsRotated30_4
+      name: CatanDevCards_4
       rect:
         serializedVersion: 2
-        x: 1488
-        y: 77
-        width: 282
-        height: 246
+        x: 671
+        y: 19
+        width: 145
+        height: 204
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -247,52 +241,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cc263cc9889a86c70800000000000000
-      internalID: 8964601462491669196
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatanElementsRotated30_5
-      rect:
-        serializedVersion: 2
-        x: 1850
-        y: 77
-        width: 282
-        height: 246
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 762ec4f08bbee50e0800000000000000
-      internalID: -2279125185639685529
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatanElementsRotated30_6
-      rect:
-        serializedVersion: 2
-        x: 2212
-        y: 77
-        width: 282
-        height: 246
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8e164336ee23b5ac0800000000000000
-      internalID: -3865439855719456280
+      spriteID: e80244c5a89820ed0800000000000000
+      internalID: -2449244019989667698
       vertices: []
       indices: 
       edges: []
@@ -311,13 +261,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      CatanElementsRotated30_0: -470374129937973913
-      CatanElementsRotated30_1: -5459122761722532568
-      CatanElementsRotated30_2: 776743480713123140
-      CatanElementsRotated30_3: 8132826631464542088
-      CatanElementsRotated30_4: 8964601462491669196
-      CatanElementsRotated30_5: -2279125185639685529
-      CatanElementsRotated30_6: -3865439855719456280
+      CatanDevCards_0: 2066255812781138114
+      CatanDevCards_1: 1683695104228080976
+      CatanDevCards_2: -1174637775894536110
+      CatanDevCards_3: 5591162711506532066
+      CatanDevCards_4: -2449244019989667698
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

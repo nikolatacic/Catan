@@ -59,7 +59,6 @@ namespace Catan.UI.Editor
             countTmp.color     = Color.white;
 
             var view = root.AddComponent<ResourceCardSlotView>();
-            view.CardBackground = background;
             view.ResourceIcon   = iconImg;
             view.CountLabel     = countTmp;
 
@@ -121,7 +120,6 @@ namespace Catan.UI.Editor
             playLabelTmp.color     = Color.white;
 
             var view = root.AddComponent<DevCardItemView>();
-            view.CardBackground  = background;
             view.NameLabel       = nameTmp;
             view.PlayButton      = playBtn;
             view.PlayableColor   = new Color(0.20f, 0.55f, 0.20f);
@@ -250,22 +248,9 @@ namespace Catan.UI.Editor
             countTmp.color     = Color.white;
 
             var slotView = go.AddComponent<ResourceCardSlotView>();
-            slotView.CardBackground = background;
             slotView.ResourceIcon   = iconImg;
             slotView.CountLabel     = countTmp;
             slotView.Resource       = FindCatanResource(resourceType);
-
-            if (slotView.Resource != null)
-            {
-                background.color = slotView.Resource.Color;
-                Debug.Log($"[Catan] Auto-connected {resourceType} resource to {slotName}");
-            }
-            else
-            {
-                Debug.LogWarning(
-                    $"[Catan] Could not find CatanResource for {resourceType}. " +
-                    $"Assign it manually to {slotName}.Resource in the prefab.");
-            }
 
             return slotView;
         }
