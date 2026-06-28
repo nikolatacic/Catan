@@ -34,11 +34,13 @@ namespace Catan.UI
         private void OnEnable()
         {
             EventBus.Subscribe<PlacementModeChangedEvent>(OnPlacementModeChanged);
+            EventBus.Subscribe<GameCore.Build.BuildSucceededEvent>(OnBuildSucceeded);
         }
 
         private void OnDisable()
         {
             EventBus.Unsubscribe<PlacementModeChangedEvent>(OnPlacementModeChanged);
+            EventBus.Unsubscribe<GameCore.Build.BuildSucceededEvent>(OnBuildSucceeded);
         }
 
         public void Initialize(GameCore.Board.HexEdge edge)
@@ -62,6 +64,8 @@ namespace Catan.UI
         {
             UpdateHighlight(gameEvent.Mode);
         }
+
+        private void OnBuildSucceeded(GameCore.Build.BuildSucceededEvent gameEvent) => Refresh();
 
         private void UpdateHighlight(PlacementMode mode)
         {

@@ -239,6 +239,9 @@ namespace Catan.UI
 
             bool isSetupPhase = TurnManager.CurrentCatanPhase == CatanTurnPhase.SetupPlacement;
 
+            // Reject a second settlement attempt in the same setup turn.
+            if (isSetupPhase && SetupSettlementPlaced) return;
+
             // Set flag BEFORE TryPlace so BuildSucceededEvent sees correct state when
             // ActionButtonsView.RefreshButtons() fires synchronously inside TryPlace.
             if (isSetupPhase) SetupSettlementPlaced = true;
@@ -257,12 +260,17 @@ namespace Catan.UI
             {
                 if (TurnManager.IsSecondSetupRound)
                     GrantAdjacentResources(player, vertex);
-                CurrentPlacementMode = PlacementMode.Road;
+                // Only change placement mode on the device whose player just acted.
+                // Clients manage their own mode via OnBuildSucceeded; the host must
+                // not overwrite its mode when processing another player's command.
+                if (IsLocalPlayerAction(player))
+                    CurrentPlacementMode = PlacementMode.Road;
             }
             else
             {
                 player.Resources.TryRemove(settlement.BuildCost);
-                CurrentPlacementMode = PlacementMode.None;
+                if (IsLocalPlayerAction(player))
+                    CurrentPlacementMode = PlacementMode.None;
             }
 
             RecalculateScoresAndCheckVictory();
@@ -284,13 +292,15 @@ namespace Catan.UI
             if (isSetupPhase)
             {
                 SetupSettlementPlaced = false;
-                CurrentPlacementMode = PlacementMode.None;
+                if (IsLocalPlayerAction(player))
+                    CurrentPlacementMode = PlacementMode.None;
                 TurnManager.NextTurn();
             }
             else
             {
                 player.Resources.TryRemove(road.BuildCost);
-                CurrentPlacementMode = PlacementMode.None;
+                if (IsLocalPlayerAction(player))
+                    CurrentPlacementMode = PlacementMode.None;
                 _longestRoadTracker.Recalculate(Board);
                 RecalculateScoresAndCheckVictory();
             }
@@ -443,7 +453,42 @@ namespace Catan.UI
         {
             if (gameEvent.Piece is Road)
                 _longestRoadTracker.Recalculate(Board);
+
+            // In multiplayer the client never runs TryPlace* directly, so the
+            // placement-mode transitions that happen inside those methods don't fire.
+            // Mirror them here when our own piece is confirmed by the host.
+            if (NetworkSession.IsClient)
+                ApplyClientSetupModeTransition(gameEvent);
+
             RecalculateScoresAndCheckVictory();
+        }
+
+        private void ApplyClientSetupModeTransition(GameCore.Build.BuildSucceededEvent gameEvent)
+        {
+            if (TurnManager.CurrentCatanPhase != CatanTurnPhase.SetupPlacement) return;
+            int localIndex = NetworkSession.LocalPlayerIndex;
+            if (localIndex < 0 || localIndex >= Players.Count) return;
+            if (gameEvent.Player != Players[localIndex]) return;
+
+            if (gameEvent.Piece is Settlement)
+            {
+                SetupSettlementPlaced = true;
+                CurrentPlacementMode = PlacementMode.Road;
+            }
+            else if (gameEvent.Piece is Road)
+            {
+                SetupSettlementPlaced = false;
+                CurrentPlacementMode = PlacementMode.None;
+            }
+        }
+
+        // True when the acting player is the one sitting at this device.
+        // In hotseat every action is local; in multiplayer only matching index actions are.
+        private bool IsLocalPlayerAction(CatanPlayer player)
+        {
+            if (!NetworkSession.IsNetworked) return true;
+            int localIndex = NetworkSession.LocalPlayerIndex;
+            return localIndex >= 0 && localIndex < Players.Count && Players[localIndex] == player;
         }
 
         private void OnVictoryAchieved(GameCore.Score.VictoryAchievedEvent gameEvent)
