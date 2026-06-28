@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1473017894196816610}
   - component: {fileID: 4175841981077823233}
   - component: {fileID: 6705222152561209212}
-  - component: {fileID: 4195679650354576056}
   m_Layer: 5
   m_Name: RollDiceButton
   m_TagString: Untagged
@@ -38,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 97, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1473017894196816610
 CanvasRenderer:
@@ -134,26 +133,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4195679650354576056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1556284490410387170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!1 &1733085871208430761
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,7 +145,6 @@ GameObject:
   - component: {fileID: 7519109297989042823}
   - component: {fileID: 1401466441905298559}
   - component: {fileID: 1976328807674003460}
-  - component: {fileID: 6317917765013072021}
   m_Layer: 5
   m_Name: BuildRoadButton
   m_TagString: Untagged
@@ -192,7 +170,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 97, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7519109297989042823
 CanvasRenderer:
@@ -288,26 +266,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &6317917765013072021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1733085871208430761}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!1 &1795070636324822977
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,7 +552,6 @@ GameObject:
   - component: {fileID: 1922245309437198207}
   - component: {fileID: 3811592733330544498}
   - component: {fileID: 72344042455241245}
-  - component: {fileID: 7469294929471427754}
   m_Layer: 5
   m_Name: CancelPlacementButton
   m_TagString: Untagged
@@ -620,7 +577,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 97, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1922245309437198207
 CanvasRenderer:
@@ -716,26 +673,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7469294929471427754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2311293334037079776}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!1 &3026850145952794943
 GameObject:
   m_ObjectHideFlags: 0
@@ -824,7 +761,6 @@ GameObject:
   - component: {fileID: 106691599484013852}
   - component: {fileID: 6900966497686539994}
   - component: {fileID: 2595166883929252022}
-  - component: {fileID: 1082528019817855707}
   m_Layer: 5
   m_Name: EndTurnButton
   m_TagString: Untagged
@@ -850,7 +786,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 97, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &106691599484013852
 CanvasRenderer:
@@ -946,26 +882,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1082528019817855707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3255286583594186986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!1 &3413916674203558576
 GameObject:
   m_ObjectHideFlags: 0
@@ -1660,7 +1576,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6014136684592513182}
-  - component: {fileID: 6196164105838228037}
+  - component: {fileID: 3644881708437879415}
   m_Layer: 5
   m_Name: ButtonsPanel
   m_TagString: Untagged
@@ -1695,7 +1611,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6196164105838228037
+--- !u!114 &3644881708437879415
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1713,8 +1629,8 @@ MonoBehaviour:
     m_Top: 4
     m_Bottom: 4
   m_ChildAlignment: 4
-  m_Spacing: 8
-  m_ChildForceExpandWidth: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
@@ -1733,7 +1649,6 @@ GameObject:
   - component: {fileID: 7660702081820696538}
   - component: {fileID: 4126687687572097594}
   - component: {fileID: 2067447721469590204}
-  - component: {fileID: 3115414341665129681}
   m_Layer: 5
   m_Name: BuildCityButton
   m_TagString: Untagged
@@ -1759,7 +1674,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 97, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7660702081820696538
 CanvasRenderer:
@@ -1855,26 +1770,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &3115414341665129681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6652552168614618770}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!1 &6735309706651872797
 GameObject:
   m_ObjectHideFlags: 0
@@ -1887,7 +1782,6 @@ GameObject:
   - component: {fileID: 6673154015547280112}
   - component: {fileID: 6936441552723254771}
   - component: {fileID: 7006745252580286002}
-  - component: {fileID: 7678515435544228412}
   m_Layer: 5
   m_Name: BuyDevCardButton
   m_TagString: Untagged
@@ -1913,7 +1807,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 97, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6673154015547280112
 CanvasRenderer:
@@ -2009,26 +1903,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7678515435544228412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6735309706651872797}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!1 &7203008531815216614
 GameObject:
   m_ObjectHideFlags: 0
@@ -2041,7 +1915,6 @@ GameObject:
   - component: {fileID: 2412338766450791327}
   - component: {fileID: 2799096553200925804}
   - component: {fileID: 5930336701425680626}
-  - component: {fileID: 2546443450025671689}
   m_Layer: 5
   m_Name: BankButton
   m_TagString: Untagged
@@ -2067,7 +1940,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 97, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2412338766450791327
 CanvasRenderer:
@@ -2163,26 +2036,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2546443450025671689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7203008531815216614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!1 &7598671237194840492
 GameObject:
   m_ObjectHideFlags: 0
@@ -2195,7 +2048,6 @@ GameObject:
   - component: {fileID: 7597922509062377055}
   - component: {fileID: 4834701715148492610}
   - component: {fileID: 6234764006830424365}
-  - component: {fileID: 4386855177716951691}
   m_Layer: 5
   m_Name: BuildSettlementButton
   m_TagString: Untagged
@@ -2221,7 +2073,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 97, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7597922509062377055
 CanvasRenderer:
@@ -2317,26 +2169,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4386855177716951691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7598671237194840492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!1 &9177115554216729588
 GameObject:
   m_ObjectHideFlags: 0
