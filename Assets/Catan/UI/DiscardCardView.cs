@@ -36,6 +36,13 @@ namespace Catan.UI
             if (ResourceLabel != null)
                 ResourceLabel.text = resource.DisplayName;
 
+            if (ResourceIcon != null)
+            {
+                var sprite = (resource as CatanResource)?.Icon;
+                ResourceIcon.sprite = sprite;
+                ResourceIcon.enabled = sprite != null;
+            }
+
             GetComponent<Button>().onClick.AddListener(OnClicked);
         }
 

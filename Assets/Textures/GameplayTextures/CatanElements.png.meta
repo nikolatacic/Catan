@@ -376,7 +376,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_7
+      name: Wheat_Card
       rect:
         serializedVersion: 2
         x: 536
@@ -398,7 +398,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_8
+      name: Wood_Card
       rect:
         serializedVersion: 2
         x: 735
@@ -420,7 +420,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_9
+      name: Sheep_Card
       rect:
         serializedVersion: 2
         x: 934
@@ -442,7 +442,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_10
+      name: Brick_Card
       rect:
         serializedVersion: 2
         x: 1133
@@ -464,7 +464,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_11
+      name: Ore_Card
       rect:
         serializedVersion: 2
         x: 1332
@@ -486,7 +486,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_12
+      name: Map_Circle_Number_2
       rect:
         serializedVersion: 2
         x: 457
@@ -508,7 +508,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_13
+      name: Map_Circle_Number_3
       rect:
         serializedVersion: 2
         x: 571
@@ -530,7 +530,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_14
+      name: Map_Circle_Number_4
       rect:
         serializedVersion: 2
         x: 685
@@ -552,7 +552,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_15
+      name: Map_Circle_Number_5
       rect:
         serializedVersion: 2
         x: 799
@@ -574,7 +574,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_16
+      name: Map_Circle_Number_6
       rect:
         serializedVersion: 2
         x: 913
@@ -596,7 +596,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_17
+      name: Map_Circle_Number_8
       rect:
         serializedVersion: 2
         x: 1034
@@ -618,7 +618,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_18
+      name: Map_Circle_Number_9
       rect:
         serializedVersion: 2
         x: 1155
@@ -640,7 +640,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_19
+      name: Map_Circle_Number_10
       rect:
         serializedVersion: 2
         x: 1269
@@ -662,7 +662,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_20
+      name: Map_Circle_Number_11
       rect:
         serializedVersion: 2
         x: 1383
@@ -684,7 +684,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_21
+      name: Map_Circle_Number_12
       rect:
         serializedVersion: 2
         x: 1497
@@ -706,7 +706,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_22
+      name: House
       rect:
         serializedVersion: 2
         x: 724
@@ -728,7 +728,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_23
+      name: City
       rect:
         serializedVersion: 2
         x: 827
@@ -750,7 +750,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_24
+      name: Road
       rect:
         serializedVersion: 2
         x: 951
@@ -772,7 +772,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_25
+      name: Thief
       rect:
         serializedVersion: 2
         x: 1088
@@ -794,7 +794,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_26
+      name: Development_Card
       rect:
         serializedVersion: 2
         x: 1180
@@ -961,38 +961,38 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      Brick_Card: -6620172601595713784
       Brick_Tile: 5751645452255951020
-      CatanElements_10: -6620172601595713784
-      CatanElements_11: -939965994133293783
-      CatanElements_12: -1186432723537472368
-      CatanElements_13: -2287191663918038243
-      CatanElements_14: 1817851307997763286
-      CatanElements_15: -5957574030813461203
-      CatanElements_16: 7920106411835336220
-      CatanElements_17: 7670321284086787960
-      CatanElements_18: 7629610136878271465
-      CatanElements_19: 1406210486964019416
-      CatanElements_20: -5716121545426167292
-      CatanElements_21: -6635370118736363477
-      CatanElements_22: 6298248980272938637
-      CatanElements_23: 1089953460198422421
-      CatanElements_24: -5421782824720375859
-      CatanElements_25: 8335607242880860783
-      CatanElements_26: 5272219037728646743
       CatanElements_27: -5100809756593437698
       CatanElements_28: 3204558683114093736
       CatanElements_29: 6179918090706146172
       CatanElements_30: 1585719682702775968
       CatanElements_31: -5288665589010421987
       CatanElements_32: -2489265126405692410
-      CatanElements_7: 7658103899002397098
-      CatanElements_8: -6597132423260445477
-      CatanElements_9: 7119511083895964361
+      City: 1089953460198422421
       Desert_Tile: 6364977248867974805
+      Development_Card: 5272219037728646743
+      House: 6298248980272938637
+      Map_Circle_Number_10: 1406210486964019416
+      Map_Circle_Number_11: -5716121545426167292
+      Map_Circle_Number_12: -6635370118736363477
+      Map_Circle_Number_2: -1186432723537472368
+      Map_Circle_Number_3: -2287191663918038243
+      Map_Circle_Number_4: 1817851307997763286
+      Map_Circle_Number_5: -5957574030813461203
+      Map_Circle_Number_6: 7920106411835336220
+      Map_Circle_Number_8: 7670321284086787960
+      Map_Circle_Number_9: 7629610136878271465
+      Ore_Card: -939965994133293783
       Ore_Tile: 7821320336301065792
       Port_Tile: 7896664584934623288
+      Road: -5421782824720375859
+      Sheep_Card: 7119511083895964361
       Sheep_Tile: -34323195216768746
+      Thief: 8335607242880860783
+      Wheat_Card: 7658103899002397098
       Wheat_Tile: -7352173502298073465
+      Wood_Card: -6597132423260445477
       Wood_Tile: 4257458840871683411
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0

@@ -7,9 +7,11 @@ namespace Catan
     public class CatanResource : ScriptableObject, IResource
     {
         [SerializeField] private CatanResourceType _type;
+        [SerializeField] private Sprite _icon;
 
         public CatanResourceType Type => _type;
         public string ResourceId => _type.ToString();
         public string DisplayName => _type.ToString();
+        public Sprite Icon => _icon;
     }
 }

@@ -51,6 +51,10 @@ namespace Catan.UI
         public RobberView RobberView;
         public StealTargetPanelView StealTargetPanel;
 
+        [Header("Dev card panels")]
+        public MonopolyPanelView MonopolyPanel;
+        public YearOfPlentyPanelView YearOfPlentyPanel;
+
         [Header("Victory")]
         [SerializeField] private int _victoryPointsToWin = 10;
         public int VictoryPointsToWin => _victoryPointsToWin;
@@ -72,6 +76,7 @@ namespace Catan.UI
         }
 
         public bool SetupSettlementPlaced { get; private set; }
+        public int FreeRoadsRemaining { get; private set; }
 
         private CardDeck<DevelopmentCard> _devCardDeck;
         private LargestArmyTracker _largestArmyTracker;
@@ -128,6 +133,7 @@ namespace Catan.UI
         private void OnDestroy()
         {
             EventBus.Unsubscribe<KnightPlayedEvent>(OnKnightPlayed);
+            EventBus.Unsubscribe<FreeRoadsGrantedEvent>(OnFreeRoadsGranted);
             EventBus.Unsubscribe<GameCore.Build.BuildSucceededEvent>(OnBuildSucceeded);
             EventBus.Unsubscribe<CatanPhaseChangedEvent>(OnPhaseChanged);
             EventBus.Unsubscribe<GameCore.Turn.TurnStartedEvent>(OnTurnStarted);
@@ -187,6 +193,7 @@ namespace Catan.UI
         private void SubscribeToEvents()
         {
             EventBus.Subscribe<KnightPlayedEvent>(OnKnightPlayed);
+            EventBus.Subscribe<FreeRoadsGrantedEvent>(OnFreeRoadsGranted);
             EventBus.Subscribe<GameCore.Build.BuildSucceededEvent>(OnBuildSucceeded);
             EventBus.Subscribe<CatanPhaseChangedEvent>(OnPhaseChanged);
             EventBus.Subscribe<GameCore.Turn.TurnStartedEvent>(OnTurnStarted);
@@ -282,19 +289,41 @@ namespace Catan.UI
             var player = ActivePlayer;
             if (player == null) return;
 
+            bool isSetupPhase = TurnManager.CurrentCatanPhase == CatanTurnPhase.SetupPlacement;
+            bool isFreeRoad   = !isSetupPhase && FreeRoadsRemaining > 0;
+
             var road = new Road(player, edge);
-            if (!BuildManager.TryPlace(road, road, player)) return;
+
+            // Free roads bypass the resource check inside CatanBuildRule by temporarily
+            // granting the cost so the rule sees the player as able to afford it.
+            if (isFreeRoad)
+                player.Resources.TryAdd(road.BuildCost);
+
+            if (!BuildManager.TryPlace(road, road, player))
+            {
+                if (isFreeRoad)
+                    player.Resources.TryRemove(road.BuildCost);
+                return;
+            }
 
             Board.Roads[edge] = road;
             player.Roads.Add(road);
 
-            bool isSetupPhase = TurnManager.CurrentCatanPhase == CatanTurnPhase.SetupPlacement;
             if (isSetupPhase)
             {
                 SetupSettlementPlaced = false;
                 if (IsLocalPlayerAction(player))
                     CurrentPlacementMode = PlacementMode.None;
                 TurnManager.NextTurn();
+            }
+            else if (isFreeRoad)
+            {
+                player.Resources.TryRemove(road.BuildCost); // cancel the temp grant
+                FreeRoadsRemaining--;
+                if (IsLocalPlayerAction(player))
+                    CurrentPlacementMode = FreeRoadsRemaining > 0 ? PlacementMode.Road : PlacementMode.None;
+                _longestRoadTracker.Recalculate(Board);
+                RecalculateScoresAndCheckVictory();
             }
             else
             {
@@ -432,12 +461,33 @@ namespace Catan.UI
 
             if (!card.IsPlayable(context)) return false;
 
+            // Monopoly and Year of Plenty need the player to pick resources first.
+            // Open the modal and defer execution — CompleteDevCardExecution is called back
+            // when the player confirms (or the modal is cancelled with no effect).
+            if (card is MonopolyCard monopolyCard)
+            {
+                MonopolyPanel?.Open(monopolyCard, context);
+                return true;
+            }
+
+            if (card is YearOfPlentyCard yearOfPlentyCard)
+            {
+                YearOfPlentyPanel?.Open(yearOfPlentyCard, context);
+                return true;
+            }
+
+            CompleteDevCardExecution(card, context);
+            return true;
+        }
+
+        // Called directly for Knight / RoadBuilding / VictoryPoint, and by the
+        // Monopoly / YearOfPlenty modals after the player has made their selection.
+        internal void CompleteDevCardExecution(DevelopmentCard card, CatanGameContext context)
+        {
             ActivePlayer.DevelopmentCards.Play(card, context);
             if (card is not VictoryPointCard)
                 _devCardPlayedThisTurn = true;
-
             RecalculateScoresAndCheckVictory();
-            return true;
         }
 
         // ── Event handlers ─────────────────────────────────────────────────────
@@ -446,6 +496,14 @@ namespace Catan.UI
         {
             if (gameEvent.Player is CatanPlayer catanPlayer)
                 _largestArmyTracker.Update(catanPlayer, catanPlayer.KnightsPlayed);
+            RecalculateScoresAndCheckVictory();
+        }
+
+        private void OnFreeRoadsGranted(FreeRoadsGrantedEvent gameEvent)
+        {
+            FreeRoadsRemaining += gameEvent.Count;
+            if (IsLocalPlayerAction(gameEvent.Player as CatanPlayer))
+                BeginPlaceRoad();
             RecalculateScoresAndCheckVictory();
         }
 
@@ -514,8 +572,9 @@ namespace Catan.UI
         private void OnTurnStarted(GameCore.Turn.TurnStartedEvent gameEvent)
         {
             _devCardPlayedThisTurn = false;
-            SetupSettlementPlaced = false;
-            CurrentPlacementMode = PlacementMode.None;
+            SetupSettlementPlaced  = false;
+            FreeRoadsRemaining     = 0;
+            CurrentPlacementMode   = PlacementMode.None;
         }
     }
 }

@@ -22,17 +22,23 @@ namespace Catan.UI
         private void Start()
         {
             ApplyResourceStyle();
-            gameObject.SetActive(false);
+            Refresh(0);
         }
 
         private void ApplyResourceStyle()
         {
             if (Resource == null) return;
+            if (ResourceIcon != null)
+            {
+                var sprite = (Resource as CatanResource)?.Icon;
+                ResourceIcon.sprite = sprite;
+                ResourceIcon.enabled = sprite != null;
+            }
         }
 
         public void Refresh(int count)
         {
-            gameObject.SetActive(count > 0);
+            gameObject.SetActive(true);
             if (CountLabel != null)
                 CountLabel.text = count.ToString();
         }

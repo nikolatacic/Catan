@@ -90,9 +90,13 @@ namespace Catan.UI
             switch (mode)
             {
                 case PlacementMode.Settlement:
-                    bool spotEmpty = board != null && !board.Settlements.ContainsKey(Vertex);
+                    bool isSetupPhase = manager.TurnManager.CurrentCatanPhase == CatanTurnPhase.SetupPlacement;
+                    bool canPlaceSettlement = board != null
+                        && !board.Settlements.ContainsKey(Vertex)
+                        && IsDistanceRuleSatisfied(board)
+                        && (isSetupPhase || HasPlayerRoadAtVertex(board, player));
                     var settleColor = player != null ? player.Color : Color.white;
-                    SetHighlight(spotEmpty, new Color(settleColor.r, settleColor.g, settleColor.b, 0.6f));
+                    SetHighlight(canPlaceSettlement, new Color(settleColor.r, settleColor.g, settleColor.b, 0.6f));
                     break;
 
                 case PlacementMode.City:
@@ -107,6 +111,32 @@ namespace Catan.UI
                     SetHighlight(false, Color.clear);
                     break;
             }
+        }
+
+        private bool IsDistanceRuleSatisfied(CatanBoard board)
+        {
+            if (Vertex.AdjacentEdges == null) return true;
+            foreach (var adjacentEdge in Vertex.AdjacentEdges)
+            {
+                if (adjacentEdge.AdjacentVertices == null) continue;
+                foreach (var neighbourVertex in adjacentEdge.AdjacentVertices)
+                {
+                    if (neighbourVertex == Vertex) continue;
+                    if (board.Settlements.ContainsKey(neighbourVertex)) return false;
+                }
+            }
+            return true;
+        }
+
+        private bool HasPlayerRoadAtVertex(CatanBoard board, CatanPlayer player)
+        {
+            if (player == null || Vertex.AdjacentEdges == null) return false;
+            foreach (var adjacentEdge in Vertex.AdjacentEdges)
+            {
+                if (board.Roads.TryGetValue(adjacentEdge, out var road) && road.Owner == player)
+                    return true;
+            }
+            return false;
         }
 
         private void SetHighlight(bool visible, Color color)

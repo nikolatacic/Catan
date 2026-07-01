@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: Sheep
   m_EditorClassIdentifier: Catan::Catan.CatanResource
   _type: 2
-  _icon: {fileID: -4939516434204257109, guid: 20672c26e65b60640aa234f50fe5d342, type: 3}
-  _color: {r: 0.38714847, g: 0.9433962, b: 0.41589057, a: 1}
+  _icon: {fileID: 7119511083895964361, guid: 1fd697f571768ac4496dbee8da5ee714, type: 3}

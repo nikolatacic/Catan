@@ -78,15 +78,42 @@ namespace Catan.UI
 
             if (mode == PlacementMode.Road)
             {
-                bool edgeEmpty = manager.Board != null && !manager.Board.Roads.ContainsKey(Edge);
                 var player = manager.ActivePlayer;
+                bool canPlaceRoad = manager.Board != null
+                    && !manager.Board.Roads.ContainsKey(Edge)
+                    && HasConnectionForRoad(manager.Board, player);
                 var roadColor = player != null ? player.Color : Color.white;
-                SetHighlight(edgeEmpty, new Color(roadColor.r, roadColor.g, roadColor.b, 0.6f));
+                SetHighlight(canPlaceRoad, new Color(roadColor.r, roadColor.g, roadColor.b, 0.6f));
             }
             else
             {
                 SetHighlight(false, Color.clear);
             }
+        }
+
+        // Mirrors CatanBuildRule.HasRoadConnectionAtEdge — player's own settlement at
+        // an endpoint is a valid connection; opponent's settlement blocks that endpoint;
+        // empty endpoint is valid if the player has any adjacent road through it.
+        private bool HasConnectionForRoad(CatanBoard board, CatanPlayer player)
+        {
+            if (player == null || Edge.AdjacentVertices == null) return false;
+            foreach (var endpointVertex in Edge.AdjacentVertices)
+            {
+                if (board.Settlements.TryGetValue(endpointVertex, out var settlement))
+                {
+                    if (settlement.Owner == player) return true;
+                    continue; // opponent's settlement blocks this endpoint
+                }
+                if (endpointVertex.AdjacentEdges == null) continue;
+                foreach (var neighbourEdge in endpointVertex.AdjacentEdges)
+                {
+                    if (neighbourEdge == Edge) continue;
+                    if (board.Roads.TryGetValue(neighbourEdge, out var neighbourRoad)
+                        && neighbourRoad.Owner == player)
+                        return true;
+                }
+            }
+            return false;
         }
 
         private void SetHighlight(bool visible, Color color)
