@@ -22,7 +22,6 @@ namespace Catan.UI
         [Header("Visuals")]
         public Image CardBackground;
         public Image ResourceIcon;
-        public TextMeshProUGUI ResourceLabel;
 
         public IResource Resource { get; private set; }
 
@@ -32,9 +31,6 @@ namespace Catan.UI
         {
             Resource = resource;
             _onClick = onClick;
-
-            if (ResourceLabel != null)
-                ResourceLabel.text = resource.DisplayName;
 
             if (ResourceIcon != null)
             {

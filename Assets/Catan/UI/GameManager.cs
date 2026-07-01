@@ -359,13 +359,19 @@ namespace Catan.UI
                 .Where(player => player != ActivePlayer)
                 .ToList();
 
-            if (eligibleVictims.Count > 1)
+            if (eligibleVictims.Count > 0)
             {
-                StealTargetPanel?.Show(coord, eligibleVictims);
+                if (StealTargetPanel != null)
+                {
+                    StealTargetPanel.Show(coord, eligibleVictims);
+                    return;
+                }
+                // Panel not wired in Inspector — auto-steal from the first/only victim.
+                CompleteRobberMove(coord, eligibleVictims[0]);
                 return;
             }
 
-            CompleteRobberMove(coord, eligibleVictims.Count == 1 ? eligibleVictims[0] : null);
+            CompleteRobberMove(coord, null);
         }
 
         public void CompleteRobberMove(GameCore.Board.HexCoord coord, GameCore.Player.IPlayer victim)

@@ -12,8 +12,7 @@ namespace Catan.UI
     //   ResourceButtons[0..4]  — one Button per resource (Wood, Brick, Sheep, Wheat, Ore)
     //                            Each button may have a TextMeshProUGUI child (auto-labelled)
     //                            and/or an Image child named "Icon" (auto-assigned sprite).
-    //   ConfirmButton          — wire OnClick → OnConfirm()
-    //   CancelButton           — wire OnClick → OnCancel()
+    //   ConfirmButton / CancelButton — assigned; onClick wired automatically in Awake().
     //   InstructionLabel       — updated at runtime
     //
     // Wire GameManager.YearOfPlentyPanel → this component.
@@ -47,15 +46,26 @@ namespace Catan.UI
         private CatanGameContext _context;
         private int _firstSelection  = -1;
         private int _secondSelection = -1;
+        private Color[] _buttonDefaultColors;
 
         private void Awake()
         {
             gameObject.SetActive(false);
+            _buttonDefaultColors = new Color[ResourceButtons.Length];
             for (int buttonIndex = 0; buttonIndex < ResourceButtons.Length; buttonIndex++)
             {
+                var resourceButton = ResourceButtons[buttonIndex];
+                if (resourceButton == null) continue;
+
+                var buttonImage = resourceButton.GetComponent<Image>();
+                if (buttonImage != null)
+                    _buttonDefaultColors[buttonIndex] = buttonImage.color;
+
                 int capturedIndex = buttonIndex;
-                ResourceButtons[buttonIndex]?.onClick.AddListener(() => OnResourceClicked(capturedIndex));
+                resourceButton.onClick.AddListener(() => OnResourceClicked(capturedIndex));
             }
+            ConfirmButton?.onClick.AddListener(OnConfirm);
+            CancelButton?.onClick.AddListener(OnCancel);
         }
 
         public void Open(YearOfPlentyCard card, CatanGameContext context)
@@ -173,7 +183,11 @@ namespace Catan.UI
 
                 bool isFirstPick  = _firstSelection  == buttonIndex;
                 bool isSecondPick = _secondSelection == buttonIndex;
-                buttonImage.color = (isFirstPick || isSecondPick) ? Color.yellow : Color.white;
+                buttonImage.color = (isFirstPick || isSecondPick)
+                    ? Color.yellow
+                    : (_buttonDefaultColors != null && buttonIndex < _buttonDefaultColors.Length
+                        ? _buttonDefaultColors[buttonIndex]
+                        : Color.white);
             }
         }
     }

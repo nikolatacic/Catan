@@ -200,15 +200,6 @@ namespace Catan.UI.Editor
                     size: V2(0, 460), pos: V2(0, -Top - Gap));
             }
 
-            var devHand = FindByName<DevHandView>("DevHandPanel");
-            if (devHand != null)
-            {
-                DisableContentSizeFitter(devHand.gameObject);
-                Anchor(devHand,
-                    min: V2(RightColFrac, 0), max: V2(1, 0), pivot: V2(0, 0),
-                    size: V2(0, 360), pos: V2(0, Bottom + Gap * 2));
-            }
-
             // BankTradePanel root is already full-screen in the prefab.
             // Do NOT change layout here — its Awake() manages active state.
             // Rendering order is handled by MoveModalsToTopOfSiblingOrder.

@@ -20,9 +20,29 @@ namespace Catan.UI.Editor
             CreateBankTradePanelPrefab();
             CreateStealTargetPanelPrefab();
             CreatePlayerSummaryRowPrefab();
+            CreateMonopolyPanelPrefab();
+            CreateYearOfPlentyPanelPrefab();
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             Debug.Log($"[Catan] All UI prefabs saved to {PrefabFolder}");
+        }
+
+        [MenuItem("Catan/Create Monopoly Panel Prefab")]
+        public static void CreateMonopolyPanelPrefabMenu()
+        {
+            EnsureFolder(PrefabFolder);
+            CreateMonopolyPanelPrefab();
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+        }
+
+        [MenuItem("Catan/Create Year of Plenty Panel Prefab")]
+        public static void CreateYearOfPlentyPanelPrefabMenu()
+        {
+            EnsureFolder(PrefabFolder);
+            CreateYearOfPlentyPanelPrefab();
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
         }
 
         [MenuItem("Catan/Create Discard Prefabs")]
@@ -84,7 +104,6 @@ namespace Catan.UI.Editor
             var cardView = root.AddComponent<DiscardCardView>();
             cardView.CardBackground = bg;
             cardView.ResourceIcon   = iconImg;
-            cardView.ResourceLabel  = label;
 
             SavePrefab(root, CardPrefabPath);
             Object.DestroyImmediate(root);
@@ -302,6 +321,127 @@ namespace Catan.UI.Editor
             tmp.color     = Color.white;
 
             return btn;
+        }
+
+        // ── Monopoly panel prefab ──────────────────────────────────────────────
+
+        private static void CreateMonopolyPanelPrefab()
+        {
+            // Root — full-screen overlay
+            var root = new GameObject("MonopolyPanel");
+            StretchFull(root.AddComponent<RectTransform>());
+            root.AddComponent<CanvasGroup>().blocksRaycasts = true;
+            var panelView = root.AddComponent<MonopolyPanelView>();
+
+            // Dark background
+            var bgGo = CreateChild(root, "Background");
+            StretchFull(bgGo.GetComponent<RectTransform>());
+            var bgImg = bgGo.AddComponent<Image>();
+            bgImg.color = new Color(0f, 0f, 0f, 0.6f);
+            bgImg.raycastTarget = true;
+
+            // Inner panel — centred
+            var inner = CreateChild(root, "InnerPanel");
+            SetAnchorCenter(inner.GetComponent<RectTransform>(), 700, 360);
+            inner.AddComponent<Image>().color = new Color(0.15f, 0.15f, 0.15f);
+            var vlg = inner.AddComponent<VerticalLayoutGroup>();
+            vlg.padding               = new RectOffset(20, 20, 20, 20);
+            vlg.spacing               = 14;
+            vlg.childControlWidth     = true;
+            vlg.childControlHeight    = false;
+            vlg.childForceExpandWidth  = true;
+            vlg.childForceExpandHeight = false;
+
+            // Title
+            CreateTMPLabel(inner, "TitleLabel", "Monopoly — Choose a Resource", 22, FontStyles.Bold, 44);
+
+            // Resource buttons
+            CreateResourceButtonRow(inner, "ResourceRow", out var resourceButtons);
+
+            // Confirm / Cancel row
+            var actionRow = CreateChild(inner, "ActionRow");
+            SetLayoutElement(actionRow, preferredHeight: 50);
+            var actionRowHlg = actionRow.AddComponent<HorizontalLayoutGroup>();
+            actionRowHlg.spacing               = 12;
+            actionRowHlg.childControlWidth     = true;
+            actionRowHlg.childControlHeight    = true;
+            actionRowHlg.childForceExpandWidth  = true;
+            actionRowHlg.childForceExpandHeight = true;
+
+            var cancelBtn  = CreateTextButton(actionRow, "CancelButton",  "Cancel",  new Color(0.6f, 0.2f, 0.2f));
+            var confirmBtn = CreateTextButton(actionRow, "ConfirmButton", "Confirm", new Color(0.2f, 0.6f, 0.3f));
+
+            // Wire fields (onClick listeners are added in Awake())
+            panelView.ResourceButtons = resourceButtons;
+            panelView.CancelButton    = cancelBtn;
+            panelView.ConfirmButton   = confirmBtn;
+
+            const string path = PrefabFolder + "/MonopolyPanel.prefab";
+            SavePrefab(root, path);
+            Object.DestroyImmediate(root);
+        }
+
+        // ── Year of Plenty panel prefab ────────────────────────────────────────
+
+        private static void CreateYearOfPlentyPanelPrefab()
+        {
+            // Root — full-screen overlay
+            var root = new GameObject("YearOfPlentyPanel");
+            StretchFull(root.AddComponent<RectTransform>());
+            root.AddComponent<CanvasGroup>().blocksRaycasts = true;
+            var panelView = root.AddComponent<YearOfPlentyPanelView>();
+
+            // Dark background
+            var bgGo = CreateChild(root, "Background");
+            StretchFull(bgGo.GetComponent<RectTransform>());
+            var bgImg = bgGo.AddComponent<Image>();
+            bgImg.color = new Color(0f, 0f, 0f, 0.6f);
+            bgImg.raycastTarget = true;
+
+            // Inner panel — centred, taller than Monopoly due to instruction label
+            var inner = CreateChild(root, "InnerPanel");
+            SetAnchorCenter(inner.GetComponent<RectTransform>(), 700, 420);
+            inner.AddComponent<Image>().color = new Color(0.15f, 0.15f, 0.15f);
+            var vlg = inner.AddComponent<VerticalLayoutGroup>();
+            vlg.padding               = new RectOffset(20, 20, 20, 20);
+            vlg.spacing               = 14;
+            vlg.childControlWidth     = true;
+            vlg.childControlHeight    = false;
+            vlg.childForceExpandWidth  = true;
+            vlg.childForceExpandHeight = false;
+
+            // Title
+            CreateTMPLabel(inner, "TitleLabel", "Year of Plenty — Choose Two Resources", 22, FontStyles.Bold, 44);
+
+            // Instruction label (updated at runtime by YearOfPlentyPanelView)
+            var instructionLabel = CreateTMPLabel(inner, "InstructionLabel", "Choose first resource", 14, FontStyles.Normal, 36);
+            instructionLabel.color = new Color(0.9f, 0.9f, 0.3f);
+
+            // Resource buttons
+            CreateResourceButtonRow(inner, "ResourceRow", out var resourceButtons);
+
+            // Confirm / Cancel row
+            var actionRow = CreateChild(inner, "ActionRow");
+            SetLayoutElement(actionRow, preferredHeight: 50);
+            var actionRowHlg = actionRow.AddComponent<HorizontalLayoutGroup>();
+            actionRowHlg.spacing               = 12;
+            actionRowHlg.childControlWidth     = true;
+            actionRowHlg.childControlHeight    = true;
+            actionRowHlg.childForceExpandWidth  = true;
+            actionRowHlg.childForceExpandHeight = true;
+
+            var cancelBtn  = CreateTextButton(actionRow, "CancelButton",  "Cancel",  new Color(0.6f, 0.2f, 0.2f));
+            var confirmBtn = CreateTextButton(actionRow, "ConfirmButton", "Confirm", new Color(0.2f, 0.6f, 0.3f));
+
+            // Wire fields (onClick listeners are added in Awake())
+            panelView.ResourceButtons  = resourceButtons;
+            panelView.InstructionLabel = instructionLabel;
+            panelView.CancelButton     = cancelBtn;
+            panelView.ConfirmButton    = confirmBtn;
+
+            const string path = PrefabFolder + "/YearOfPlentyPanel.prefab";
+            SavePrefab(root, path);
+            Object.DestroyImmediate(root);
         }
 
         // ── Player summary row prefab ──────────────────────────────────────────
