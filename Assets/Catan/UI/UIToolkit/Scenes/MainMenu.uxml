@@ -3,7 +3,7 @@
     <ui:Style src="project://database/Assets/Catan/UI/UIToolkit/Styles/common.uss"/>
     <ui:Style src="project://database/Assets/Catan/UI/UIToolkit/Scenes/MainMenu.uss"/>
 
-    <ui:VisualElement name="MainMenuRoot" class="main-menu-root">
+    <ui:VisualElement name="MainMenuRoot" class="main-menu-root catan-vars">
 
         <ui:VisualElement name="TitleBlock" class="title-block">
             <ui:Label name="TitleLabel" text="CATAN" class="label--hero title-label"/>

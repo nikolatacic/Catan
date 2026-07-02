@@ -17,7 +17,7 @@
         clicks pass through. Interactive children override this with their own
         picking-mode (default = Position, which blocks clicks).
     -->
-    <ui:VisualElement name="HUDRoot" picking-mode="Ignore" class="hud-root">
+    <ui:VisualElement name="HUDRoot" picking-mode="Ignore" class="hud-root catan-vars">
 
         <!-- ── Right panel ────────────────────────────────────────────────── -->
         <ui:VisualElement name="RightPanel" class="right-panel">

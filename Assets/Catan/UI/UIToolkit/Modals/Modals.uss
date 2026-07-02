@@ -123,7 +123,6 @@
     border-radius: var(--radius-sm);
     background-size: contain;
     background-repeat: no-repeat;
-    cursor: link;
     transition-duration: 0.1s;
     transition-property: scale;
 }
