@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using GameCore.Events;
-using GameCore.Turn;
+using GameCore.Resources;
 using GameCore.Score;
+using GameCore.Turn;
 
 namespace Catan.UI
 {
