@@ -54,7 +54,6 @@
     font-size: var(--font-size-sm);
     padding: var(--space-sm) var(--space-md);
     margin: var(--space-xs);
-    cursor: link;
     transition-duration: 0.1s;
     transition-property: background-color, border-color;
 }
@@ -72,7 +71,6 @@
     background-color: var(--color-bg-button-disabled);
     color: var(--color-text-disabled);
     border-color: var(--color-bg-button-disabled);
-    cursor: arrow;
 }
 
 .btn--primary {
@@ -115,7 +113,6 @@
     margin: var(--space-xs);
     min-width: 56px;
     min-height: 64px;
-    cursor: link;
 }
 
 .resource-btn:hover {
@@ -130,7 +127,6 @@
 
 .resource-btn--disabled {
     opacity: 0.35;
-    cursor: arrow;
 }
 
 /* ── Typography helpers ───────────────────────────────────────────────────── */

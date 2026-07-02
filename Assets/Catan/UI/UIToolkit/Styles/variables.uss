@@ -3,7 +3,7 @@
 /*   @import url("../Styles/variables.uss");                                   */
 /* ─────────────────────────────────────────────────────────────────────────── */
 
-:root {
+.catan-vars {
 
     /* Colours — background */
     --color-bg-panel:        rgba(20, 18, 14, 0.88);
