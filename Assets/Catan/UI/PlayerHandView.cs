@@ -155,11 +155,11 @@ namespace Catan.UI
         // Only called once — sprites don't change between turns.
         private void ApplyResourceCardSprites()
         {
-            ApplySprite(_woodIcon,  CatanResources.Wood?.Icon);
-            ApplySprite(_brickIcon, CatanResources.Brick?.Icon);
-            ApplySprite(_sheepIcon, CatanResources.Sheep?.Icon);
-            ApplySprite(_wheatIcon, CatanResources.Wheat?.Icon);
-            ApplySprite(_oreIcon,   CatanResources.Ore?.Icon);
+            ApplySprite(_woodIcon,  (CatanResources.Wood  as CatanResource)?.Icon);
+            ApplySprite(_brickIcon, (CatanResources.Brick as CatanResource)?.Icon);
+            ApplySprite(_sheepIcon, (CatanResources.Sheep as CatanResource)?.Icon);
+            ApplySprite(_wheatIcon, (CatanResources.Wheat as CatanResource)?.Icon);
+            ApplySprite(_oreIcon,   (CatanResources.Ore   as CatanResource)?.Icon);
         }
 
         private static void ApplySprite(VisualElement iconElement, UnityEngine.Sprite sprite)
