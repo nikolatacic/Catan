@@ -18,10 +18,10 @@
 .victory-modal {
     min-width: 360px;
     max-width: 520px;
-    padding: var(--space-lg);
-    padding-bottom: var(--space-xl);
-    border-radius: var(--radius-md);
-    background-color: var(--color-bg-panel);
+    padding: 20px;
+    padding-bottom: 32px;
+    border-radius: 8px;
+    background-color: rgba(20, 18, 14, 0.88);
     border-width: 1px;
     border-color: rgba(255, 255, 255, 0.08);
     flex-direction: column;
@@ -30,31 +30,31 @@
 
 .modal-title {
     align-self: center;
-    margin-bottom: var(--space-xs);
+    margin-bottom: 4px;
     -unity-font-style: bold;
 }
 
 .section-title {
-    margin-top: var(--space-sm);
-    margin-bottom: var(--space-xs);
+    margin-top: 8px;
+    margin-bottom: 4px;
     -unity-font-style: bold;
     letter-spacing: 1px;
-    color: var(--color-text-muted);
+    color: rgba(180, 164, 128, 1);
 }
 
 /* ── Resource rows ────────────────────────────────────────────────── */
 .bank-resource-row {
     flex-direction: row;
     justify-content: space-between;
-    margin-top: var(--space-xs);
-    margin-bottom: var(--space-xs);
+    margin-top: 4px;
+    margin-bottom: 4px;
 }
 
 /* Card-shaped icon inside each resource button */
 .bank-card-icon {
     width: 44px;
     height: 62px;
-    margin-bottom: var(--space-xs);
+    margin-bottom: 4px;
     background-size: contain;
     background-repeat: no-repeat;
     align-self: center;
@@ -64,32 +64,32 @@
 .bank-trade-modal .resource-btn,
 .resource-picker-modal .resource-btn {
     min-width: 68px;
-    padding: var(--space-xs);
+    padding: 4px;
     flex-direction: column;
     align-items: center;
 }
 
 .modal-feedback {
     align-self: center;
-    margin-top: var(--space-sm);
-    color: var(--color-text-muted);
+    margin-top: 8px;
+    color: rgba(180, 164, 128, 1);
 }
 
 /* ── Bottom button row ───────────────────────────────────────────── */
 .modal-button-row {
     flex-direction: row;
     justify-content: flex-end;
-    margin-top: var(--space-md);
+    margin-top: 12px;
 }
 
 .modal-btn {
     min-width: 88px;
-    margin-left: var(--space-sm);
+    margin-left: 8px;
 }
 
 .modal-btn-full {
     width: 100%;
-    margin-top: var(--space-md);
+    margin-top: 12px;
 }
 
 /* ── Discard panel ────────────────────────────────────────────────── */
@@ -102,10 +102,10 @@
     flex-wrap: nowrap;
     min-height: 80px;
     max-height: 100px;
-    border-radius: var(--radius-sm);
+    border-radius: 4px;
     background-color: rgba(0, 0, 0, 0.2);
-    padding: var(--space-xs);
-    margin-bottom: var(--space-xs);
+    padding: 4px;
+    margin-bottom: 4px;
     overflow: hidden;
 }
 
@@ -119,8 +119,8 @@
 .discard-card {
     width: 48px;
     height: 64px;
-    margin-right: var(--space-xs);
-    border-radius: var(--radius-sm);
+    margin-right: 4px;
+    border-radius: 4px;
     background-size: contain;
     background-repeat: no-repeat;
     transition-duration: 0.1s;
@@ -140,14 +140,14 @@
 .steal-player-btn {
     flex-direction: row;
     align-items: center;
-    padding: var(--space-sm) var(--space-md);
-    margin-bottom: var(--space-xs);
-    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    margin-bottom: 4px;
+    border-radius: 4px;
     border-width: 1px;
     border-color: rgba(255, 255, 255, 0.1);
     background-color: rgba(255, 255, 255, 0.04);
-    font-size: var(--font-size-md);
-    color: var(--color-text-primary);
+    font-size: 14px;
+    color: rgba(240, 228, 196, 1);
 }
 
 .steal-player-btn:hover {
@@ -158,7 +158,7 @@
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    margin-right: var(--space-sm);
+    margin-right: 8px;
 }
 
 /* ── Victory screen ───────────────────────────────────────────────── */
@@ -175,6 +175,6 @@
     width: 120px;
     height: 6px;
     border-radius: 3px;
-    margin-top: var(--space-xs);
-    margin-bottom: var(--space-sm);
+    margin-top: 4px;
+    margin-bottom: 8px;
 }

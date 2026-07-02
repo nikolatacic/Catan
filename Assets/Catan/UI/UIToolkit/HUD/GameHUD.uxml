@@ -1,5 +1,4 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements">
-    <ui:Style src="project://database/Assets/Catan/UI/UIToolkit/Styles/variables.uss"/>
     <ui:Style src="project://database/Assets/Catan/UI/UIToolkit/Styles/common.uss"/>
     <ui:Style src="project://database/Assets/Catan/UI/UIToolkit/HUD/GameHUD.uss"/>
     <ui:Style src="project://database/Assets/Catan/UI/UIToolkit/Modals/Modals.uss"/>
@@ -17,7 +16,7 @@
         clicks pass through. Interactive children override this with their own
         picking-mode (default = Position, which blocks clicks).
     -->
-    <ui:VisualElement name="HUDRoot" picking-mode="Ignore" class="hud-root catan-vars">
+    <ui:VisualElement name="HUDRoot" picking-mode="Ignore" class="hud-root">
 
         <!-- ── Right panel ────────────────────────────────────────────────── -->
         <ui:VisualElement name="RightPanel" class="right-panel">

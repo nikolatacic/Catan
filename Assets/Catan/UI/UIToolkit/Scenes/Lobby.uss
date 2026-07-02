@@ -1,6 +1,6 @@
 
 .lobby-overlay {
-    background-color: var(--color-bg-overlay);
+    background-color: rgba(0, 0, 0, 0.72);
 }
 
 .lobby-modal {
@@ -9,50 +9,50 @@
 }
 
 .lobby-title {
-    margin-bottom: var(--space-sm);
+    margin-bottom: 8px;
     -unity-text-align: upper-center;
 }
 
 .lobby-section {
     flex-direction: column;
-    margin-top: var(--space-sm);
-    margin-bottom: var(--space-sm);
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 
 .join-code-display {
-    color: var(--color-accent-gold);
+    color: rgba(212, 172, 60, 1);
     -unity-text-align: upper-center;
     letter-spacing: 4px;
-    margin-top: var(--space-xs);
-    margin-bottom: var(--space-xs);
+    margin-top: 4px;
+    margin-bottom: 4px;
 }
 
 .join-code-input {
-    margin-top: var(--space-xs);
+    margin-top: 4px;
     height: 36px;
-    font-size: var(--font-size-md);
-    color: var(--color-text-primary);
-    background-color: var(--color-bg-button);
-    border-color: var(--color-border);
-    border-width: var(--border-width);
-    border-radius: var(--radius-sm);
-    padding: var(--space-xs) var(--space-sm);
+    font-size: 14px;
+    color: rgba(240, 228, 196, 1);
+    background-color: rgba(60, 52, 36, 1);
+    border-color: rgba(90, 78, 52, 1);
+    border-width: 1px;
+    border-radius: 4px;
+    padding: 4px 8px;
 }
 
 .join-code-input:focus {
-    border-color: var(--color-border-focus);
-    border-width: var(--border-width-focus);
+    border-color: rgba(212, 172, 60, 1);
+    border-width: 2px;
 }
 
 .status-label {
     min-height: 20px;
-    margin-top: var(--space-sm);
+    margin-top: 8px;
     -unity-text-align: upper-center;
     white-space: normal;
 }
 
 .lobby-button-row {
-    margin-top: var(--space-md);
+    margin-top: 12px;
     justify-content: flex-end;
 }
 
