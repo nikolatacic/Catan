@@ -1,5 +1,3 @@
-@import url("../Styles/variables.uss");
-
 /* ── Overlay backdrop ─────────────────────────────────────────────── */
 .modal-overlay {
     position: absolute;

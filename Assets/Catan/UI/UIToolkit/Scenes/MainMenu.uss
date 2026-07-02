@@ -1,4 +1,3 @@
-@import url("../Styles/variables.uss");
 
 .main-menu-root {
     flex: 1;

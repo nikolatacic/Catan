@@ -1,4 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:Style src="project://database/Assets/Catan/UI/UIToolkit/Styles/variables.uss"/>
     <ui:Style src="project://database/Assets/Catan/UI/UIToolkit/Styles/common.uss"/>
     <ui:Style src="project://database/Assets/Catan/UI/UIToolkit/Scenes/Lobby.uss"/>
 

@@ -1,4 +1,3 @@
-@import url("../Styles/variables.uss");
 
 .lobby-overlay {
     background-color: var(--color-bg-overlay);
