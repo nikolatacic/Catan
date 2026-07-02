@@ -1,0 +1,64 @@
+@import url("../Styles/variables.uss");
+
+.lobby-overlay {
+    background-color: var(--color-bg-overlay);
+}
+
+.lobby-modal {
+    min-width: 340px;
+    max-width: 420px;
+}
+
+.lobby-title {
+    margin-bottom: var(--space-sm);
+    -unity-text-align: upper-center;
+}
+
+.lobby-section {
+    flex-direction: column;
+    margin-top: var(--space-sm);
+    margin-bottom: var(--space-sm);
+}
+
+.join-code-display {
+    color: var(--color-accent-gold);
+    -unity-text-align: upper-center;
+    letter-spacing: 4px;
+    margin-top: var(--space-xs);
+    margin-bottom: var(--space-xs);
+}
+
+.join-code-input {
+    margin-top: var(--space-xs);
+    height: 36px;
+    font-size: var(--font-size-md);
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-button);
+    border-color: var(--color-border);
+    border-width: var(--border-width);
+    border-radius: var(--radius-sm);
+    padding: var(--space-xs) var(--space-sm);
+}
+
+.join-code-input:focus {
+    border-color: var(--color-border-focus);
+    border-width: var(--border-width-focus);
+}
+
+.status-label {
+    min-height: 20px;
+    margin-top: var(--space-sm);
+    -unity-text-align: upper-center;
+    white-space: normal;
+}
+
+.lobby-button-row {
+    margin-top: var(--space-md);
+    justify-content: flex-end;
+}
+
+.lobby-btn {
+    min-width: 100px;
+    height: 40px;
+    justify-content: center;
+}

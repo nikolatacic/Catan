@@ -1,0 +1,150 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:Style src="project://database/Assets/Catan/UI/UIToolkit/Styles/common.uss"/>
+    <ui:Style src="project://database/Assets/Catan/UI/UIToolkit/HUD/GameHUD.uss"/>
+    <ui:Style src="project://database/Assets/Catan/UI/UIToolkit/Modals/Modals.uss"/>
+
+    <!-- Modal templates -->
+    <ui:Template name="BankTradePanel"   src="project://database/Assets/Catan/UI/UIToolkit/Modals/BankTradePanel.uxml"/>
+    <ui:Template name="DiscardPanel"     src="project://database/Assets/Catan/UI/UIToolkit/Modals/DiscardPanel.uxml"/>
+    <ui:Template name="MonopolyPanel"    src="project://database/Assets/Catan/UI/UIToolkit/Modals/MonopolyPanel.uxml"/>
+    <ui:Template name="YearOfPlentyPanel" src="project://database/Assets/Catan/UI/UIToolkit/Modals/YearOfPlentyPanel.uxml"/>
+    <ui:Template name="StealTargetPanel" src="project://database/Assets/Catan/UI/UIToolkit/Modals/StealTargetPanel.uxml"/>
+    <ui:Template name="VictoryScreen"    src="project://database/Assets/Catan/UI/UIToolkit/Modals/VictoryScreen.uxml"/>
+
+    <!--
+        Full-screen HUD overlay. picking-mode="Ignore" on the root so board
+        clicks pass through. Interactive children override this with their own
+        picking-mode (default = Position, which blocks clicks).
+    -->
+    <ui:VisualElement name="HUDRoot" picking-mode="Ignore" class="hud-root">
+
+        <!-- ── Right panel ────────────────────────────────────────────────── -->
+        <ui:VisualElement name="RightPanel" class="right-panel">
+
+            <!-- Turn indicator -->
+            <ui:VisualElement name="TurnSection" class="panel hud-section">
+                <ui:VisualElement class="row turn-header">
+                    <ui:VisualElement name="PlayerColorBar" class="player-color-bar"/>
+                    <ui:VisualElement class="col turn-header-labels">
+                        <ui:Label name="ActivePlayerLabel" text="—" class="label--lg"/>
+                        <ui:Label name="TurnNumberLabel"   text="Turn 1" class="label--xs label--secondary"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:Label name="PhaseLabel"      text="—"  class="label--sm label--secondary phase-label"/>
+                <ui:Label name="DiceResultLabel" text=""   class="label--xl label--highlight dice-label"/>
+            </ui:VisualElement>
+
+            <!-- All players summary -->
+            <ui:VisualElement name="SummarySection" class="panel hud-section">
+                <ui:Label text="PLAYERS" class="label--xs label--secondary section-title"/>
+                <ui:VisualElement name="SummaryRowContainer" class="summary-row-container"/>
+            </ui:VisualElement>
+
+            <!-- Dev card hand -->
+            <ui:VisualElement name="DevHandSection" class="panel hud-section">
+                <ui:Label text="DEV CARDS" class="label--xs label--secondary section-title"/>
+                <ui:VisualElement name="DevCardContainer" class="dev-card-container"/>
+                <ui:Label name="DevHandEmptyLabel" text="No cards" class="label--xs label--secondary dev-empty-label"/>
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+
+        <!-- ── Player hand (bottom-left, above action bar) ───────────────── -->
+        <ui:VisualElement name="PlayerHandSection" class="panel player-hand-section">
+            <ui:VisualElement class="row row--space-between hand-header">
+                <ui:Label name="HandPlayerNameLabel" text="—"      class="label--md"/>
+                <ui:Label name="HandVPLabel"         text="0 VP"   class="label--xs label--secondary"/>
+                <ui:Label name="HandTotalCardsLabel" text="0 cards" class="label--xs label--secondary"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="row resource-row">
+                <ui:VisualElement name="WoodSlot"  class="resource-slot">
+                    <ui:VisualElement name="WoodIcon"  class="resource-card-icon"/>
+                    <ui:Label        name="WoodCount"  text="0" class="resource-count-label"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="BrickSlot" class="resource-slot">
+                    <ui:VisualElement name="BrickIcon" class="resource-card-icon"/>
+                    <ui:Label        name="BrickCount" text="0" class="resource-count-label"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="SheepSlot" class="resource-slot">
+                    <ui:VisualElement name="SheepIcon" class="resource-card-icon"/>
+                    <ui:Label        name="SheepCount" text="0" class="resource-count-label"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="WheatSlot" class="resource-slot">
+                    <ui:VisualElement name="WheatIcon" class="resource-card-icon"/>
+                    <ui:Label        name="WheatCount" text="0" class="resource-count-label"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="OreSlot"   class="resource-slot">
+                    <ui:VisualElement name="OreIcon"   class="resource-card-icon"/>
+                    <ui:Label        name="OreCount"   text="0" class="resource-count-label"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- ── Cheat menu (top-left, debug only) ────────────────────────── -->
+        <ui:VisualElement name="CheatSection" class="cheat-section">
+            <ui:Button name="CheatToggleButton" text="TEST" class="btn cheat-toggle-btn"/>
+            <ui:VisualElement name="CheatPanel" class="panel cheat-panel hidden">
+                <ui:Label name="CheatPlayerLabel" text="Active: —" class="label--xs label--secondary"/>
+                <ui:Button name="CheatAddVPButton"           text="+1 VP"    class="btn"/>
+                <ui:Button name="CheatGiveResourcesButton"   text="+5 All"   class="btn"/>
+                <ui:Button name="CheatSkipToEndTurnButton"   text="End Turn" class="btn"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- ── Action bar (bottom) ───────────────────────────────────────── -->
+        <ui:VisualElement name="ActionBar" class="action-bar">
+
+            <ui:Button name="RollDiceButton" class="btn action-btn action-btn--turn">
+                <ui:VisualElement name="RollDiceIcon" class="action-btn-icon"/>
+                <ui:Label text="Roll" class="action-btn-label"/>
+            </ui:Button>
+
+            <ui:Button name="EndTurnButton" class="btn action-btn action-btn--turn">
+                <ui:VisualElement name="EndTurnIcon" class="action-btn-icon"/>
+                <ui:Label text="End Turn" class="action-btn-label"/>
+            </ui:Button>
+
+            <ui:VisualElement class="action-separator"/>
+
+            <ui:Button name="BuildSettlementButton" class="btn action-btn action-btn--build">
+                <ui:VisualElement name="SettlementIcon" class="action-btn-icon"/>
+                <ui:Label text="Settlement" class="action-btn-label"/>
+            </ui:Button>
+
+            <ui:Button name="BuildRoadButton" class="btn action-btn action-btn--build">
+                <ui:VisualElement name="RoadIcon" class="action-btn-icon"/>
+                <ui:Label text="Road" class="action-btn-label"/>
+            </ui:Button>
+
+            <ui:Button name="BuildCityButton" class="btn action-btn action-btn--build">
+                <ui:VisualElement name="CityIcon" class="action-btn-icon"/>
+                <ui:Label text="City" class="action-btn-label"/>
+            </ui:Button>
+
+            <ui:Button name="BuyDevCardButton" class="btn action-btn action-btn--build">
+                <ui:VisualElement name="DevCardIcon" class="action-btn-icon"/>
+                <ui:Label text="Dev Card" class="action-btn-label"/>
+            </ui:Button>
+
+            <ui:VisualElement class="action-separator"/>
+
+            <ui:Button name="BankTradeButton" class="btn action-btn action-btn--trade">
+                <ui:Label text="Bank Trade" class="action-btn-label"/>
+            </ui:Button>
+
+            <ui:Button name="CancelPlacementButton" class="btn btn--danger action-btn">
+                <ui:Label text="Cancel" class="action-btn-label"/>
+            </ui:Button>
+
+        </ui:VisualElement>
+
+        <!-- ── Modals (hidden by default, shown via DisplayStyle in C#) ─────── -->
+        <ui:Instance template="BankTradePanel"/>
+        <ui:Instance template="DiscardPanel"/>
+        <ui:Instance template="MonopolyPanel"/>
+        <ui:Instance template="YearOfPlentyPanel"/>
+        <ui:Instance template="StealTargetPanel"/>
+        <ui:Instance template="VictoryScreen"/>
+
+    </ui:VisualElement>
+</ui:UXML>

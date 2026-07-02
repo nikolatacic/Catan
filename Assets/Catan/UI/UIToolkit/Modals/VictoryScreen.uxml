@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement name="VictoryScreenRoot" class="panel--overlay modal-overlay victory-overlay" style="display: none;">
+        <ui:VisualElement class="modal victory-modal">
+
+            <ui:Label text="VICTORY!" class="label--hero label--highlight modal-title"/>
+            <ui:VisualElement name="VictoryColorBar" class="victory-color-bar"/>
+            <ui:Label name="VictoryWinnerLabel" text=""  class="label--xl"/>
+            <ui:Label name="VictoryPointsLabel" text=""  class="label--md label--secondary"/>
+            <ui:VisualElement class="divider"/>
+            <ui:Label text="FINAL STANDINGS" class="label--xs label--secondary section-title"/>
+            <ui:Label name="VictoryStandingsLabel" text="" class="label--sm"/>
+            <ui:Button name="VictoryRestartButton" text="Play Again" class="btn btn--primary modal-btn-full"/>
+
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,32 +1,44 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 
 namespace Catan.UI
 {
+    [RequireComponent(typeof(UIDocument))]
     public class MainMenuView : MonoBehaviour
     {
-        [Header("Lobby (optional — required for Host/Join)")]
+        private Button _playButton;
+        private Button _hostButton;
+        private Button _joinButton;
+
+        [Header("Lobby (required for Host/Join)")]
         public LobbyView Lobby;
 
-        // ── Play (hotseat) ─────────────────────────────────────────────────────
-        // Scene index 1 in Build Settings = the game scene (MainScene).
-        // Populates GameSession with a default 2-player hotseat config so the
-        // game scene knows who's playing.
-        public void OnPlay()
+        private void Awake()
+        {
+            var root = GetComponent<UIDocument>().rootVisualElement;
+            _playButton = root.Q<Button>("PlayButton");
+            _hostButton = root.Q<Button>("HostButton");
+            _joinButton = root.Q<Button>("JoinButton");
+
+            _playButton.RegisterCallback<ClickEvent>(_ => OnPlay());
+            _hostButton.RegisterCallback<ClickEvent>(_ => OnHost());
+            _joinButton.RegisterCallback<ClickEvent>(_ => OnJoin());
+        }
+
+        private void OnPlay()
         {
             NetworkSession.EnterHotseatMode();
             GameSession.SetDefault2PlayerHotseat();
             SceneManager.LoadScene(1);
         }
 
-        // ── Host (multiplayer) ─────────────────────────────────────────────────
-        public void OnHost()
+        private void OnHost()
         {
             if (Lobby != null) Lobby.ShowAsHost();
         }
 
-        // ── Join (multiplayer) ─────────────────────────────────────────────────
-        public void OnJoin()
+        private void OnJoin()
         {
             if (Lobby != null) Lobby.ShowAsClient();
         }

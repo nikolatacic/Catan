@@ -1,0 +1,75 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <!-- BankTradePanel — instantiated as a template inside GameHUD.uxml -->
+    <ui:VisualElement name="BankTradePanelRoot" class="panel--overlay modal-overlay" style="display: none;">
+        <ui:VisualElement class="modal bank-trade-modal">
+
+            <ui:Label text="BANK TRADE" class="label--lg modal-title"/>
+            <ui:VisualElement class="divider"/>
+
+            <!-- Give row -->
+            <ui:Label text="YOU GIVE" class="label--xs label--secondary section-title"/>
+            <ui:VisualElement class="row bank-resource-row">
+                <ui:Button name="GiveWoodBtn"  class="btn resource-btn bank-give-btn">
+                    <ui:VisualElement name="GiveWoodIcon"  class="bank-card-icon"/>
+                    <ui:Label name="GiveWoodLabel"  text="Wood"  class="label--xs"/>
+                    <ui:Label name="GiveWoodInfo"   text=""      class="label--xs label--secondary"/>
+                </ui:Button>
+                <ui:Button name="GiveBrickBtn" class="btn resource-btn bank-give-btn">
+                    <ui:VisualElement name="GiveBrickIcon" class="bank-card-icon"/>
+                    <ui:Label name="GiveBrickLabel" text="Brick" class="label--xs"/>
+                    <ui:Label name="GiveBrickInfo"  text=""      class="label--xs label--secondary"/>
+                </ui:Button>
+                <ui:Button name="GiveSheepBtn" class="btn resource-btn bank-give-btn">
+                    <ui:VisualElement name="GiveSheepIcon" class="bank-card-icon"/>
+                    <ui:Label name="GiveSheepLabel" text="Sheep" class="label--xs"/>
+                    <ui:Label name="GiveSheepInfo"  text=""      class="label--xs label--secondary"/>
+                </ui:Button>
+                <ui:Button name="GiveWheatBtn" class="btn resource-btn bank-give-btn">
+                    <ui:VisualElement name="GiveWheatIcon" class="bank-card-icon"/>
+                    <ui:Label name="GiveWheatLabel" text="Wheat" class="label--xs"/>
+                    <ui:Label name="GiveWheatInfo"  text=""      class="label--xs label--secondary"/>
+                </ui:Button>
+                <ui:Button name="GiveOreBtn"   class="btn resource-btn bank-give-btn">
+                    <ui:VisualElement name="GiveOreIcon"   class="bank-card-icon"/>
+                    <ui:Label name="GiveOreLabel"   text="Ore"   class="label--xs"/>
+                    <ui:Label name="GiveOreInfo"    text=""      class="label--xs label--secondary"/>
+                </ui:Button>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="divider"/>
+
+            <!-- Receive row -->
+            <ui:Label text="YOU RECEIVE" class="label--xs label--secondary section-title"/>
+            <ui:VisualElement class="row bank-resource-row">
+                <ui:Button name="ReceiveWoodBtn"  class="btn resource-btn">
+                    <ui:VisualElement name="ReceiveWoodIcon"  class="bank-card-icon"/>
+                    <ui:Label text="Wood"  class="label--xs"/>
+                </ui:Button>
+                <ui:Button name="ReceiveBrickBtn" class="btn resource-btn">
+                    <ui:VisualElement name="ReceiveBrickIcon" class="bank-card-icon"/>
+                    <ui:Label text="Brick" class="label--xs"/>
+                </ui:Button>
+                <ui:Button name="ReceiveSheepBtn" class="btn resource-btn">
+                    <ui:VisualElement name="ReceiveSheepIcon" class="bank-card-icon"/>
+                    <ui:Label text="Sheep" class="label--xs"/>
+                </ui:Button>
+                <ui:Button name="ReceiveWheatBtn" class="btn resource-btn">
+                    <ui:VisualElement name="ReceiveWheatIcon" class="bank-card-icon"/>
+                    <ui:Label text="Wheat" class="label--xs"/>
+                </ui:Button>
+                <ui:Button name="ReceiveOreBtn"   class="btn resource-btn">
+                    <ui:VisualElement name="ReceiveOreIcon"   class="bank-card-icon"/>
+                    <ui:Label text="Ore"   class="label--xs"/>
+                </ui:Button>
+            </ui:VisualElement>
+
+            <ui:Label name="BankTradeFeedbackLabel" text="" class="label--sm modal-feedback"/>
+
+            <ui:VisualElement class="row modal-button-row">
+                <ui:Button name="BankTradeCancelBtn"  text="Cancel"  class="btn modal-btn"/>
+                <ui:Button name="BankTradeConfirmBtn" text="Trade"   class="btn btn--primary modal-btn"/>
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

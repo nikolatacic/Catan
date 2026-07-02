@@ -1,66 +1,73 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+using UnityEngine.UIElements;
 using Catan.Commands;
 using GameCore.Player;
 
 namespace Catan.UI
 {
-    // ── Scene setup ────────────────────────────────────────────────────────────
-    // Place on Canvas (starts inactive). Wire GameManager.StealTargetPanel to
-    // this object. Run Catan → Create All UI Prefabs to generate the prefab
-    // with a matching PlayerButtonPrefab already wired.
-    // ──────────────────────────────────────────────────────────────────────────
-
+    [RequireComponent(typeof(UIDocument))]
     public class StealTargetPanelView : MonoBehaviour
     {
-        [Header("Layout")]
-        public TextMeshProUGUI TitleLabel;
-        public Transform ButtonContainer;
-
-        [Header("Prefab")]
-        public GameObject PlayerButtonPrefab;
+        private VisualElement _panelRoot;
+        private VisualElement _buttonContainer;
 
         private GameCore.Board.HexCoord _pendingCoord;
 
-        private void Awake() => gameObject.SetActive(false);
+        private void Awake()
+        {
+            var root = GetComponent<UIDocument>().rootVisualElement;
+
+            _panelRoot        = root.Q<VisualElement>("StealTargetPanelRoot");
+            _buttonContainer  = root.Q<VisualElement>("StealButtonContainer");
+
+            if (_panelRoot != null) _panelRoot.style.display = DisplayStyle.None;
+        }
+
+        // ── Public API ─────────────────────────────────────────────────────────
 
         public void Show(GameCore.Board.HexCoord coord, List<IPlayer> victims)
         {
             _pendingCoord = coord;
 
-            foreach (Transform child in ButtonContainer)
-                Destroy(child.gameObject);
-
-            if (TitleLabel != null)
-                TitleLabel.text = "Choose a player to steal from";
+            _buttonContainer?.Clear();
 
             foreach (var victim in victims)
-            {
-                if (PlayerButtonPrefab == null) break;
+                _buttonContainer?.Add(BuildPlayerButton(victim));
 
-                var go = Instantiate(PlayerButtonPrefab, ButtonContainer);
-                var image = go.GetComponent<Image>();
-                var label = go.GetComponentInChildren<TextMeshProUGUI>();
-                var button = go.GetComponent<Button>();
-
-                if (image != null && victim is CatanPlayer catanPlayer)
-                    image.color = catanPlayer.Color;
-
-                if (label != null)
-                    label.text = victim.DisplayName;
-
-                IPlayer capturedVictim = victim;
-                button?.onClick.AddListener(() => OnVictimSelected(capturedVictim));
-            }
-
-            gameObject.SetActive(true);
+            if (_panelRoot != null) _panelRoot.style.display = DisplayStyle.Flex;
         }
+
+        // ── Builder ────────────────────────────────────────────────────────────
+
+        private Button BuildPlayerButton(IPlayer player)
+        {
+            var playerButton = new Button();
+            playerButton.AddToClassList("steal-player-btn");
+
+            var colorSwatch = new VisualElement();
+            colorSwatch.AddToClassList("steal-player-color-swatch");
+
+            if (player is CatanPlayer catanPlayer)
+                colorSwatch.style.backgroundColor = new StyleColor(catanPlayer.Color);
+
+            var nameLabel = new Label(player.DisplayName);
+            nameLabel.AddToClassList("label--md");
+
+            playerButton.Add(colorSwatch);
+            playerButton.Add(nameLabel);
+
+            IPlayer capturedPlayer = player;
+            playerButton.RegisterCallback<ClickEvent>(_ => OnVictimSelected(capturedPlayer));
+
+            return playerButton;
+        }
+
+        // ── Callbacks ──────────────────────────────────────────────────────────
 
         private void OnVictimSelected(IPlayer victim)
         {
-            gameObject.SetActive(false);
+            if (_panelRoot != null) _panelRoot.style.display = DisplayStyle.None;
             CommandDispatcher.Send(new CompleteRobberMoveCommand { Coord = _pendingCoord, Victim = victim });
         }
     }

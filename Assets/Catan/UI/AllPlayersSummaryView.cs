@@ -1,33 +1,31 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using GameCore.Events;
-using GameCore.Resources;
 using GameCore.Turn;
 using GameCore.Score;
 
 namespace Catan.UI
 {
-    // ── Scene setup ────────────────────────────────────────────────────────────
-    // Place anywhere on Canvas (side panel recommended). Assign RowContainer
-    // and RowPrefab. Rows are spawned automatically from GameManager.Players
-    // on the first TurnStartedEvent — no manual wiring per player needed.
-    // ──────────────────────────────────────────────────────────────────────────
-
+    [RequireComponent(typeof(UIDocument))]
     public class AllPlayersSummaryView : MonoBehaviour
     {
-        [Header("Layout")]
-        public Transform RowContainer;
-        public GameObject RowPrefab;
-
-        private readonly List<PlayerSummaryRowView> _rows = new();
+        private VisualElement _summaryRowContainer;
+        private readonly List<PlayerSummaryRowView> _summaryRows = new();
         private CatanPlayer _activePlayer;
+
+        private void Awake()
+        {
+            var root = GetComponent<UIDocument>().rootVisualElement;
+            _summaryRowContainer = root.Q<VisualElement>("SummaryRowContainer");
+        }
 
         private void OnEnable()
         {
             EventBus.Subscribe<TurnStartedEvent>(OnTurnStarted);
             EventBus.Subscribe<ScoreChangedEvent>(OnScoreChanged);
-            EventBus.Subscribe<ResourceAddedEvent>(OnResourceChanged);
-            EventBus.Subscribe<ResourceRemovedEvent>(OnResourceChanged);
+            EventBus.Subscribe<ResourceAddedEvent>(OnResourceAdded);
+            EventBus.Subscribe<ResourceRemovedEvent>(OnResourceRemoved);
             EventBus.Subscribe<KnightPlayedEvent>(OnKnightPlayed);
         }
 
@@ -35,65 +33,62 @@ namespace Catan.UI
         {
             EventBus.Unsubscribe<TurnStartedEvent>(OnTurnStarted);
             EventBus.Unsubscribe<ScoreChangedEvent>(OnScoreChanged);
-            EventBus.Unsubscribe<ResourceAddedEvent>(OnResourceChanged);
-            EventBus.Unsubscribe<ResourceRemovedEvent>(OnResourceChanged);
+            EventBus.Unsubscribe<ResourceAddedEvent>(OnResourceAdded);
+            EventBus.Unsubscribe<ResourceRemovedEvent>(OnResourceRemoved);
             EventBus.Unsubscribe<KnightPlayedEvent>(OnKnightPlayed);
         }
-
-        // ── Event handlers ─────────────────────────────────────────────────────
 
         private void OnTurnStarted(TurnStartedEvent gameEvent)
         {
             _activePlayer = gameEvent.Actor as CatanPlayer;
-
-            if (_rows.Count == 0)
+            if (_summaryRows.Count == 0)
                 BuildRows();
-
             RefreshAll();
         }
 
         private void OnScoreChanged(ScoreChangedEvent gameEvent) => RefreshAll();
-        private void OnResourceChanged(ResourceAddedEvent gameEvent) => RefreshRow(gameEvent.Player as CatanPlayer);
-        private void OnResourceChanged(ResourceRemovedEvent gameEvent) => RefreshRow(gameEvent.Player as CatanPlayer);
-        private void OnKnightPlayed(KnightPlayedEvent gameEvent) => RefreshRow(gameEvent.Player as CatanPlayer);
-
-        // ── Row management ─────────────────────────────────────────────────────
+        private void OnResourceAdded(ResourceAddedEvent gameEvent) => RefreshSingleRow(gameEvent.Player as CatanPlayer);
+        private void OnResourceRemoved(ResourceRemovedEvent gameEvent) => RefreshSingleRow(gameEvent.Player as CatanPlayer);
+        private void OnKnightPlayed(KnightPlayedEvent gameEvent) => RefreshSingleRow(gameEvent.Player as CatanPlayer);
 
         private void BuildRows()
         {
             var manager = GameManager.Instance;
-            if (manager == null || RowPrefab == null) return;
+            if (manager == null || _summaryRowContainer == null) return;
+
+            _summaryRowContainer.Clear();
+            _summaryRows.Clear();
 
             foreach (var player in manager.Players)
             {
-                var go = Instantiate(RowPrefab, RowContainer);
-                var row = go.GetComponent<PlayerSummaryRowView>();
-                if (row == null) continue;
-                row.Initialize(player);
-                _rows.Add(row);
+                var catanPlayer = player as CatanPlayer;
+                if (catanPlayer == null) continue;
+                var summaryRow = new PlayerSummaryRowView(catanPlayer);
+                _summaryRowContainer.Add(summaryRow.Root);
+                _summaryRows.Add(summaryRow);
             }
         }
 
         private void RefreshAll()
         {
             var manager = GameManager.Instance;
-            foreach (var row in _rows)
+            foreach (var summaryRow in _summaryRows)
             {
-                if (row == null || row.Player == null) continue;
-                int score = manager?.ScoreManager.GetScore(row.Player) ?? 0;
-                row.Refresh(isActive: row.Player == _activePlayer, score: score);
+                if (summaryRow.Player == null) continue;
+                int playerScore = manager?.ScoreManager.GetScore(summaryRow.Player) ?? 0;
+                summaryRow.Refresh(isActive: summaryRow.Player == _activePlayer, score: playerScore);
             }
         }
 
-        private void RefreshRow(CatanPlayer player)
+        private void RefreshSingleRow(CatanPlayer player)
         {
             if (player == null) return;
             var manager = GameManager.Instance;
-            foreach (var row in _rows)
+            foreach (var summaryRow in _summaryRows)
             {
-                if (row.Player != player) continue;
-                int score = manager?.ScoreManager.GetScore(player) ?? 0;
-                row.Refresh(isActive: player == _activePlayer, score: score);
+                if (summaryRow.Player != player) continue;
+                int playerScore = manager?.ScoreManager.GetScore(player) ?? 0;
+                summaryRow.Refresh(isActive: player == _activePlayer, score: playerScore);
                 break;
             }
         }

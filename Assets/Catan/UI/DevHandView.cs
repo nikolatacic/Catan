@@ -1,19 +1,13 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using GameCore.Cards;
 using GameCore.Events;
 
 namespace Catan.UI
 {
-    // ── Scene setup ────────────────────────────────────────────────────────────
-    // Place anywhere on Canvas (side panel recommended).
-    // Assign CardContainer (Transform) — a VerticalLayoutGroup works well.
-    // Assign DevCardItemPrefab — a prefab with DevCardItemView component.
-    // Assign CardSprites — one entry per DevelopmentCard.CardId (e.g. "Knight").
-    // Automatically follows the active player via TurnStartedEvent.
-    // ──────────────────────────────────────────────────────────────────────────
-
+    [RequireComponent(typeof(UIDocument))]
     public class DevHandView : MonoBehaviour
     {
         [Serializable]
@@ -23,13 +17,19 @@ namespace Catan.UI
             public Sprite Sprite;
         }
 
-        public Transform CardContainer;
-        public GameObject DevCardItemPrefab;
-
-        [Header("Card sprites (one per DevelopmentCard.CardId)")]
+        [Header("Card sprites — one entry per DevelopmentCard.CardId (e.g. \"Knight\")")]
         public List<CardSpriteEntry> CardSprites = new();
 
-        private CatanPlayer _player;
+        private VisualElement _devCardContainer;
+        private Label _emptyLabel;
+        private CatanPlayer _trackedPlayer;
+
+        private void Awake()
+        {
+            var root = GetComponent<UIDocument>().rootVisualElement;
+            _devCardContainer = root.Q<VisualElement>("DevCardContainer");
+            _emptyLabel       = root.Q<Label>("DevHandEmptyLabel");
+        }
 
         private void OnEnable()
         {
@@ -51,78 +51,78 @@ namespace Catan.UI
 
         private void OnTurnStarted(GameCore.Turn.TurnStartedEvent gameEvent)
         {
-            ResolvePlayer(gameEvent.Actor as CatanPlayer);
+            ResolveTrackedPlayer(gameEvent.Actor as CatanPlayer);
             Rebuild();
         }
 
         private void OnLocalPlayerAssigned(LocalPlayerAssignedEvent gameEvent)
         {
-            ResolvePlayer(activePlayer: null);
+            ResolveTrackedPlayer(activePlayer: null);
             Rebuild();
         }
 
         // Hotseat: track the active player. Networked: track the local player.
-        private void ResolvePlayer(CatanPlayer activePlayer)
+        private void ResolveTrackedPlayer(CatanPlayer activePlayer)
         {
             if (Catan.NetworkSession.IsNetworked)
             {
                 var manager = GameManager.Instance;
-                int index = Catan.NetworkSession.LocalPlayerIndex;
-                if (manager != null && index >= 0 && index < manager.Players.Count)
-                    _player = manager.Players[index];
+                int localPlayerIndex = Catan.NetworkSession.LocalPlayerIndex;
+                if (manager != null && localPlayerIndex >= 0 && localPlayerIndex < manager.Players.Count)
+                    _trackedPlayer = manager.Players[localPlayerIndex];
             }
             else
             {
-                _player = activePlayer ?? _player;
+                _trackedPlayer = activePlayer ?? _trackedPlayer;
             }
         }
 
         private void OnDevCardPurchased(DevCardPurchasedEvent gameEvent)
         {
-            if (gameEvent.Player == _player) Rebuild();
+            if (gameEvent.Player == _trackedPlayer) Rebuild();
         }
 
         private void OnCardPlayed(CardPlayedEvent<DevelopmentCard> gameEvent) => Rebuild();
-
         private void OnPhaseChanged(CatanPhaseChangedEvent gameEvent) => Rebuild();
 
         private void Rebuild()
         {
-            if (CardContainer == null || DevCardItemPrefab == null) return;
+            if (_devCardContainer == null) return;
 
-            foreach (Transform child in CardContainer)
-                Destroy(child.gameObject);
+            _devCardContainer.Clear();
 
-            if (_player == null) return;
+            bool hasCards = _trackedPlayer != null && _trackedPlayer.DevelopmentCards.Cards.Count > 0;
+
+            if (_emptyLabel != null)
+                _emptyLabel.style.display = hasCards ? DisplayStyle.None : DisplayStyle.Flex;
+
+            if (!hasCards) return;
 
             var manager = GameManager.Instance;
-            CatanGameContext context = null;
+            CatanGameContext gameContext = null;
             if (manager != null)
             {
-                context = new CatanGameContext(
+                gameContext = new CatanGameContext(
                     manager.ActivePlayer,
                     manager.TurnManager,
                     manager.Board,
                     new List<GameCore.Player.IPlayer>(manager.Players));
             }
 
-            foreach (var card in _player.DevelopmentCards.Cards)
+            foreach (var developmentCard in _trackedPlayer.DevelopmentCards.Cards)
             {
-                var go = Instantiate(DevCardItemPrefab, CardContainer);
-                var itemView = go.GetComponent<DevCardItemView>();
-                if (itemView == null) continue;
-
-                bool isPlayable = context != null && card.IsPlayable(context);
-                itemView.Initialize(card, isPlayable, GetCardSprite(card.CardId));
+                bool isPlayable = gameContext != null && developmentCard.IsPlayable(gameContext);
+                var cardItemView = new DevCardItemView(developmentCard, isPlayable, GetCardSprite(developmentCard.CardId));
+                _devCardContainer.Add(cardItemView.Root);
             }
         }
 
         private Sprite GetCardSprite(string cardId)
         {
-            foreach (var entry in CardSprites)
+            foreach (var spriteEntry in CardSprites)
             {
-                if (entry.CardId == cardId)
-                    return entry.Sprite;
+                if (spriteEntry.CardId == cardId)
+                    return spriteEntry.Sprite;
             }
             return null;
         }

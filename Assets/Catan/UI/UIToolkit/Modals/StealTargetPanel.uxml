@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement name="StealTargetPanelRoot" class="panel--overlay modal-overlay" style="display: none;">
+        <ui:VisualElement class="modal steal-modal">
+
+            <ui:Label text="CHOOSE A TARGET" class="label--lg modal-title"/>
+            <ui:Label text="Select a player to steal a resource from." class="label--sm label--secondary"/>
+            <ui:VisualElement class="divider"/>
+
+            <!-- Player buttons are created at runtime by StealTargetPanelView -->
+            <ui:VisualElement name="StealButtonContainer" class="col steal-button-container"/>
+
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,9 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
-using TMPro;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Services.Authentication;
@@ -14,41 +13,28 @@ using Unity.Services.Relay.Models;
 namespace Catan.UI
 {
     // ── Scene setup ────────────────────────────────────────────────────────────
-    // Lives inside the MainMenu scene as a child of Canvas (starts hidden).
-    // MainMenuView's "Host" / "Join" buttons call ShowAsHost() / ShowAsClient()
-    // to reveal this panel.
+    // Attach to the same GameObject as a UIDocument whose Visual Tree Asset is
+    // Lobby.uxml. LobbyRoot starts hidden (display:none). MainMenuView calls
+    // ShowAsHost() / ShowAsClient() to reveal it.
     //
-    // Required Inspector wiring:
-    //   StatusLabel       — TMP, shows progress / errors
-    //   JoinCodeDisplay   — TMP, shows the code to share (host mode)
-    //   JoinCodeInput     — TMP_InputField, accepts code (client mode)
-    //   ConfirmButton     — Button, "Start Game" (host) or "Connect" (client)
-    //   BackButton        — Button, returns to main menu
-    //
-    // A NetworkManager GameObject must exist in the scene (added by the
-    // Catan → Create Main Menu Scene editor tool). Its UnityTransport
+    // A NetworkManager GameObject must exist in the scene. Its UnityTransport
     // component is reconfigured at runtime when a Relay allocation lands.
     // ──────────────────────────────────────────────────────────────────────────
 
+    [RequireComponent(typeof(UIDocument))]
     public class LobbyView : MonoBehaviour
     {
-        [Header("Common")]
-        public GameObject Root;
-        public TextMeshProUGUI StatusLabel;
-        public Button ConfirmButton;
-        public Button BackButton;
-
-        [Header("Host mode")]
-        public GameObject HostSection;
-        public TextMeshProUGUI JoinCodeDisplay;
-
-        [Header("Client mode")]
-        public GameObject ClientSection;
-        public TMP_InputField JoinCodeInput;
-
-        [Header("Limits")]
-        [Tooltip("Max number of clients besides the host. Hotseat caps at 4 players total.")]
+        [Tooltip("Max clients besides the host. Hotseat caps at 4 players total.")]
         public int MaxClients = 3;
+
+        private VisualElement _lobbyRoot;
+        private VisualElement _hostSection;
+        private VisualElement _clientSection;
+        private Label _joinCodeDisplay;
+        private Label _statusLabel;
+        private TextField _joinCodeInput;
+        private Button _confirmButton;
+        private Button _backButton;
 
         private bool _isHostMode;
         private bool _isBusy;
@@ -56,19 +42,18 @@ namespace Catan.UI
 
         private void Awake()
         {
-            if (Root != null) Root.SetActive(false);
-        }
+            var root = GetComponent<UIDocument>().rootVisualElement;
+            _lobbyRoot      = root.Q<VisualElement>("LobbyRoot");
+            _hostSection    = root.Q<VisualElement>("HostSection");
+            _clientSection  = root.Q<VisualElement>("ClientSection");
+            _joinCodeDisplay = root.Q<Label>("JoinCodeDisplay");
+            _statusLabel    = root.Q<Label>("StatusLabel");
+            _joinCodeInput  = root.Q<TextField>("JoinCodeInput");
+            _confirmButton  = root.Q<Button>("ConfirmButton");
+            _backButton     = root.Q<Button>("BackButton");
 
-        private void OnEnable()
-        {
-            if (ConfirmButton != null) ConfirmButton.onClick.AddListener(OnConfirm);
-            if (BackButton != null)    BackButton.onClick.AddListener(OnBack);
-        }
-
-        private void OnDisable()
-        {
-            if (ConfirmButton != null) ConfirmButton.onClick.RemoveListener(OnConfirm);
-            if (BackButton != null)    BackButton.onClick.RemoveListener(OnBack);
+            _confirmButton.RegisterCallback<ClickEvent>(_ => OnConfirm());
+            _backButton.RegisterCallback<ClickEvent>(_ => OnBack());
         }
 
         // ── Public API ─────────────────────────────────────────────────────────
@@ -78,9 +63,9 @@ namespace Catan.UI
             _isHostMode = true;
             _isHostAllocated = false;
             Show();
-            if (HostSection != null)   HostSection.SetActive(true);
-            if (ClientSection != null) ClientSection.SetActive(false);
-            if (JoinCodeDisplay != null) JoinCodeDisplay.text = "—";
+            SetVisible(_hostSection, true);
+            SetVisible(_clientSection, false);
+            if (_joinCodeDisplay != null) _joinCodeDisplay.text = "—";
             SetStatus("Click Create Room to get a join code.");
             SetConfirmText("Create Room");
         }
@@ -89,9 +74,9 @@ namespace Catan.UI
         {
             _isHostMode = false;
             Show();
-            if (HostSection != null)   HostSection.SetActive(false);
-            if (ClientSection != null) ClientSection.SetActive(true);
-            if (JoinCodeInput != null) JoinCodeInput.text = "";
+            SetVisible(_hostSection, false);
+            SetVisible(_clientSection, true);
+            if (_joinCodeInput != null) _joinCodeInput.value = "";
             SetStatus("Enter join code and press Connect.");
             SetConfirmText("Connect");
         }
@@ -121,17 +106,14 @@ namespace Catan.UI
         private void OnBack()
         {
             if (_isBusy) return;
-            if (Root != null) Root.SetActive(false);
+            SetVisible(_lobbyRoot, false);
             _isHostAllocated = false;
             NetworkSession.EnterHotseatMode();
         }
 
         // ── Host flow ──────────────────────────────────────────────────────────
 
-        // Two-stage flow:
-        //   First click → allocate + start host. Code is shown and held visible.
-        //                 Button changes to "Start Game".
-        //   Second click → load the game scene (taking all connected clients with it).
+        // Two-stage: first click allocates relay and shows code; second loads game.
         private async Task StartAsHostAsync()
         {
             if (!_isHostAllocated)
@@ -144,7 +126,7 @@ namespace Catan.UI
 
                 SetStatus("Requesting join code…");
                 var joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
-                if (JoinCodeDisplay != null) JoinCodeDisplay.text = joinCode;
+                if (_joinCodeDisplay != null) _joinCodeDisplay.text = joinCode;
 
                 ConfigureTransportForHost(allocation);
 
@@ -171,7 +153,7 @@ namespace Catan.UI
 
         private async Task StartAsClientAsync()
         {
-            var joinCode = JoinCodeInput != null ? JoinCodeInput.text?.Trim() : null;
+            var joinCode = _joinCodeInput?.value?.Trim();
             if (string.IsNullOrEmpty(joinCode))
             {
                 SetStatus("Enter a join code.");
@@ -192,11 +174,8 @@ namespace Catan.UI
 
             SetStatus("Connecting to host…");
             if (!NetworkManager.Singleton.StartClient())
-            {
                 throw new InvalidOperationException("NetworkManager.StartClient returned false.");
-            }
-            // Host will load GameHotseat via NetworkManager.SceneManager; the client
-            // follows automatically. Nothing more to do here.
+            // Host loads GameHotseat via NetworkManager.SceneManager; client follows automatically.
         }
 
         // ── Unity Services helpers ─────────────────────────────────────────────
@@ -229,25 +208,29 @@ namespace Catan.UI
         private void Show()
         {
             _isBusy = false;
-            if (Root != null) Root.SetActive(true);
+            SetVisible(_lobbyRoot, true);
             SetConfirmInteractable(true);
         }
 
         private void SetStatus(string text)
         {
-            if (StatusLabel != null) StatusLabel.text = text;
+            if (_statusLabel != null) _statusLabel.text = text;
         }
 
         private void SetConfirmText(string text)
         {
-            if (ConfirmButton == null) return;
-            var label = ConfirmButton.GetComponentInChildren<TextMeshProUGUI>();
-            if (label != null) label.text = text;
+            if (_confirmButton != null) _confirmButton.text = text;
         }
 
         private void SetConfirmInteractable(bool interactable)
         {
-            if (ConfirmButton != null) ConfirmButton.interactable = interactable;
+            if (_confirmButton != null) _confirmButton.SetEnabled(interactable);
+        }
+
+        private static void SetVisible(VisualElement element, bool visible)
+        {
+            if (element != null)
+                element.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
         }
     }
 }

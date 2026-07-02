@@ -1,55 +1,40 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+using UnityEngine.UIElements;
 using Catan.Commands;
 
 namespace Catan.UI
 {
-    // ── Prefab setup ───────────────────────────────────────────────────────────
-    // Spawned at runtime by DevHandView. Wire CardBackground (Image),
-    // NameLabel (TMP), PlayButton (Button). PlayButton's OnClick is wired in code.
-    // ──────────────────────────────────────────────────────────────────────────
-
-    public class DevCardItemView : MonoBehaviour
+    // No longer a MonoBehaviour — creates and owns a VisualElement card item.
+    // Instantiated at runtime by DevHandView.
+    public class DevCardItemView
     {
-        [Header("Visuals")]
-        public Image CardBackground;
-        public Image Icon;
-        public TextMeshProUGUI NameLabel;
-        public Button PlayButton;
+        public VisualElement Root { get; }
 
-        [Header("Colors")]
-        public Color PlayableColor   = new Color(0.20f, 0.55f, 0.20f);
-        public Color UnplayableColor = new Color(0.30f, 0.30f, 0.30f);
+        private readonly DevelopmentCard _card;
 
-        private DevelopmentCard _card;
-
-        public void Initialize(DevelopmentCard card, bool isPlayable, Sprite icon)
+        public DevCardItemView(DevelopmentCard card, bool isPlayable, Sprite cardSprite)
         {
             _card = card;
 
-            if (NameLabel != null)
-                NameLabel.text = card.DisplayName;
+            Root = new VisualElement();
+            Root.AddToClassList("dev-card-item");
+            Root.AddToClassList(isPlayable ? "dev-card-item--playable" : "dev-card-item--unplayable");
 
-            if (CardBackground != null)
-                CardBackground.color = isPlayable ? PlayableColor : UnplayableColor;
+            var cardIconElement = new VisualElement();
+            cardIconElement.AddToClassList("dev-card-icon");
+            if (cardSprite != null)
+                cardIconElement.style.backgroundImage = new StyleBackground(cardSprite);
+            Root.Add(cardIconElement);
 
-            if (Icon != null)
-            {
-                Icon.sprite = icon;
-                Icon.enabled = icon != null;
-            }
+            var cardNameLabel = new Label(card.DisplayName);
+            cardNameLabel.AddToClassList("dev-card-name");
+            Root.Add(cardNameLabel);
 
-            if (PlayButton != null)
-            {
-                PlayButton.interactable = isPlayable;
-                PlayButton.onClick.AddListener(OnPlayClicked);
-            }
-        }
-
-        private void OnDestroy()
-        {
-            PlayButton?.onClick.RemoveListener(OnPlayClicked);
+            var playButton = new Button(OnPlayClicked) { text = "Play" };
+            playButton.AddToClassList("btn");
+            playButton.AddToClassList("dev-card-play-btn");
+            playButton.SetEnabled(isPlayable);
+            Root.Add(playButton);
         }
 
         private void OnPlayClicked()

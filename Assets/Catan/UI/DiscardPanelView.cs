@@ -1,50 +1,44 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+using UnityEngine.UIElements;
 using GameCore.Events;
 using GameCore.Resources;
 
 namespace Catan.UI
 {
-    // ── Scene setup ────────────────────────────────────────────────────────────
-    // Place on a full-screen overlay panel (Canvas → DiscardPanel).
-    // Set the panel inactive by default — Awake() enforces this.
-    // Wire ConfirmButton.OnClick → OnConfirmDiscard() in the Inspector.
-    // See scene layout guide below the class for hierarchy details.
-    // ──────────────────────────────────────────────────────────────────────────
-
+    [RequireComponent(typeof(UIDocument))]
     public class DiscardPanelView : MonoBehaviour
     {
-        [Header("Labels")]
-        public TextMeshProUGUI PlayerNameLabel;
-        public TextMeshProUGUI InstructionLabel;
-
-        [Header("Card containers")]
-        public Transform HandContainer;
-        public Transform DiscardContainer;
-
-        [Header("Confirm")]
-        public Button ConfirmButton;
-
-        [Header("Card prefab")]
-        public GameObject CardPrefab;
-
-        // ── Private state ──────────────────────────────────────────────────────
-
         private struct DiscardRequest { public CatanPlayer Player; public int Count; }
 
         private readonly Queue<DiscardRequest> _queue = new();
         private CatanPlayer _currentPlayer;
         private int _requiredCount;
-        private readonly List<DiscardCardView> _handCards = new();
+        private readonly List<DiscardCardView> _handCards     = new();
         private readonly List<DiscardCardView> _selectedCards = new();
 
-        // ── Unity lifecycle ────────────────────────────────────────────────────
+        private VisualElement _panelRoot;
+        private Label         _playerNameLabel;
+        private Label         _instructionLabel;
+        private ScrollView    _handScrollView;
+        private ScrollView    _discardScrollView;
+        private Button        _confirmButton;
 
         private void Awake()
         {
-            gameObject.SetActive(false);
+            var root = GetComponent<UIDocument>().rootVisualElement;
+
+            _panelRoot        = root.Q<VisualElement>("DiscardPanelRoot");
+            _playerNameLabel  = root.Q<Label>("DiscardPlayerNameLabel");
+            _instructionLabel = root.Q<Label>("DiscardInstructionLabel");
+            _handScrollView    = root.Q<ScrollView>("DiscardHandContainer");
+            _discardScrollView = root.Q<ScrollView>("DiscardSelectedContainer");
+            _confirmButton    = root.Q<Button>("DiscardConfirmButton");
+
+            _confirmButton?.RegisterCallback<ClickEvent>(_ => OnConfirmDiscard());
+
+            if (_panelRoot != null) _panelRoot.style.display = DisplayStyle.None;
+
             EventBus.Subscribe<DiscardRequiredEvent>(OnDiscardRequired);
         }
 
@@ -61,7 +55,10 @@ namespace Catan.UI
 
             _queue.Enqueue(new DiscardRequest { Player = catanPlayer, Count = gameEvent.Count });
 
-            if (!gameObject.activeSelf)
+            bool panelIsCurrentlyHidden = _panelRoot == null
+                || _panelRoot.style.display == DisplayStyle.None;
+
+            if (panelIsCurrentlyHidden)
                 ProcessNext();
         }
 
@@ -71,15 +68,15 @@ namespace Catan.UI
         {
             if (_queue.Count == 0)
             {
-                gameObject.SetActive(false);
+                if (_panelRoot != null) _panelRoot.style.display = DisplayStyle.None;
                 return;
             }
 
-            var request = _queue.Dequeue();
-            _currentPlayer = request.Player;
-            _requiredCount = request.Count;
+            var discardRequest = _queue.Dequeue();
+            _currentPlayer = discardRequest.Player;
+            _requiredCount = discardRequest.Count;
 
-            gameObject.SetActive(true);
+            if (_panelRoot != null) _panelRoot.style.display = DisplayStyle.Flex;
             PopulateHand();
             RefreshUI();
         }
@@ -88,7 +85,7 @@ namespace Catan.UI
         {
             ClearCards();
 
-            var resources = _currentPlayer.Resources.Current;
+            var currentResources = _currentPlayer.Resources.Current;
             IResource[] allResources =
             {
                 CatanResources.Wood, CatanResources.Brick,
@@ -97,35 +94,32 @@ namespace Catan.UI
 
             foreach (var resource in allResources)
             {
-                int count = resources.Get(resource);
-                for (int cardIndex = 0; cardIndex < count; cardIndex++)
-                    SpawnCard(resource, HandContainer, _handCards);
+                int cardCount = currentResources.Get(resource);
+                for (int cardIndex = 0; cardIndex < cardCount; cardIndex++)
+                    SpawnHandCard(resource);
             }
         }
 
-        private void SpawnCard(IResource resource, Transform container, List<DiscardCardView> targetList)
+        private void SpawnHandCard(IResource resource)
         {
-            if (CardPrefab == null) return;
-
-            var go = Instantiate(CardPrefab, container);
-            var cardView = go.GetComponent<DiscardCardView>();
-            if (cardView == null) return;
-
-            cardView.Initialize(resource, OnCardClicked);
-            targetList.Add(cardView);
+            var discardCard = new DiscardCardView(resource, OnCardClicked);
+            _handCards.Add(discardCard);
+            _handScrollView?.Add(discardCard.Root);
         }
 
-        private void OnCardClicked(DiscardCardView card)
+        private void OnCardClicked(DiscardCardView clickedCard)
         {
-            if (_handCards.Remove(card))
+            if (_handCards.Remove(clickedCard))
             {
-                card.transform.SetParent(DiscardContainer, false);
-                _selectedCards.Add(card);
+                clickedCard.Root.RemoveFromHierarchy();
+                _discardScrollView?.Add(clickedCard.Root);
+                _selectedCards.Add(clickedCard);
             }
-            else if (_selectedCards.Remove(card))
+            else if (_selectedCards.Remove(clickedCard))
             {
-                card.transform.SetParent(HandContainer, false);
-                _handCards.Add(card);
+                clickedCard.Root.RemoveFromHierarchy();
+                _handScrollView?.Add(clickedCard.Root);
+                _handCards.Add(clickedCard);
             }
 
             RefreshUI();
@@ -133,13 +127,13 @@ namespace Catan.UI
 
         // ── Confirm ────────────────────────────────────────────────────────────
 
-        public void OnConfirmDiscard()
+        private void OnConfirmDiscard()
         {
             if (_selectedCards.Count != _requiredCount) return;
 
             var discardBundle = new ResourceBundle();
-            foreach (var card in _selectedCards)
-                discardBundle = discardBundle.Add(card.Resource, 1);
+            foreach (var discardCard in _selectedCards)
+                discardBundle = discardBundle.Add(discardCard.Resource, 1);
 
             _currentPlayer.Resources.TryRemove(discardBundle);
 
@@ -151,21 +145,24 @@ namespace Catan.UI
 
         private void RefreshUI()
         {
-            if (PlayerNameLabel != null)
-                PlayerNameLabel.text = _currentPlayer?.DisplayName ?? "";
+            if (_playerNameLabel != null)
+                _playerNameLabel.text = _currentPlayer?.DisplayName ?? "";
 
-            if (InstructionLabel != null)
-                InstructionLabel.text =
+            if (_instructionLabel != null)
+                _instructionLabel.text =
                     $"Select {_requiredCount} cards to discard  ({_selectedCards.Count}/{_requiredCount})";
 
-            if (ConfirmButton != null)
-                ConfirmButton.interactable = _selectedCards.Count == _requiredCount;
+            _confirmButton?.SetEnabled(_selectedCards.Count == _requiredCount);
         }
 
         private void ClearCards()
         {
-            foreach (var card in _handCards)   if (card != null) Destroy(card.gameObject);
-            foreach (var card in _selectedCards) if (card != null) Destroy(card.gameObject);
+            foreach (var handCard in _handCards)
+                handCard.Root.RemoveFromHierarchy();
+
+            foreach (var selectedCard in _selectedCards)
+                selectedCard.Root.RemoveFromHierarchy();
+
             _handCards.Clear();
             _selectedCards.Clear();
         }

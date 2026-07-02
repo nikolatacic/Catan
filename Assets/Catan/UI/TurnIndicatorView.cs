@@ -1,22 +1,27 @@
 using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 using GameCore.Events;
 
 namespace Catan.UI
 {
-    // ── Editor wiring required ─────────────────────────────────────────────────
-    // Attach to a UI panel. Assign all label fields in the Inspector.
-    // ──────────────────────────────────────────────────────────────────────────
-
+    [RequireComponent(typeof(UIDocument))]
     public class TurnIndicatorView : MonoBehaviour
     {
-        [Header("Labels")]
-        public TextMeshProUGUI ActivePlayerLabel;
-        public TextMeshProUGUI PhaseLabel;
-        public TextMeshProUGUI TurnNumberLabel;
-        public TextMeshProUGUI DiceResultLabel;
-        public Image PlayerColorIndicator;
+        private Label _activePlayerLabel;
+        private Label _turnNumberLabel;
+        private Label _phaseLabel;
+        private Label _diceResultLabel;
+        private VisualElement _playerColorBar;
+
+        private void Awake()
+        {
+            var root = GetComponent<UIDocument>().rootVisualElement;
+            _activePlayerLabel = root.Q<Label>("ActivePlayerLabel");
+            _turnNumberLabel   = root.Q<Label>("TurnNumberLabel");
+            _phaseLabel        = root.Q<Label>("PhaseLabel");
+            _diceResultLabel   = root.Q<Label>("DiceResultLabel");
+            _playerColorBar    = root.Q<VisualElement>("PlayerColorBar");
+        }
 
         private void OnEnable()
         {
@@ -36,7 +41,7 @@ namespace Catan.UI
 
         private void OnTurnStarted(GameCore.Turn.TurnStartedEvent gameEvent)
         {
-            if (DiceResultLabel != null) DiceResultLabel.text = "";
+            if (_diceResultLabel != null) _diceResultLabel.text = "";
             Refresh();
         }
 
@@ -44,8 +49,8 @@ namespace Catan.UI
 
         private void OnDiceRolled(DiceRolledEvent gameEvent)
         {
-            if (DiceResultLabel != null)
-                DiceResultLabel.text = $"{gameEvent.D1} + {gameEvent.D2} = {gameEvent.Total}";
+            if (_diceResultLabel != null)
+                _diceResultLabel.text = $"{gameEvent.D1} + {gameEvent.D2} = {gameEvent.Total}";
         }
 
         private void Refresh()
@@ -53,23 +58,27 @@ namespace Catan.UI
             var manager = GameManager.Instance;
             if (manager == null) return;
 
-            var player = manager.ActivePlayer;
-            if (ActivePlayerLabel != null)
-                ActivePlayerLabel.text = player != null ? player.DisplayName : "—";
+            var activePlayer = manager.ActivePlayer;
 
-            if (PlayerColorIndicator != null && player != null)
-                PlayerColorIndicator.color = player.Color;
+            if (_activePlayerLabel != null)
+                _activePlayerLabel.text = activePlayer != null ? activePlayer.DisplayName : "—";
 
-            if (TurnNumberLabel != null)
-                TurnNumberLabel.text = $"Turn {manager.TurnManager.TurnNumber}";
+            if (_playerColorBar != null && activePlayer != null)
+            {
+                var playerColor = activePlayer.Color;
+                _playerColorBar.style.backgroundColor = new StyleColor(playerColor);
+            }
+
+            if (_turnNumberLabel != null)
+                _turnNumberLabel.text = $"Turn {manager.TurnManager.TurnNumber}";
 
             RefreshPhase(manager.TurnManager.CurrentCatanPhase);
         }
 
         private void RefreshPhase(CatanTurnPhase phase)
         {
-            if (PhaseLabel == null) return;
-            PhaseLabel.text = phase switch
+            if (_phaseLabel == null) return;
+            _phaseLabel.text = phase switch
             {
                 CatanTurnPhase.SetupPlacement => "Setup — Place Settlement & Road",
                 CatanTurnPhase.RollDice       => "Roll Dice",

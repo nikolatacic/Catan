@@ -1,8 +1,12 @@
 # Catan Unity — Project Progress
 
-**Active branch**: `multiplayertest` (all current work here)  
+**Active branches**:
+- `new-ui-2-ui-toolkit` — UI Toolkit migration (active UI work)
+- `multiplayertest` — multiplayer work
+- `main` — stable hotseat base
+
 **Unity**: 6000.4.6f1 — hotseat + Unity Relay networked multiplayer  
-**Last updated**: 2026-06-26
+**Last updated**: 2026-07-02
 
 ---
 
@@ -24,7 +28,7 @@ Local hotseat Catan implementation built from scratch in Unity 6 using an event-
 | 5 | Done | TurnManager, CatanTurnManager, DiceManager, RobberSystem, tests |
 | 6 | Done | CatanBuildRule, CatanTradeRule, BuildManager, TradeManager, ScoreManager, LargestArmyTracker, LongestRoadTracker, all dev cards, CatanGameContext, tests |
 | 7 | Done | All UI MonoBehaviours written and gameplay working |
-| 8 | In progress | Polish and edge cases — several items done, see below |
+| 8 | In progress | Polish and edge cases — MonopolyCard, YearOfPlentyCard implemented; UI cleanup ongoing |
 
 ### Multiplayer (Unity Relay + NGO, branch: `multiplayertest`)
 | Phase | Status | Description |
@@ -39,6 +43,66 @@ Local hotseat Catan implementation built from scratch in Unity 6 using an event-
 | MP-5d | Done | Per-device UI: index assignment, LocalPlayerAssignedEvent, MirrorActor/MirrorPhase |
 | MP-5e | Not started | Hidden state filtering, real lobby player picker, StealTargetPanel for clients |
 | MP-6 | Not started | Final polish, edge cases |
+
+### UI Toolkit migration (branch: `new-ui-2-ui-toolkit`)
+
+Goal: replace all MonoBehaviour-based UGUI with Unity UI Toolkit (UXML + USS).  
+14 top-level view classes migrate; 4 board-interaction views (`HexTileView`, `VertexView`, `EdgeView`, `RobberView`) stay as MonoBehaviours (world-space `OnMouseDown`).  
+4 sub-components (`ResourceCardSlotView`, `PlayerSummaryRowView`, `DevCardItemView`, `DiscardCardView`) become inline `<Template>` blocks inside their parent UXML — no separate C# class needed.  
+C# view classes keep EventBus subscriptions unchanged; only element lookup changes from `[SerializeField]` to `root.Q<>()`.
+
+#### Step-by-step plan
+
+| Step | Status | Scope |
+|---|---|---|
+| **UI-1** | Done | **Foundation** — created `Assets/Catan/UI/UIToolkit/` folder tree with `Styles/`, `Scenes/`, `HUD/`, `ActionBar/`, `Modals/`; wrote `variables.uss` (colour tokens, spacing, font sizes); wrote `common.uss` (base button, label, panel, layout helper styles) |
+| **UI-2** | Done | **Scene views** — `MainMenu.uxml/.uss` + `Lobby.uxml/.uss` written; `MainMenuView.cs` + `LobbyView.cs` updated to use `UIDocument` + `root.Q<>()` instead of `[SerializeField]` UGUI refs; `TMP_InputField` → `TextField`; `Button.onClick` → `RegisterCallback<ClickEvent>` |
+| **UI-3** | Done | **HUD** — `GameHUD.uxml`+`.uss` written (right panel + player hand + cheat menu); `TurnIndicatorView`, `PlayerHandView`, `AllPlayersSummaryView`, `DevHandView`, `CheatMenuView` migrated; `PlayerSummaryRowView` + `DevCardItemView` converted from MonoBehaviour to plain C# classes that build VisualElements; `ResourceCardSlotView` inlined into `PlayerHandView`; resource card sprites set via `CatanResource.Icon` at runtime |
+| **UI-4** | Done | **Action bar** — `ActionButtonsView` migrated; build icons (House/Road/City/DevCard) from CatanElements wired via `[SerializeField] Sprite` fields; `Button.interactable` → `SetEnabled()`; all phase logic unchanged |
+| **UI-5** | Done | **Modal panels** — `BankTradePanel.uxml/.uss`, `DiscardPanel.uxml`, `MonopolyPanel.uxml`, `YearOfPlentyPanel.uxml`, `StealTargetPanel.uxml`, `VictoryScreen.uxml` written to `Modals/`; `Modals.uss` for overlay/card/discard/steal/victory styles; all 6 panels instantiated as UXML templates inside `GameHUD.uxml`; all 6 C# classes rewritten (`[RequireComponent(UIDocument)]`, `root.Q<>()`, `DisplayStyle.Flex/None`); `DiscardCardView` converted from MonoBehaviour to plain C# class building its own VisualElement; `VisualElementSpriteExtensions.ApplySprite()` helper added in `BankTradePanelView.cs`; no UGUI/TMP imports remain in any UI script |
+| **UI-6** | Partial | **Cleanup** — All C# UGUI/TMP imports removed; no `SetActive`, `interactable`, `TextMeshProUGUI`, `Button (UGUI)` usages remain in UI scripts. **Remaining (requires Unity Editor):** delete old Canvas hierarchy from scene, remove legacy `DiscardCard.prefab` / `BankTradePanel.prefab` / player-hand prefabs, delete `DiscardUICreator.cs` editor script (TMP-dependent), remove `Unity.TextMeshPro` from `Catan.Editor.asmdef`, wire UIDocument + all view MonoBehaviours on a single HUD GameObject in the scene |
+
+#### Folder structure (target)
+
+```
+Assets/Catan/UI/UIToolkit/
+  Styles/
+    variables.uss       ← colour tokens, font sizes, spacing scale
+    common.uss          ← button, label, panel base rules
+  Scenes/
+    MainMenu.uxml
+    MainMenu.uss
+    Lobby.uxml
+    Lobby.uss
+  HUD/
+    GameHUD.uxml        ← root document for in-game screen
+    TurnIndicator.uxml
+    TurnIndicator.uss
+    PlayerHand.uxml
+    PlayerHand.uss
+    AllPlayersSummary.uxml
+    AllPlayersSummary.uss
+    DevHand.uxml
+    DevHand.uss
+    CheatMenu.uxml
+    CheatMenu.uss
+  ActionBar/
+    ActionButtons.uxml
+    ActionButtons.uss
+  Modals/
+    BankTradePanel.uxml
+    BankTradePanel.uss
+    DiscardPanel.uxml
+    DiscardPanel.uss
+    MonopolyPanel.uxml
+    MonopolyPanel.uss
+    YearOfPlentyPanel.uxml
+    YearOfPlentyPanel.uss
+    StealTargetPanel.uxml
+    StealTargetPanel.uss
+    VictoryScreen.uxml
+    VictoryScreen.uss
+```
 
 ---
 
@@ -94,17 +158,33 @@ Assets/Catan/                     Catan-specific game logic
 |---|---|
 | `GameManager.cs` | Singleton root; wires all systems in `Start()`; exposes `TryPlaceSettlement`, `TryPlaceRoad`, `TryUpgradeCity`, `TryMoveRobber`, `TryBankTrade`, `TryPurchaseDevCard`, `TryPlayDevCard`, `EndTurn`, `RequestRoll`, placement mode setters |
 | `BoardRenderer.cs` | Spawns tile/vertex/edge GameObjects; vertex world pos = `center + (cos(-60i°), sin(-60i°)) * HexSize`; edge i rotated `−60*(i+1)°`; driven by `GameManager.Start()`, no `Start()` of its own |
+| **Board interaction (stay as MonoBehaviours — world space)** | |
 | `HexTileView.cs` | `OnMouseDown` → `TryMoveRobber` during Robber phase |
 | `VertexView.cs` | `OnMouseDown` → `TryPlaceSettlement` or `TryUpgradeCity` |
 | `EdgeView.cs` | `OnMouseDown` → `TryPlaceRoad` |
-| `PlayerHandView.cs` | Resource counts; subscribes to `ResourceAddedEvent`/`ResourceRemovedEvent`; field is `Player`, not `Owner` |
-| `TurnIndicatorView.cs` | Active player, phase, turn number, dice result (`DiceResultLabel` TMP field — wire in Inspector) |
-| `ActionButtonsView.cs` | Phase-gated buttons; `BankTradeButton` enabled during Trading/Building; `BankTradePanel` ref opens `BankTradePanelView` |
 | `RobberView.cs` | Single world-space robber icon; `SnapToCurrentPosition()` called by `GameManager.Start()` |
-| `VictoryScreenView.cs` | Activates on `VictoryAchievedEvent` |
-| `DiscardPanelView.cs` | Activates on `DiscardRequiredEvent`; queues multiple players; `OnConfirmDiscard()` calls `player.Resources.TryRemove(bundle)` |
-| `DiscardCardView.cs` | Clickable card widget; colour-coded by `CatanResourceType` |
+| **Action bar** | |
+| `ActionButtonsView.cs` | Phase-gated buttons (Build Settlement, City, Road, Buy Dev Card, Bank Trade, End Turn, Roll Dice); `BankTradeButton` opens `BankTradePanelView` |
+| **HUD views** | |
+| `TurnIndicatorView.cs` | Active player, phase, turn number, dice result (`DiceResultLabel` TMP field) |
+| `PlayerHandView.cs` | Resource counts per player; subscribes to `ResourceAddedEvent`/`ResourceRemovedEvent` |
+| `ResourceCardSlotView.cs` | Single resource slot widget used inside `PlayerHandView` |
+| `AllPlayersSummaryView.cs` | Scoreboard showing VP, resource count, dev cards for all players |
+| `PlayerSummaryRowView.cs` | One row inside `AllPlayersSummaryView` |
+| `DevHandView.cs` | Dev card hand display; lists playable cards |
+| `DevCardItemView.cs` | Single dev card button/widget inside `DevHandView` |
+| **Modal panels** | |
+| `DiscardPanelView.cs` | Activates on `DiscardRequiredEvent`; queues multiple players; confirm calls `TryRemove`; subscribes in `Awake`/`OnDestroy` (starts inactive) |
+| `DiscardCardView.cs` | Clickable card widget inside `DiscardPanelView`; colour-coded by `CatanResourceType` |
 | `BankTradePanelView.cs` | 5 give + 5 receive buttons; shows count + ratio; calls `GameManager.TryBankTrade(give, receive)` |
+| `MonopolyPanelView.cs` | Resource picker for Monopoly dev card; calls `GameManager.TryPlayDevCard` |
+| `YearOfPlentyPanelView.cs` | Two-resource picker for Year of Plenty dev card |
+| `StealTargetPanelView.cs` | Player picker shown after robber placement when multiple victims are possible |
+| **Scene / overlay views** | |
+| `VictoryScreenView.cs` | Activates on `VictoryAchievedEvent` |
+| `CheatMenuView.cs` | Debug panel for granting resources in development |
+| `MainMenuView.cs` | Title screen; navigates to hotseat or multiplayer lobby |
+| `LobbyView.cs` | Multiplayer lobby: host/join, Relay code display, player ready states |
 
 ### Logic layer — `Assets/Catan/`
 

@@ -1,0 +1,302 @@
+@import url("../Styles/variables.uss");
+
+/* ── Root overlay ─────────────────────────────────────────────────────────── */
+
+.hud-root {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+/* ── Right panel ──────────────────────────────────────────────────────────── */
+
+.right-panel {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    bottom: 72px;
+    width: 220px;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.hud-section {
+    margin-bottom: var(--space-sm);
+}
+
+.section-title {
+    margin-bottom: var(--space-xs);
+    letter-spacing: 1px;
+}
+
+/* Turn indicator */
+
+.turn-header {
+    margin-bottom: var(--space-sm);
+    align-items: flex-start;
+}
+
+.player-color-bar {
+    width: 6px;
+    min-height: 36px;
+    border-radius: 3px;
+    margin-right: var(--space-sm);
+    background-color: var(--color-accent-gold);
+}
+
+.turn-header-labels {
+    flex: 1;
+}
+
+.phase-label {
+    margin-top: var(--space-xs);
+    white-space: normal;
+}
+
+.dice-label {
+    margin-top: var(--space-xs);
+    -unity-text-align: upper-center;
+    min-height: 0;
+}
+
+/* Summary rows (created at runtime by AllPlayersSummaryView) */
+
+.summary-row-container {
+    flex-direction: column;
+}
+
+/* Dev card hand */
+
+.dev-card-container {
+    flex-direction: column;
+}
+
+.dev-empty-label {
+    margin-top: var(--space-xs);
+    -unity-text-align: upper-center;
+}
+
+/* ── Player hand ──────────────────────────────────────────────────────────── */
+
+.player-hand-section {
+    position: absolute;
+    bottom: 72px;
+    left: 8px;
+    flex-direction: column;
+    min-width: 280px;
+}
+
+.hand-header {
+    margin-bottom: var(--space-sm);
+}
+
+.resource-row {
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.resource-slot {
+    flex-direction: column;
+    align-items: center;
+    margin-right: var(--space-xs);
+    min-width: 48px;
+}
+
+.resource-card-icon {
+    width: 40px;
+    height: 56px;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-bg-button);
+    background-size: cover;
+    background-position: center;
+}
+
+.resource-count-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    -unity-font-style: bold;
+    -unity-text-align: upper-center;
+    margin-top: 2px;
+}
+
+/* ── Cheat menu ───────────────────────────────────────────────────────────── */
+
+.cheat-section {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.cheat-toggle-btn {
+    font-size: var(--font-size-xs);
+    padding: 2px 6px;
+    opacity: 0.6;
+}
+
+.cheat-panel {
+    margin-top: var(--space-xs);
+    min-width: 140px;
+    flex-direction: column;
+}
+
+/* ── Action bar ───────────────────────────────────────────────────────────── */
+
+.action-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: var(--color-bg-panel);
+    border-top-color: var(--color-border);
+    border-top-width: var(--border-width);
+    padding: 0 var(--space-sm);
+}
+
+.action-btn {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xs) var(--space-sm);
+    min-width: 56px;
+    height: 52px;
+    margin: 2px;
+}
+
+.action-btn-icon {
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    background-position: center;
+    margin-bottom: 2px;
+}
+
+.action-btn-label {
+    font-size: var(--font-size-xs);
+    color: inherit;
+    -unity-text-align: upper-center;
+    white-space: nowrap;
+}
+
+.action-btn--turn {
+    border-color: var(--color-accent-gold);
+}
+
+.action-btn--build {
+    min-width: 64px;
+}
+
+.action-btn--trade {
+    min-width: 80px;
+}
+
+.action-separator {
+    width: 1px;
+    height: 40px;
+    background-color: var(--color-border);
+    margin: 0 var(--space-xs);
+}
+
+/* ── Runtime-spawned elements (AllPlayersSummaryView, DevHandView) ────────── */
+
+/* PlayerSummaryRow elements */
+.summary-row {
+    flex-direction: row;
+    align-items: center;
+    padding: var(--space-xs) 0;
+    border-bottom-color: var(--color-border);
+    border-bottom-width: var(--border-width);
+}
+
+.summary-row-color-bar {
+    width: 4px;
+    height: 100%;
+    min-height: 28px;
+    border-radius: 2px;
+    margin-right: var(--space-xs);
+}
+
+.summary-row-active-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background-color: var(--color-accent-gold);
+    margin-right: var(--space-xs);
+}
+
+.summary-row-name {
+    flex: 1;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.summary-row-name--active {
+    -unity-font-style: bold;
+    color: var(--color-accent-gold);
+}
+
+.summary-row-stats {
+    flex-direction: row;
+    align-items: center;
+}
+
+.summary-row-stat {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+    margin-left: var(--space-xs);
+}
+
+.summary-row-badge {
+    font-size: 8px;
+    color: var(--color-accent-gold);
+    margin-left: 2px;
+}
+
+/* DevCardItem elements */
+.dev-card-item {
+    flex-direction: row;
+    align-items: center;
+    padding: var(--space-xs);
+    border-radius: var(--radius-sm);
+    margin-bottom: 2px;
+}
+
+.dev-card-item--playable {
+    background-color: var(--color-card-playable);
+}
+
+.dev-card-item--unplayable {
+    background-color: var(--color-card-unplayable);
+    opacity: 0.7;
+}
+
+.dev-card-icon {
+    width: 28px;
+    height: 40px;
+    background-size: contain;
+    background-position: center;
+    margin-right: var(--space-xs);
+    border-radius: 2px;
+}
+
+.dev-card-name {
+    flex: 1;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-primary);
+}
+
+.dev-card-play-btn {
+    font-size: var(--font-size-xs);
+    padding: 2px 6px;
+    min-width: 36px;
+}

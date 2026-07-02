@@ -1,0 +1,183 @@
+@import url("../Styles/variables.uss");
+
+/* ── Overlay backdrop ─────────────────────────────────────────────── */
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.65);
+}
+
+/* ── Modal card ───────────────────────────────────────────────────── */
+.bank-trade-modal,
+.discard-modal,
+.resource-picker-modal,
+.steal-modal,
+.victory-modal {
+    min-width: 360px;
+    max-width: 520px;
+    padding: var(--space-lg);
+    padding-bottom: var(--space-xl);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-panel);
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.08);
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.modal-title {
+    align-self: center;
+    margin-bottom: var(--space-xs);
+    -unity-font-style: bold;
+}
+
+.section-title {
+    margin-top: var(--space-sm);
+    margin-bottom: var(--space-xs);
+    -unity-font-style: bold;
+    letter-spacing: 1px;
+    color: var(--color-text-muted);
+}
+
+/* ── Resource rows ────────────────────────────────────────────────── */
+.bank-resource-row {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: var(--space-xs);
+    margin-bottom: var(--space-xs);
+}
+
+/* Card-shaped icon inside each resource button */
+.bank-card-icon {
+    width: 44px;
+    height: 62px;
+    margin-bottom: var(--space-xs);
+    background-size: contain;
+    background-repeat: no-repeat;
+    align-self: center;
+}
+
+/* Override resource-btn for the narrower bank layout */
+.bank-trade-modal .resource-btn,
+.resource-picker-modal .resource-btn {
+    min-width: 68px;
+    padding: var(--space-xs);
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-feedback {
+    align-self: center;
+    margin-top: var(--space-sm);
+    color: var(--color-text-muted);
+}
+
+/* ── Bottom button row ───────────────────────────────────────────── */
+.modal-button-row {
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: var(--space-md);
+}
+
+.modal-btn {
+    min-width: 88px;
+    margin-left: var(--space-sm);
+}
+
+.modal-btn-full {
+    width: 100%;
+    margin-top: var(--space-md);
+}
+
+/* ── Discard panel ────────────────────────────────────────────────── */
+.discard-modal {
+    max-width: 600px;
+}
+
+.discard-card-area {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    min-height: 80px;
+    max-height: 100px;
+    border-radius: var(--radius-sm);
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: var(--space-xs);
+    margin-bottom: var(--space-xs);
+    overflow: hidden;
+}
+
+.discard-selected-area {
+    background-color: rgba(180, 40, 40, 0.12);
+    border-width: 1px;
+    border-color: rgba(220, 60, 60, 0.35);
+}
+
+/* Each discard card widget */
+.discard-card {
+    width: 48px;
+    height: 64px;
+    margin-right: var(--space-xs);
+    border-radius: var(--radius-sm);
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: link;
+    transition-duration: 0.1s;
+    transition-property: scale;
+}
+
+.discard-card:hover {
+    scale: 1.08;
+}
+
+/* ── Steal panel ──────────────────────────────────────────────────── */
+.steal-button-container {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.steal-player-btn {
+    flex-direction: row;
+    align-items: center;
+    padding: var(--space-sm) var(--space-md);
+    margin-bottom: var(--space-xs);
+    border-radius: var(--radius-sm);
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.04);
+    font-size: var(--font-size-md);
+    color: var(--color-text-primary);
+}
+
+.steal-player-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.steal-player-color-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    margin-right: var(--space-sm);
+}
+
+/* ── Victory screen ───────────────────────────────────────────────── */
+.victory-overlay {
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.victory-modal {
+    align-items: center;
+    text-align: center;
+}
+
+.victory-color-bar {
+    width: 120px;
+    height: 6px;
+    border-radius: 3px;
+    margin-top: var(--space-xs);
+    margin-bottom: var(--space-sm);
+}

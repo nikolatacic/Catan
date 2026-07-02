@@ -1,94 +1,79 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+using UnityEngine.UIElements;
 using Catan.Commands;
 using GameCore.Resources;
 
 namespace Catan.UI
 {
-    // ── Scene setup ────────────────────────────────────────────────────────────
-    // Drop the CheatMenu prefab anywhere inside your Canvas. All button
-    // listeners are wired in Awake — no Inspector OnClick setup needed.
-    // The panel starts hidden; click the TEST button to show/hide it.
-    // ──────────────────────────────────────────────────────────────────────────
-
+    [RequireComponent(typeof(UIDocument))]
     public class CheatMenuView : MonoBehaviour
     {
-        [Header("Structure")]
-        public GameObject CheatPanel;
-        public Button ToggleButton;
-        public TextMeshProUGUI PlayerLabel;
-
-        [Header("Cheat buttons")]
-        public Button AddVPButton;
-        public Button GiveAllResourcesButton;
-        public Button SkipToEndTurnButton;
+        private VisualElement _cheatPanel;
+        private Label _cheatPlayerLabel;
 
         private void Awake()
         {
-            if (CheatPanel != null) CheatPanel.SetActive(false);
-            if (ToggleButton != null)            ToggleButton.onClick.AddListener(Toggle);
-            if (AddVPButton != null)             AddVPButton.onClick.AddListener(CheatAddVP);
-            if (GiveAllResourcesButton != null)  GiveAllResourcesButton.onClick.AddListener(CheatGiveAllResources);
-            if (SkipToEndTurnButton != null)     SkipToEndTurnButton.onClick.AddListener(CheatSkipToEndTurn);
+            var root = GetComponent<UIDocument>().rootVisualElement;
+
+            _cheatPanel       = root.Q<VisualElement>("CheatPanel");
+            _cheatPlayerLabel = root.Q<Label>("CheatPlayerLabel");
+
+            root.Q<Button>("CheatToggleButton")?.RegisterCallback<ClickEvent>(_ => Toggle());
+            root.Q<Button>("CheatAddVPButton")?.RegisterCallback<ClickEvent>(_ => CheatAddVP());
+            root.Q<Button>("CheatGiveResourcesButton")?.RegisterCallback<ClickEvent>(_ => CheatGiveAllResources());
+            root.Q<Button>("CheatSkipToEndTurnButton")?.RegisterCallback<ClickEvent>(_ => CheatSkipToEndTurn());
         }
 
-        private void OnDestroy()
+        private void Toggle()
         {
-            if (ToggleButton != null)           ToggleButton.onClick.RemoveListener(Toggle);
-            if (AddVPButton != null)            AddVPButton.onClick.RemoveListener(CheatAddVP);
-            if (GiveAllResourcesButton != null) GiveAllResourcesButton.onClick.RemoveListener(CheatGiveAllResources);
-            if (SkipToEndTurnButton != null)    SkipToEndTurnButton.onClick.RemoveListener(CheatSkipToEndTurn);
-        }
-
-        // ── Toggle ─────────────────────────────────────────────────────────────
-
-        public void Toggle()
-        {
-            if (CheatPanel == null) return;
-            bool opening = !CheatPanel.activeSelf;
-            CheatPanel.SetActive(opening);
-            if (opening) RefreshPlayerLabel();
+            if (_cheatPanel == null) return;
+            bool isCurrentlyHidden = _cheatPanel.ClassListContains("hidden");
+            if (isCurrentlyHidden)
+            {
+                _cheatPanel.RemoveFromClassList("hidden");
+                RefreshPlayerLabel();
+            }
+            else
+            {
+                _cheatPanel.AddToClassList("hidden");
+            }
         }
 
         private void RefreshPlayerLabel()
         {
-            if (PlayerLabel == null) return;
-            var player = GameManager.Instance?.ActivePlayer;
-            PlayerLabel.text = player != null
-                ? $"Active: {player.DisplayName}"
+            if (_cheatPlayerLabel == null) return;
+            var activePlayer = GameManager.Instance?.ActivePlayer;
+            _cheatPlayerLabel.text = activePlayer != null
+                ? $"Active: {activePlayer.DisplayName}"
                 : "No active player";
         }
 
-        // ── Cheats ─────────────────────────────────────────────────────────────
-
         private void CheatAddVP()
         {
-            var manager = GameManager.Instance;
-            var player  = manager?.ActivePlayer;
-            if (player == null) return;
+            var manager     = GameManager.Instance;
+            var activePlayer = manager?.ActivePlayer;
+            if (activePlayer == null) return;
 
-            player.DevelopmentCards.Add(new VictoryPointCard());
+            activePlayer.DevelopmentCards.Add(new VictoryPointCard());
             manager.ScoreManager.RecalculateAll();
             RefreshPlayerLabel();
-            Debug.Log($"[CheatMenu] +1 VP → {player.DisplayName}");
+            Debug.Log($"[CheatMenu] +1 VP → {activePlayer.DisplayName}");
         }
 
         private void CheatGiveAllResources()
         {
-            var manager = GameManager.Instance;
-            var player  = manager?.ActivePlayer;
-            if (player == null) return;
+            var activePlayer = GameManager.Instance?.ActivePlayer;
+            if (activePlayer == null) return;
 
-            var bundle = new ResourceBundle()
+            var resourceBundle = new ResourceBundle()
                 .Add(CatanResources.Wood,  5)
                 .Add(CatanResources.Brick, 5)
                 .Add(CatanResources.Sheep, 5)
                 .Add(CatanResources.Wheat, 5)
                 .Add(CatanResources.Ore,   5);
 
-            player.Resources.TryAdd(bundle);
-            Debug.Log($"[CheatMenu] +5 of each resource → {player.DisplayName}");
+            activePlayer.Resources.TryAdd(resourceBundle);
+            Debug.Log($"[CheatMenu] +5 of each resource → {activePlayer.DisplayName}");
         }
 
         private void CheatSkipToEndTurn()

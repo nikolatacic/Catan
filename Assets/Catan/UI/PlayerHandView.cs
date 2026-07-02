@@ -1,39 +1,52 @@
 using UnityEngine;
-using TMPro;
+using UnityEngine.UIElements;
 using GameCore.Events;
 using GameCore.Resources;
-using GameCore.Player;
-using GameCore.Score;
 
 namespace Catan.UI
 {
-    // ── Scene setup ────────────────────────────────────────────────────────────
-    // One instance on Canvas.
-    //
-    // Hotseat: follows the active player (whoever's turn it is) via TurnStartedEvent.
-    // Networked: follows the LOCAL player at this device via NetworkSession.
-    //            Local player index is set by NetworkEventBridge on connect.
-    //
-    // Wire 5 ResourceCardSlotView children (Wood/Brick/Sheep/Wheat/Ore) to the
-    // corresponding slot fields. Each slot has its CatanResource assigned in
-    // the slot's own Inspector.
-    // ──────────────────────────────────────────────────────────────────────────
-
+    [RequireComponent(typeof(UIDocument))]
     public class PlayerHandView : MonoBehaviour
     {
-        [Header("Player info")]
-        public TextMeshProUGUI PlayerNameLabel;
-        public TextMeshProUGUI TotalCardsLabel;
-        public TextMeshProUGUI VictoryPointsLabel;
+        private Label _playerNameLabel;
+        private Label _totalCardsLabel;
+        private Label _victoryPointsLabel;
 
-        [Header("Resource card slots (one per type)")]
-        public ResourceCardSlotView WoodSlot;
-        public ResourceCardSlotView BrickSlot;
-        public ResourceCardSlotView SheepSlot;
-        public ResourceCardSlotView WheatSlot;
-        public ResourceCardSlotView OreSlot;
+        private VisualElement _woodIcon;
+        private VisualElement _brickIcon;
+        private VisualElement _sheepIcon;
+        private VisualElement _wheatIcon;
+        private VisualElement _oreIcon;
 
-        private CatanPlayer _player;
+        private Label _woodCountLabel;
+        private Label _brickCountLabel;
+        private Label _sheepCountLabel;
+        private Label _wheatCountLabel;
+        private Label _oreCountLabel;
+
+        private CatanPlayer _trackedPlayer;
+        private bool _spritesApplied;
+
+        private void Awake()
+        {
+            var root = GetComponent<UIDocument>().rootVisualElement;
+
+            _playerNameLabel    = root.Q<Label>("HandPlayerNameLabel");
+            _totalCardsLabel    = root.Q<Label>("HandTotalCardsLabel");
+            _victoryPointsLabel = root.Q<Label>("HandVPLabel");
+
+            _woodIcon  = root.Q<VisualElement>("WoodIcon");
+            _brickIcon = root.Q<VisualElement>("BrickIcon");
+            _sheepIcon = root.Q<VisualElement>("SheepIcon");
+            _wheatIcon = root.Q<VisualElement>("WheatIcon");
+            _oreIcon   = root.Q<VisualElement>("OreIcon");
+
+            _woodCountLabel  = root.Q<Label>("WoodCount");
+            _brickCountLabel = root.Q<Label>("BrickCount");
+            _sheepCountLabel = root.Q<Label>("SheepCount");
+            _wheatCountLabel = root.Q<Label>("WheatCount");
+            _oreCountLabel   = root.Q<Label>("OreCount");
+        }
 
         private void OnEnable()
         {
@@ -55,81 +68,109 @@ namespace Catan.UI
 
         private void OnTurnStarted(GameCore.Turn.TurnStartedEvent gameEvent)
         {
-            ResolvePlayer(gameEvent.Actor as CatanPlayer);
+            ResolveTrackedPlayer(gameEvent.Actor as CatanPlayer);
             Refresh();
         }
 
         private void OnLocalPlayerAssigned(LocalPlayerAssignedEvent gameEvent)
         {
-            ResolvePlayer(activePlayer: null);
+            ResolveTrackedPlayer(activePlayer: null);
             Refresh();
         }
 
-        // Hotseat: track whoever's turn it is.
-        // Networked: always track the local player at this device.
-        private void ResolvePlayer(CatanPlayer activePlayer)
+        // Hotseat: track whoever's turn it is. Networked: track local player.
+        private void ResolveTrackedPlayer(CatanPlayer activePlayer)
         {
             if (Catan.NetworkSession.IsNetworked)
             {
                 var manager = GameManager.Instance;
-                int index = Catan.NetworkSession.LocalPlayerIndex;
-                if (manager != null && index >= 0 && index < manager.Players.Count)
-                    _player = manager.Players[index];
+                int localPlayerIndex = Catan.NetworkSession.LocalPlayerIndex;
+                if (manager != null && localPlayerIndex >= 0 && localPlayerIndex < manager.Players.Count)
+                    _trackedPlayer = manager.Players[localPlayerIndex];
             }
             else
             {
-                _player = activePlayer ?? _player;
+                _trackedPlayer = activePlayer ?? _trackedPlayer;
             }
         }
 
         private void OnResourceAdded(ResourceAddedEvent gameEvent)
         {
-            if (gameEvent.Player == _player) Refresh();
+            if (gameEvent.Player == _trackedPlayer) Refresh();
         }
 
         private void OnResourceRemoved(ResourceRemovedEvent gameEvent)
         {
-            if (gameEvent.Player == _player) Refresh();
+            if (gameEvent.Player == _trackedPlayer) Refresh();
         }
 
         private void OnScoreChanged(ScoreChangedEvent gameEvent)
         {
-            if (gameEvent.Player == _player) RefreshScore();
+            if (gameEvent.Player == _trackedPlayer) RefreshScore();
         }
 
         public void Refresh()
         {
-            if (_player == null) return;
+            if (_trackedPlayer == null) return;
 
-            if (PlayerNameLabel != null)
-                PlayerNameLabel.text = _player.DisplayName;
+            if (!_spritesApplied)
+            {
+                ApplyResourceCardSprites();
+                _spritesApplied = true;
+            }
 
-            var resources = _player.Resources.Current;
+            if (_playerNameLabel != null)
+                _playerNameLabel.text = _trackedPlayer.DisplayName;
 
-            WoodSlot?.Refresh(resources.Get(CatanResources.Wood));
-            BrickSlot?.Refresh(resources.Get(CatanResources.Brick));
-            SheepSlot?.Refresh(resources.Get(CatanResources.Sheep));
-            WheatSlot?.Refresh(resources.Get(CatanResources.Wheat));
-            OreSlot?.Refresh(resources.Get(CatanResources.Ore));
+            var currentResources = _trackedPlayer.Resources.Current;
 
-            int totalCards = resources.Get(CatanResources.Wood)
-                           + resources.Get(CatanResources.Brick)
-                           + resources.Get(CatanResources.Sheep)
-                           + resources.Get(CatanResources.Wheat)
-                           + resources.Get(CatanResources.Ore);
+            SetResourceCount(_woodCountLabel,  currentResources.Get(CatanResources.Wood));
+            SetResourceCount(_brickCountLabel, currentResources.Get(CatanResources.Brick));
+            SetResourceCount(_sheepCountLabel, currentResources.Get(CatanResources.Sheep));
+            SetResourceCount(_wheatCountLabel, currentResources.Get(CatanResources.Wheat));
+            SetResourceCount(_oreCountLabel,   currentResources.Get(CatanResources.Ore));
 
-            if (TotalCardsLabel != null)
-                TotalCardsLabel.text = $"Cards: {totalCards}";
+            int totalCardCount = currentResources.Get(CatanResources.Wood)
+                               + currentResources.Get(CatanResources.Brick)
+                               + currentResources.Get(CatanResources.Sheep)
+                               + currentResources.Get(CatanResources.Wheat)
+                               + currentResources.Get(CatanResources.Ore);
+
+            if (_totalCardsLabel != null)
+                _totalCardsLabel.text = $"{totalCardCount} cards";
 
             RefreshScore();
         }
 
         private void RefreshScore()
         {
-            if (_player == null || VictoryPointsLabel == null) return;
+            if (_trackedPlayer == null || _victoryPointsLabel == null) return;
             var manager = GameManager.Instance;
             if (manager == null) return;
-            VictoryPointsLabel.text = $"VP: {manager.ScoreManager.GetScore(_player)}";
+            _victoryPointsLabel.text = $"{manager.ScoreManager.GetScore(_trackedPlayer)} VP";
+        }
+
+        // Sets the card art from each CatanResource ScriptableObject's Icon sprite.
+        // Only called once — sprites don't change between turns.
+        private void ApplyResourceCardSprites()
+        {
+            ApplySprite(_woodIcon,  CatanResources.Wood?.Icon);
+            ApplySprite(_brickIcon, CatanResources.Brick?.Icon);
+            ApplySprite(_sheepIcon, CatanResources.Sheep?.Icon);
+            ApplySprite(_wheatIcon, CatanResources.Wheat?.Icon);
+            ApplySprite(_oreIcon,   CatanResources.Ore?.Icon);
+        }
+
+        private static void ApplySprite(VisualElement iconElement, UnityEngine.Sprite sprite)
+        {
+            if (iconElement == null || sprite == null) return;
+            iconElement.style.backgroundImage = new StyleBackground(sprite);
+        }
+
+        private static void SetResourceCount(Label countLabel, int count)
+        {
+            if (countLabel != null)
+                countLabel.text = count.ToString();
         }
     }
 }

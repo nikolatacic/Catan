@@ -1,0 +1,31 @@
+@import url("../Styles/variables.uss");
+
+.main-menu-root {
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-bg-overlay);
+}
+
+.title-block {
+    align-items: center;
+    margin-bottom: var(--space-xl);
+}
+
+.title-label {
+    letter-spacing: 6px;
+    margin-bottom: var(--space-sm);
+}
+
+.button-block {
+    align-items: stretch;
+    width: 260px;
+}
+
+.menu-btn {
+    width: 100%;
+    height: 48px;
+    font-size: var(--font-size-md);
+    margin-bottom: var(--space-sm);
+    justify-content: center;
+}

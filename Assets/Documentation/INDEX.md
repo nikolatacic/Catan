@@ -1,7 +1,8 @@
 # Catan Unity — Documentation Index
 
 Single entry point for all project documentation.  
-**Active branch:** `multiplayertest` | **Engine:** Unity 6000.4.6f1
+**Active branches:** `new-ui-2-ui-toolkit` (UI Toolkit migration) · `multiplayertest` (multiplayer) · `main` (stable hotseat)  
+**Engine:** Unity 6000.4.6f1
 
 ---
 

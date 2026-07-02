@@ -1,22 +1,9 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+using UnityEngine.UIElements;
 
 namespace Catan.UI
 {
-    // ── Scene setup ────────────────────────────────────────────────────────────
-    // Full-screen overlay panel — add to Canvas as a sibling of other modals.
-    // Starts active so Awake() fires on scene load, then deactivates itself.
-    //
-    // Assign in Inspector:
-    //   ResourceButtons[0..4]  — one Button per resource (Wood, Brick, Sheep, Wheat, Ore)
-    //                            Each button may have a TextMeshProUGUI child (auto-labelled)
-    //                            and/or an Image child for the resource icon (auto-assigned).
-    //   ConfirmButton / CancelButton — assigned; onClick wired automatically in Awake().
-    //
-    // Wire GameManager.MonopolyPanel → this component.
-    // ──────────────────────────────────────────────────────────────────────────
-
+    [RequireComponent(typeof(UIDocument))]
     public class MonopolyPanelView : MonoBehaviour
     {
         private static readonly CatanResourceType[] ResourceOrder =
@@ -25,70 +12,65 @@ namespace Catan.UI
             CatanResourceType.Wheat, CatanResourceType.Ore
         };
 
-        [Header("Resource buttons (Wood, Brick, Sheep, Wheat, Ore)")]
-        public Button[] ResourceButtons;
+        private VisualElement _panelRoot;
+        private Button[]      _resourceButtons;
+        private VisualElement[] _resourceIcons;
+        private Button        _confirmButton;
 
-        [Header("Controls")]
-        public Button ConfirmButton;
-        public Button CancelButton;
-
-        private MonopolyCard _card;
-        private CatanGameContext _context;
-        private int _selectedIndex = -1;
-        private Color[] _buttonDefaultColors;
+        private MonopolyCard       _card;
+        private CatanGameContext   _context;
+        private int                _selectedIndex = -1;
 
         private void Awake()
         {
-            gameObject.SetActive(false);
-            _buttonDefaultColors = new Color[ResourceButtons.Length];
-            for (int buttonIndex = 0; buttonIndex < ResourceButtons.Length; buttonIndex++)
+            var root = GetComponent<UIDocument>().rootVisualElement;
+
+            _panelRoot = root.Q<VisualElement>("MonopolyPanelRoot");
+
+            _resourceButtons = new[]
             {
-                var resourceButton = ResourceButtons[buttonIndex];
-                if (resourceButton == null) continue;
+                root.Q<Button>("MonopolyWoodBtn"),
+                root.Q<Button>("MonopolyBrickBtn"),
+                root.Q<Button>("MonopolySheepBtn"),
+                root.Q<Button>("MonopolyWheatBtn"),
+                root.Q<Button>("MonopolyOreBtn")
+            };
 
-                var buttonImage = resourceButton.GetComponent<Image>();
-                if (buttonImage != null)
-                    _buttonDefaultColors[buttonIndex] = buttonImage.color;
+            _resourceIcons = new[]
+            {
+                root.Q<VisualElement>("MonopolyWoodIcon"),
+                root.Q<VisualElement>("MonopolyBrickIcon"),
+                root.Q<VisualElement>("MonopolySheepIcon"),
+                root.Q<VisualElement>("MonopolyWheatIcon"),
+                root.Q<VisualElement>("MonopolyOreIcon")
+            };
 
+            _confirmButton = root.Q<Button>("MonopolyConfirmBtn");
+            _confirmButton?.RegisterCallback<ClickEvent>(_ => OnConfirm());
+            root.Q<Button>("MonopolyCancelBtn")?.RegisterCallback<ClickEvent>(_ => OnCancel());
+
+            for (int buttonIndex = 0; buttonIndex < _resourceButtons.Length; buttonIndex++)
+            {
                 int capturedIndex = buttonIndex;
-                resourceButton.onClick.AddListener(() => OnResourceClicked(capturedIndex));
+                _resourceButtons[buttonIndex]?.RegisterCallback<ClickEvent>(_ => OnResourceClicked(capturedIndex));
             }
-            ConfirmButton?.onClick.AddListener(OnConfirm);
-            CancelButton?.onClick.AddListener(OnCancel);
+
+            ApplyResourceIcons();
+            if (_panelRoot != null) _panelRoot.style.display = DisplayStyle.None;
         }
+
+        // ── Public API ─────────────────────────────────────────────────────────
 
         public void Open(MonopolyCard card, CatanGameContext context)
         {
-            _card = card;
-            _context = context;
+            _card          = card;
+            _context       = context;
             _selectedIndex = -1;
-            gameObject.SetActive(true);
-            SetButtonLabels();
+            if (_panelRoot != null) _panelRoot.style.display = DisplayStyle.Flex;
             RefreshUI();
         }
 
-        private void SetButtonLabels()
-        {
-            for (int buttonIndex = 0; buttonIndex < ResourceButtons.Length; buttonIndex++)
-            {
-                if (buttonIndex >= ResourceOrder.Length) break;
-                var button = ResourceButtons[buttonIndex];
-                if (button == null) continue;
-
-                var resource = CatanResources.Get(ResourceOrder[buttonIndex]) as CatanResource;
-
-                var label = button.GetComponentInChildren<TextMeshProUGUI>();
-                if (label != null && resource != null)
-                    label.text = resource.DisplayName;
-
-                var icon = button.transform.Find("Icon")?.GetComponent<Image>();
-                if (icon != null && resource != null)
-                {
-                    icon.sprite = resource.Icon;
-                    icon.enabled = resource.Icon != null;
-                }
-            }
-        }
+        // ── Callbacks ──────────────────────────────────────────────────────────
 
         private void OnResourceClicked(int index)
         {
@@ -96,47 +78,55 @@ namespace Catan.UI
             RefreshUI();
         }
 
-        public void OnConfirm()
+        private void OnConfirm()
         {
             if (_selectedIndex < 0 || _card == null) return;
 
             _card.ChosenResourceType = ResourceOrder[_selectedIndex];
 
-            var card = _card;
-            var context = _context;
-            _card = null;
-            _context = null;
+            var cardToComplete    = _card;
+            var contextToComplete = _context;
+            _card          = null;
+            _context       = null;
             _selectedIndex = -1;
 
-            gameObject.SetActive(false);
-            GameManager.Instance?.CompleteDevCardExecution(card, context);
+            if (_panelRoot != null) _panelRoot.style.display = DisplayStyle.None;
+            GameManager.Instance?.CompleteDevCardExecution(cardToComplete, contextToComplete);
         }
 
-        public void OnCancel()
+        private void OnCancel()
         {
-            _card = null;
-            _context = null;
+            _card          = null;
+            _context       = null;
             _selectedIndex = -1;
-            gameObject.SetActive(false);
+            if (_panelRoot != null) _panelRoot.style.display = DisplayStyle.None;
+        }
+
+        // ── UI ─────────────────────────────────────────────────────────────────
+
+        private void ApplyResourceIcons()
+        {
+            for (int resourceIndex = 0; resourceIndex < ResourceOrder.Length; resourceIndex++)
+            {
+                var catanResource = CatanResources.Get(ResourceOrder[resourceIndex]) as CatanResource;
+                if (catanResource?.Icon == null) continue;
+                if (resourceIndex < _resourceIcons.Length)
+                    _resourceIcons[resourceIndex]?.ApplySprite(catanResource.Icon);
+            }
         }
 
         private void RefreshUI()
         {
-            if (ConfirmButton != null)
-                ConfirmButton.interactable = _selectedIndex >= 0;
+            _confirmButton?.SetEnabled(_selectedIndex >= 0);
 
-            for (int buttonIndex = 0; buttonIndex < ResourceButtons.Length; buttonIndex++)
+            for (int buttonIndex = 0; buttonIndex < _resourceButtons.Length; buttonIndex++)
             {
-                if (ResourceButtons[buttonIndex] == null) continue;
-                var buttonImage = ResourceButtons[buttonIndex].GetComponent<Image>();
-                if (buttonImage == null) continue;
+                var button = _resourceButtons[buttonIndex];
+                if (button == null) continue;
 
                 bool isSelected = _selectedIndex == buttonIndex;
-                buttonImage.color = isSelected
-                    ? Color.yellow
-                    : (_buttonDefaultColors != null && buttonIndex < _buttonDefaultColors.Length
-                        ? _buttonDefaultColors[buttonIndex]
-                        : Color.white);
+                if (isSelected) button.AddToClassList("btn--selected");
+                else            button.RemoveFromClassList("btn--selected");
             }
         }
     }

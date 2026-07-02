@@ -1,52 +1,32 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+using UnityEngine.UIElements;
 using GameCore.Resources;
 
 namespace Catan.UI
 {
-    // ── Prefab setup ───────────────────────────────────────────────────────────
-    // Add to a UI GameObject that also has a Button component.
-    // Children needed:
-    //   CardBackground  — Image (coloured backing)
-    //   ResourceIcon    — Image (resource sprite, optional)
-    //   ResourceLabel   — TextMeshProUGUI (resource name)
-    // Wire the Button's OnClick → this.OnClicked() in the Inspector,
-    // OR let DiscardPanelView add the listener via Initialize().
-    // ──────────────────────────────────────────────────────────────────────────
-
-    [RequireComponent(typeof(Button))]
-    public class DiscardCardView : MonoBehaviour
+    // Plain C# class — no longer a MonoBehaviour/prefab.
+    // Builds its own VisualElement; DiscardPanelView moves Root between containers.
+    public class DiscardCardView
     {
-        [Header("Visuals")]
-        public Image CardBackground;
-        public Image ResourceIcon;
+        public IResource Resource { get; }
+        public VisualElement Root { get; }
 
-        public IResource Resource { get; private set; }
+        private readonly Action<DiscardCardView> _onClicked;
 
-        private Action<DiscardCardView> _onClick;
-
-        public void Initialize(IResource resource, Action<DiscardCardView> onClick)
+        public DiscardCardView(IResource resource, Action<DiscardCardView> onClicked)
         {
-            Resource = resource;
-            _onClick = onClick;
+            Resource   = resource;
+            _onClicked = onClicked;
 
-            if (ResourceIcon != null)
-            {
-                var sprite = (resource as CatanResource)?.Icon;
-                ResourceIcon.sprite = sprite;
-                ResourceIcon.enabled = sprite != null;
-            }
+            Root = new VisualElement();
+            Root.AddToClassList("discard-card");
 
-            GetComponent<Button>().onClick.AddListener(OnClicked);
+            var cardSprite = (resource as CatanResource)?.Icon;
+            if (cardSprite != null)
+                Root.style.backgroundImage = new StyleBackground(cardSprite);
+
+            Root.RegisterCallback<ClickEvent>(_ => _onClicked?.Invoke(this));
         }
-
-        private void OnDestroy()
-        {
-            GetComponent<Button>()?.onClick.RemoveListener(OnClicked);
-        }
-
-        public void OnClicked() => _onClick?.Invoke(this);
     }
 }

@@ -1,0 +1,19 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:Style src="project://database/Assets/Catan/UI/UIToolkit/Styles/common.uss"/>
+    <ui:Style src="project://database/Assets/Catan/UI/UIToolkit/Scenes/MainMenu.uss"/>
+
+    <ui:VisualElement name="MainMenuRoot" class="main-menu-root">
+
+        <ui:VisualElement name="TitleBlock" class="title-block">
+            <ui:Label name="TitleLabel" text="CATAN" class="label--hero title-label"/>
+            <ui:Label name="SubtitleLabel" text="Local &amp; Online Multiplayer" class="label--sm label--secondary"/>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="ButtonBlock" class="button-block">
+            <ui:Button name="PlayButton" text="Play (Hotseat)" class="btn btn--primary menu-btn"/>
+            <ui:Button name="HostButton" text="Host Game" class="btn menu-btn"/>
+            <ui:Button name="JoinButton" text="Join Game" class="btn menu-btn"/>
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>

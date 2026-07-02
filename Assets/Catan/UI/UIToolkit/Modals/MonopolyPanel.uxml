@@ -1,0 +1,39 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement name="MonopolyPanelRoot" class="panel--overlay modal-overlay" style="display: none;">
+        <ui:VisualElement class="modal resource-picker-modal">
+
+            <ui:Label text="MONOPOLY" class="label--lg modal-title"/>
+            <ui:Label text="Choose a resource type to claim from all players." class="label--sm label--secondary"/>
+            <ui:VisualElement class="divider"/>
+
+            <ui:VisualElement class="row bank-resource-row">
+                <ui:Button name="MonopolyWoodBtn"  class="btn resource-btn">
+                    <ui:VisualElement name="MonopolyWoodIcon"  class="bank-card-icon"/>
+                    <ui:Label text="Wood"  class="label--xs"/>
+                </ui:Button>
+                <ui:Button name="MonopolyBrickBtn" class="btn resource-btn">
+                    <ui:VisualElement name="MonopolyBrickIcon" class="bank-card-icon"/>
+                    <ui:Label text="Brick" class="label--xs"/>
+                </ui:Button>
+                <ui:Button name="MonopolySheepBtn" class="btn resource-btn">
+                    <ui:VisualElement name="MonopolySheepIcon" class="bank-card-icon"/>
+                    <ui:Label text="Sheep" class="label--xs"/>
+                </ui:Button>
+                <ui:Button name="MonopolyWheatBtn" class="btn resource-btn">
+                    <ui:VisualElement name="MonopolyWheatIcon" class="bank-card-icon"/>
+                    <ui:Label text="Wheat" class="label--xs"/>
+                </ui:Button>
+                <ui:Button name="MonopolyOreBtn"   class="btn resource-btn">
+                    <ui:VisualElement name="MonopolyOreIcon"   class="bank-card-icon"/>
+                    <ui:Label text="Ore"   class="label--xs"/>
+                </ui:Button>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="row modal-button-row">
+                <ui:Button name="MonopolyCancelBtn"  text="Cancel" class="btn modal-btn"/>
+                <ui:Button name="MonopolyConfirmBtn" text="Claim"  class="btn btn--primary modal-btn"/>
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
