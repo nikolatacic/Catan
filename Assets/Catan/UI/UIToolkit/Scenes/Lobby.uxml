@@ -1,10 +1,9 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements">
-    <ui:Style src="project://database/Assets/Catan/UI/UIToolkit/Styles/variables.uss"/>
     <ui:Style src="project://database/Assets/Catan/UI/UIToolkit/Styles/common.uss"/>
     <ui:Style src="project://database/Assets/Catan/UI/UIToolkit/Scenes/Lobby.uss"/>
 
     <!-- Root overlay; hidden by default, shown by MainMenuView on Host/Join -->
-    <ui:VisualElement name="LobbyRoot" class="panel--overlay lobby-overlay catan-vars" style="display: none;">
+    <ui:VisualElement name="LobbyRoot" class="panel--overlay lobby-overlay" style="display: none;">
 
         <ui:VisualElement name="LobbyModal" class="modal lobby-modal">
 

@@ -22,18 +22,18 @@
 }
 
 .hud-section {
-    margin-bottom: var(--space-sm);
+    margin-bottom: 8px;
 }
 
 .section-title {
-    margin-bottom: var(--space-xs);
+    margin-bottom: 4px;
     letter-spacing: 1px;
 }
 
 /* Turn indicator */
 
 .turn-header {
-    margin-bottom: var(--space-sm);
+    margin-bottom: 8px;
     align-items: flex-start;
 }
 
@@ -41,8 +41,8 @@
     width: 6px;
     min-height: 36px;
     border-radius: 3px;
-    margin-right: var(--space-sm);
-    background-color: var(--color-accent-gold);
+    margin-right: 8px;
+    background-color: rgba(212, 172, 60, 1);
 }
 
 .turn-header-labels {
@@ -50,12 +50,12 @@
 }
 
 .phase-label {
-    margin-top: var(--space-xs);
+    margin-top: 4px;
     white-space: normal;
 }
 
 .dice-label {
-    margin-top: var(--space-xs);
+    margin-top: 4px;
     -unity-text-align: upper-center;
     min-height: 0;
 }
@@ -73,7 +73,7 @@
 }
 
 .dev-empty-label {
-    margin-top: var(--space-xs);
+    margin-top: 4px;
     -unity-text-align: upper-center;
 }
 
@@ -88,7 +88,7 @@
 }
 
 .hand-header {
-    margin-bottom: var(--space-sm);
+    margin-bottom: 8px;
 }
 
 .resource-row {
@@ -99,22 +99,22 @@
 .resource-slot {
     flex-direction: column;
     align-items: center;
-    margin-right: var(--space-xs);
+    margin-right: 4px;
     min-width: 48px;
 }
 
 .resource-card-icon {
     width: 40px;
     height: 56px;
-    border-radius: var(--radius-sm);
-    background-color: var(--color-bg-button);
+    border-radius: 4px;
+    background-color: rgba(60, 52, 36, 1);
     background-size: cover;
     background-position: center;
 }
 
 .resource-count-label {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-primary);
+    font-size: 12px;
+    color: rgba(240, 228, 196, 1);
     -unity-font-style: bold;
     -unity-text-align: upper-center;
     margin-top: 2px;
@@ -131,13 +131,13 @@
 }
 
 .cheat-toggle-btn {
-    font-size: var(--font-size-xs);
+    font-size: 10px;
     padding: 2px 6px;
     opacity: 0.6;
 }
 
 .cheat-panel {
-    margin-top: var(--space-xs);
+    margin-top: 4px;
     min-width: 140px;
     flex-direction: column;
 }
@@ -153,17 +153,17 @@
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    background-color: var(--color-bg-panel);
-    border-top-color: var(--color-border);
-    border-top-width: var(--border-width);
-    padding: 0 var(--space-sm);
+    background-color: rgba(20, 18, 14, 0.88);
+    border-top-color: rgba(90, 78, 52, 1);
+    border-top-width: 1px;
+    padding: 0 8px;
 }
 
 .action-btn {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: var(--space-xs) var(--space-sm);
+    padding: 4px 8px;
     min-width: 56px;
     height: 52px;
     margin: 2px;
@@ -178,14 +178,14 @@
 }
 
 .action-btn-label {
-    font-size: var(--font-size-xs);
+    font-size: 10px;
     color: inherit;
     -unity-text-align: upper-center;
     white-space: nowrap;
 }
 
 .action-btn--turn {
-    border-color: var(--color-accent-gold);
+    border-color: rgba(212, 172, 60, 1);
 }
 
 .action-btn--build {
@@ -199,8 +199,8 @@
 .action-separator {
     width: 1px;
     height: 40px;
-    background-color: var(--color-border);
-    margin: 0 var(--space-xs);
+    background-color: rgba(90, 78, 52, 1);
+    margin: 0 4px;
 }
 
 /* ── Runtime-spawned elements (AllPlayersSummaryView, DevHandView) ────────── */
@@ -209,9 +209,9 @@
 .summary-row {
     flex-direction: row;
     align-items: center;
-    padding: var(--space-xs) 0;
-    border-bottom-color: var(--color-border);
-    border-bottom-width: var(--border-width);
+    padding: 4px 0;
+    border-bottom-color: rgba(90, 78, 52, 1);
+    border-bottom-width: 1px;
 }
 
 .summary-row-color-bar {
@@ -219,21 +219,21 @@
     height: 100%;
     min-height: 28px;
     border-radius: 2px;
-    margin-right: var(--space-xs);
+    margin-right: 4px;
 }
 
 .summary-row-active-dot {
     width: 6px;
     height: 6px;
     border-radius: 3px;
-    background-color: var(--color-accent-gold);
-    margin-right: var(--space-xs);
+    background-color: rgba(212, 172, 60, 1);
+    margin-right: 4px;
 }
 
 .summary-row-name {
     flex: 1;
-    font-size: var(--font-size-sm);
-    color: var(--color-text-primary);
+    font-size: 12px;
+    color: rgba(240, 228, 196, 1);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -241,7 +241,7 @@
 
 .summary-row-name--active {
     -unity-font-style: bold;
-    color: var(--color-accent-gold);
+    color: rgba(212, 172, 60, 1);
 }
 
 .summary-row-stats {
@@ -250,14 +250,14 @@
 }
 
 .summary-row-stat {
-    font-size: var(--font-size-xs);
-    color: var(--color-text-secondary);
-    margin-left: var(--space-xs);
+    font-size: 10px;
+    color: rgba(180, 164, 128, 1);
+    margin-left: 4px;
 }
 
 .summary-row-badge {
     font-size: 8px;
-    color: var(--color-accent-gold);
+    color: rgba(212, 172, 60, 1);
     margin-left: 2px;
 }
 
@@ -265,17 +265,17 @@
 .dev-card-item {
     flex-direction: row;
     align-items: center;
-    padding: var(--space-xs);
-    border-radius: var(--radius-sm);
+    padding: 4px;
+    border-radius: 4px;
     margin-bottom: 2px;
 }
 
 .dev-card-item--playable {
-    background-color: var(--color-card-playable);
+    background-color: rgba(51, 140, 51, 1);
 }
 
 .dev-card-item--unplayable {
-    background-color: var(--color-card-unplayable);
+    background-color: rgba(76, 76, 76, 1);
     opacity: 0.7;
 }
 
@@ -284,18 +284,18 @@
     height: 40px;
     background-size: contain;
     background-position: center;
-    margin-right: var(--space-xs);
+    margin-right: 4px;
     border-radius: 2px;
 }
 
 .dev-card-name {
     flex: 1;
-    font-size: var(--font-size-xs);
-    color: var(--color-text-primary);
+    font-size: 10px;
+    color: rgba(240, 228, 196, 1);
 }
 
 .dev-card-play-btn {
-    font-size: var(--font-size-xs);
+    font-size: 10px;
     padding: 2px 6px;
     min-width: 36px;
 }

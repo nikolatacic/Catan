@@ -1,68 +1,31 @@
-/* ── Design tokens ────────────────────────────────────────────────────────── */
-/* Import this file at the top of every other USS file:                        */
-/*   @import url("../Styles/variables.uss");                                   */
-/* ─────────────────────────────────────────────────────────────────────────── */
-
-.catan-vars {
-
-    /* Colours — background */
-    --color-bg-panel:        rgba(20, 18, 14, 0.88);
-    --color-bg-panel-light:  rgba(38, 34, 26, 0.92);
-    --color-bg-overlay:      rgba(0, 0, 0, 0.72);
-    --color-bg-button:       rgba(60, 52, 36, 1);
-    --color-bg-button-hover: rgba(88, 76, 52, 1);
-    --color-bg-button-active:rgba(112, 96, 64, 1);
-    --color-bg-button-disabled: rgba(36, 34, 30, 1);
-
-    /* Colours — text */
-    --color-text-primary:    rgba(240, 228, 196, 1);
-    --color-text-secondary:  rgba(180, 164, 128, 1);
-    --color-text-disabled:   rgba(100, 96, 86, 1);
-    --color-text-highlight:  rgba(255, 220, 80, 1);
-
-    /* Colours — accent / state */
-    --color-accent-gold:     rgba(212, 172, 60, 1);
-    --color-accent-selected: rgba(255, 220, 80, 1);
-    --color-border:          rgba(90, 78, 52, 1);
-    --color-border-focus:    rgba(212, 172, 60, 1);
-
-    /* Colours — resources (match CatanResource sprite tints) */
-    --color-resource-wood:   rgba(101, 67, 33, 1);
-    --color-resource-brick:  rgba(178, 76, 44, 1);
-    --color-resource-sheep:  rgba(88, 160, 56, 1);
-    --color-resource-wheat:  rgba(210, 168, 40, 1);
-    --color-resource-ore:    rgba(100, 108, 128, 1);
-
-    /* Colours — dev card states */
-    --color-card-playable:   rgba(51, 140, 51, 1);
-    --color-card-unplayable: rgba(76, 76, 76, 1);
-
-    /* Spacing */
-    --space-xs:  4px;
-    --space-sm:  8px;
-    --space-md:  12px;
-    --space-lg:  20px;
-    --space-xl:  32px;
-
-    /* Border radius */
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 14px;
-
-    /* Font sizes */
-    --font-size-xs:   10px;
-    --font-size-sm:   12px;
-    --font-size-md:   14px;
-    --font-size-lg:   18px;
-    --font-size-xl:   24px;
-    --font-size-hero: 36px;
-
-    /* Border width */
-    --border-width: 1px;
-    --border-width-focus: 2px;
-
-    /* Panel sizes */
-    --modal-width:  360px;
-    --hud-height:   80px;
-    --action-bar-height: 64px;
-}
+/*
+ * Catan Design Tokens — REFERENCE ONLY
+ *
+ * CSS custom properties (var()) do not work reliably in Unity 6 USS.
+ * All values below are inlined directly into the USS files that use them.
+ *
+ * Colors
+ *   bg-panel            rgba(20, 18, 14, 0.88)
+ *   bg-panel-light      rgba(38, 34, 26, 0.92)
+ *   bg-overlay          rgba(0, 0, 0, 0.72)
+ *   bg-button           rgba(60, 52, 36, 1)
+ *   bg-button-hover     rgba(88, 76, 52, 1)
+ *   bg-button-active    rgba(112, 96, 64, 1)
+ *   bg-button-disabled  rgba(36, 34, 30, 1)
+ *   text-primary        rgba(240, 228, 196, 1)
+ *   text-secondary      rgba(180, 164, 128, 1)
+ *   text-disabled       rgba(100, 96, 86, 1)
+ *   text-highlight      rgba(255, 220, 80, 1)
+ *   accent-gold         rgba(212, 172, 60, 1)
+ *   accent-selected     rgba(255, 220, 80, 1)
+ *   border              rgba(90, 78, 52, 1)
+ *   border-focus        rgba(212, 172, 60, 1)
+ *   card-playable       rgba(51, 140, 51, 1)
+ *   card-unplayable     rgba(76, 76, 76, 1)
+ *
+ * Spacing: xs=4px  sm=8px  md=12px  lg=20px  xl=32px
+ * Radius:  sm=4px  md=8px  lg=14px
+ * Font:    xs=10px sm=12px md=14px  lg=18px  xl=24px  hero=36px
+ * Border:  width=1px  focus=2px
+ * Modal:   width=360px
+ */
