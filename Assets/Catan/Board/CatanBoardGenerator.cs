@@ -44,25 +44,25 @@ namespace Catan
         // 9 fixed border edge positions: (ring-2 tile coord, outward direction index).
         // Each becomes one port; its two access vertices come from the edge's AdjacentVertices.
         // Clockwise from upper-left. Access territory per port:
-        //   (-2,2)  dir4 : both vertices solo on (-2,2)
-        //   (-1,2)  dir5 : vertices touch (-1,2) and (0,2)
-        //   ( 0,2)  dir0 : vertices touch (0,2) and (1,1)
-        //   ( 2,0)  dir0 : both vertices solo on (2,0)
-        //   ( 2,-1) dir1 : vertices touch (2,-1) and (2,-2)
-        //   ( 2,-2) dir2 : vertices touch (2,-2) and (1,-2)
-        //   ( 0,-2) dir2 : both vertices solo on (0,-2)
-        //   (-2, 0) dir4 : vertices touch (-2,0) and (-2,1)
-        //   (-2, 1) dir3 : vertices touch (-2,0) and (-2,1)
+        //   (-2,2)   dir4 : both vertices solo on (-2,2)
+        //   (-1,2)   dir5 : vertices touch (-1,2) and (0,2)
+        //   ( 1,1)   dir5 : vertices touch (0,2) and (1,1)
+        //   ( 2,0)   dir0 : both vertices solo on (2,0)
+        //   ( 2,-1)  dir1 : vertices touch (2,-1) and (2,-2)
+        //   ( 1,-2)  dir1 : vertices touch (1,-2) and (2,-2)
+        //   ( 0,-2)  dir2 : both vertices solo on (0,-2)
+        //   (-1,-1)  dir3 : vertex touches (-2,0) and (-1,-1), other solo on (-1,-1)
+        //   (-2, 1)  dir3 : vertices touch (-2,0) and (-2,1)
         private static readonly (HexCoord TileCoord, int DirectionIndex)[] PortEdgePositions =
         {
             (new HexCoord(-2,  2), 4),
             (new HexCoord(-1,  2), 5),
-            (new HexCoord(0,   2), 0),
+            (new HexCoord(1,   1), 5),
             (new HexCoord(2,   0), 0),
             (new HexCoord(2,  -1), 1),
-            (new HexCoord(2,  -2), 2),
+            (new HexCoord(1,  -2), 1),
             (new HexCoord(0,  -2), 2),
-            (new HexCoord(-2,  0), 4),
+            (new HexCoord(-1, -1), 3),
             (new HexCoord(-2,  1), 3),
         };
 
