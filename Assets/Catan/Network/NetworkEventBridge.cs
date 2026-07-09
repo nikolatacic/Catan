@@ -100,22 +100,24 @@ namespace Catan.Network
                 currentPhase = (int)manager.TurnManager.CurrentCatanPhase;
             }
 
+            int playerCount = NetworkManager.ConnectedClientsIds.Count;
+
             var targetOnly = new ClientRpcParams
             {
                 Send = new ClientRpcSendParams { TargetClientIds = new[] { clientId } }
             };
-            SendInitialStateClientRpc(seed, index, currentActorIndex, currentTurnNumber, currentPhase, targetOnly);
+            SendInitialStateClientRpc(seed, index, playerCount, currentActorIndex, currentTurnNumber, currentPhase, targetOnly);
         }
 
         [ClientRpc]
-        private void SendInitialStateClientRpc(int seed, int index, int currentActorIndex,
+        private void SendInitialStateClientRpc(int seed, int index, int playerCount, int currentActorIndex,
             int turnNumber, int phase, ClientRpcParams rpc = default)
         {
             // Targeted RPC, but NGO still delivers locally on the host with the
             // ClientRpc plumbing. Host already initialized itself, so guard.
             if (IsServer) return;
 
-            Debug.Log($"[NetworkEventBridge] Client received initial state — seed={seed} index={index} actorIndex={currentActorIndex} turn={turnNumber} phase={phase}");
+            Debug.Log($"[NetworkEventBridge] Client received initial state — seed={seed} index={index} playerCount={playerCount} actorIndex={currentActorIndex} turn={turnNumber} phase={phase}");
 
             var manager = GameManager.Instance;
             if (manager == null)
@@ -128,8 +130,8 @@ namespace Catan.Network
             // LocalPlayerAssignedEvent fires and RefreshButtons reads Players.Count.
             if (manager.Board == null)
             {
-                Debug.Log($"[NetworkEventBridge] Client calling CompleteInitialization with seed={seed}");
-                GameSession.SetDefault2PlayerHotseat();
+                Debug.Log($"[NetworkEventBridge] Client calling CompleteInitialization with seed={seed} playerCount={playerCount}");
+                GameSession.SetNetworkedPlayers(playerCount);
                 manager.CompleteInitialization(seed);
                 Debug.Log($"[NetworkEventBridge] Client CompleteInitialization done. Players={manager.Players.Count} Board={(manager.Board != null ? "OK" : "NULL")}");
             }

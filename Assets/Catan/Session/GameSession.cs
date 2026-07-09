@@ -32,14 +32,38 @@ namespace Catan
 
         public static void Clear() => _players.Clear();
 
+        private static readonly Color[] DefaultPlayerColors =
+        {
+            new Color(0.85f, 0.20f, 0.20f), // red
+            new Color(0.20f, 0.40f, 0.85f), // blue
+            new Color(0.20f, 0.70f, 0.25f), // green
+            new Color(0.90f, 0.75f, 0.10f), // yellow
+        };
+
         // ── Default 2-player setup used by MainMenu's quick-play button ────────
         public static void SetDefault2PlayerHotseat()
         {
             SetPlayers(new[]
             {
-                new UI.PlayerConfig { PlayerName = "Player 1", PlayerColor = new Color(0.85f, 0.20f, 0.20f) },
-                new UI.PlayerConfig { PlayerName = "Player 2", PlayerColor = new Color(0.20f, 0.40f, 0.85f) },
+                new UI.PlayerConfig { PlayerName = "Player 1", PlayerColor = DefaultPlayerColors[0] },
+                new UI.PlayerConfig { PlayerName = "Player 2", PlayerColor = DefaultPlayerColors[1] },
             });
+        }
+
+        // ── Networked game: creates N players with default names and colors ────
+        public static void SetNetworkedPlayers(int count)
+        {
+            int clampedCount = Mathf.Clamp(count, 2, DefaultPlayerColors.Length);
+            var configs = new UI.PlayerConfig[clampedCount];
+            for (int playerIndex = 0; playerIndex < clampedCount; playerIndex++)
+            {
+                configs[playerIndex] = new UI.PlayerConfig
+                {
+                    PlayerName = $"Player {playerIndex + 1}",
+                    PlayerColor = DefaultPlayerColors[playerIndex],
+                };
+            }
+            SetPlayers(configs);
         }
     }
 }
