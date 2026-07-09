@@ -24,10 +24,6 @@ namespace Catan.UI
             if (_panelRoot != null) _panelRoot.style.display = DisplayStyle.None;
         }
 
-        private void Start()
-        {
-            _panelRoot?.StretchTemplateContainerToFill();
-        }
 
         // ── Public API ─────────────────────────────────────────────────────────
 
