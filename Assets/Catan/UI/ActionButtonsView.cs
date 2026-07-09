@@ -14,8 +14,9 @@ namespace Catan.UI
         public UnityEngine.Sprite CitySprite;
         public UnityEngine.Sprite DevCardSprite;
 
-        [Header("Bank trade panel reference")]
+        [Header("Trade panel references")]
         public BankTradePanelView BankTradePanel;
+        public PlayerTradePanelView PlayerTradePanel;
 
         private Button _rollDiceButton;
         private Button _endTurnButton;
@@ -25,6 +26,7 @@ namespace Catan.UI
         private Button _buyDevCardButton;
         private Button _cancelPlacementButton;
         private Button _bankTradeButton;
+        private Button _playerTradeButton;
 
         private void Awake()
         {
@@ -38,6 +40,7 @@ namespace Catan.UI
             _buyDevCardButton      = root.Q<Button>("BuyDevCardButton");
             _cancelPlacementButton = root.Q<Button>("CancelPlacementButton");
             _bankTradeButton       = root.Q<Button>("BankTradeButton");
+            _playerTradeButton     = root.Q<Button>("PlayerTradeButton");
 
             _rollDiceButton?.RegisterCallback<ClickEvent>(_ => CommandDispatcher.Send(new RequestRollCommand()));
             _endTurnButton?.RegisterCallback<ClickEvent>(_ => CommandDispatcher.Send(new EndTurnCommand()));
@@ -47,6 +50,7 @@ namespace Catan.UI
             _buyDevCardButton?.RegisterCallback<ClickEvent>(_ => CommandDispatcher.Send(new PurchaseDevCardCommand()));
             _cancelPlacementButton?.RegisterCallback<ClickEvent>(_ => GameManager.Instance?.CancelPlacement());
             _bankTradeButton?.RegisterCallback<ClickEvent>(_ => BankTradePanel?.Open());
+            _playerTradeButton?.RegisterCallback<ClickEvent>(_ => PlayerTradePanel?.Open());
 
             ApplyButtonIcons();
         }
@@ -149,6 +153,7 @@ namespace Catan.UI
             SetEnabled(_cancelPlacementButton, manager.CurrentPlacementMode != PlacementMode.None
                                                && manager.CurrentPlacementMode != PlacementMode.MoveRobber);
             SetEnabled(_bankTradeButton,       isBuildPhase || isTradingPhase);
+            SetEnabled(_playerTradeButton,     (isBuildPhase || isTradingPhase) && manager.Players.Count > 1);
         }
 
         // ── Affordability checks ───────────────────────────────────────────────
@@ -201,6 +206,7 @@ namespace Catan.UI
             SetEnabled(_buyDevCardButton,      isEnabled);
             SetEnabled(_cancelPlacementButton, isEnabled);
             SetEnabled(_bankTradeButton,       isEnabled);
+            SetEnabled(_playerTradeButton,     isEnabled);
         }
     }
 }

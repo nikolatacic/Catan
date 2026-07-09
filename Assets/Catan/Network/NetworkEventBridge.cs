@@ -184,6 +184,10 @@ namespace Catan.Network
             EventBus.Subscribe<GameCore.Score.VictoryAchievedEvent>(OnHostVictoryAchieved);
             EventBus.Subscribe<ResourceAddedEvent>(OnHostResourceAdded);
             EventBus.Subscribe<ResourceRemovedEvent>(OnHostResourceRemoved);
+            EventBus.Subscribe<GameCore.Trade.TradeProposedEvent>(OnHostTradeProposed);
+            EventBus.Subscribe<GameCore.Trade.TradeAcceptedEvent>(OnHostTradeAccepted);
+            EventBus.Subscribe<GameCore.Trade.TradeRejectedEvent>(OnHostTradeRejected);
+            EventBus.Subscribe<GameCore.Trade.TradeCancelledEvent>(OnHostTradeCancelled);
         }
 
         private void UnsubscribeFromHostEvents()
@@ -200,6 +204,10 @@ namespace Catan.Network
             EventBus.Unsubscribe<GameCore.Score.VictoryAchievedEvent>(OnHostVictoryAchieved);
             EventBus.Unsubscribe<ResourceAddedEvent>(OnHostResourceAdded);
             EventBus.Unsubscribe<ResourceRemovedEvent>(OnHostResourceRemoved);
+            EventBus.Unsubscribe<GameCore.Trade.TradeProposedEvent>(OnHostTradeProposed);
+            EventBus.Unsubscribe<GameCore.Trade.TradeAcceptedEvent>(OnHostTradeAccepted);
+            EventBus.Unsubscribe<GameCore.Trade.TradeRejectedEvent>(OnHostTradeRejected);
+            EventBus.Unsubscribe<GameCore.Trade.TradeCancelledEvent>(OnHostTradeCancelled);
         }
 
         // ── Host handlers → ClientRpc ──────────────────────────────────────────
@@ -274,6 +282,29 @@ namespace Catan.Network
             var bundle = AsBundleBytes(e.Removed);
             ResourceRemovedClientRpc(PlayerIndex(e.Player),
                 bundle[0], bundle[1], bundle[2], bundle[3], bundle[4]);
+        }
+
+        private void OnHostTradeProposed(GameCore.Trade.TradeProposedEvent e)
+        {
+            if (e.Offer.Target == null) return; // bank trade
+            var offerBytes = AsBundleBytes(e.Offer.Offering);
+            var wantBytes  = AsBundleBytes(e.Offer.Requesting);
+            PlayerTradeProposedClientRpc(
+                PlayerIndex(e.Offer.Proposer), PlayerIndex(e.Offer.Target),
+                offerBytes[0], offerBytes[1], offerBytes[2], offerBytes[3], offerBytes[4],
+                wantBytes[0],  wantBytes[1],  wantBytes[2],  wantBytes[3],  wantBytes[4]);
+        }
+
+        private void OnHostTradeAccepted(GameCore.Trade.TradeAcceptedEvent e)
+            => PlayerTradeAcceptedClientRpc(PlayerIndex(e.Responder), PlayerIndex(e.Offer.Proposer));
+
+        private void OnHostTradeRejected(GameCore.Trade.TradeRejectedEvent e)
+            => PlayerTradeDeclinedClientRpc(PlayerIndex(e.Responder), PlayerIndex(e.Offer.Proposer));
+
+        private void OnHostTradeCancelled(GameCore.Trade.TradeCancelledEvent e)
+        {
+            if (e.Offer.Target == null) return; // bank trade
+            PlayerTradeCancelledClientRpc(PlayerIndex(e.Offer.Proposer));
         }
 
         // ── ClientRpcs → republish on every client ─────────────────────────────
@@ -441,6 +472,62 @@ namespace Catan.Network
             var player = PlayerAt(playerIndex) as CatanPlayer;
             if (player == null) return;
             player.Resources.TryRemove(BundleFromBytes(wood, brick, sheep, wheat, ore));
+        }
+
+        [ClientRpc]
+        private void PlayerTradeProposedClientRpc(
+            int proposerIndex, int targetIndex,
+            byte offerWood, byte offerBrick, byte offerSheep, byte offerWheat, byte offerOre,
+            byte wantWood,  byte wantBrick,  byte wantSheep,  byte wantWheat,  byte wantOre)
+        {
+            if (IsServer) return;
+            var proposer   = PlayerAt(proposerIndex);
+            var target     = PlayerAt(targetIndex);
+            if (proposer == null || target == null) return;
+            var offering   = BundleFromBytes(offerWood, offerBrick, offerSheep, offerWheat, offerOre);
+            var requesting = BundleFromBytes(wantWood,  wantBrick,  wantSheep,  wantWheat,  wantOre);
+            EventBus.Publish(new GameCore.Trade.TradeProposedEvent
+            {
+                Offer = new GameCore.Trade.TradeOffer(proposer, target, offering, requesting)
+            });
+        }
+
+        [ClientRpc]
+        private void PlayerTradeAcceptedClientRpc(int responderIndex, int proposerIndex)
+        {
+            if (IsServer) return;
+            EventBus.Publish(new GameCore.Trade.TradeAcceptedEvent
+            {
+                Responder = PlayerAt(responderIndex),
+                Offer = new GameCore.Trade.TradeOffer(
+                    PlayerAt(proposerIndex), PlayerAt(responderIndex),
+                    new ResourceBundle(), new ResourceBundle()),
+            });
+        }
+
+        [ClientRpc]
+        private void PlayerTradeDeclinedClientRpc(int responderIndex, int proposerIndex)
+        {
+            if (IsServer) return;
+            EventBus.Publish(new GameCore.Trade.TradeRejectedEvent
+            {
+                Responder = PlayerAt(responderIndex),
+                Offer = new GameCore.Trade.TradeOffer(
+                    PlayerAt(proposerIndex), PlayerAt(responderIndex),
+                    new ResourceBundle(), new ResourceBundle()),
+            });
+        }
+
+        [ClientRpc]
+        private void PlayerTradeCancelledClientRpc(int proposerIndex)
+        {
+            if (IsServer) return;
+            var proposer = PlayerAt(proposerIndex);
+            EventBus.Publish(new GameCore.Trade.TradeCancelledEvent
+            {
+                // Target is set to proposer to pass the bank-trade null filter in UI subscribers.
+                Offer = new GameCore.Trade.TradeOffer(proposer, proposer, new ResourceBundle(), new ResourceBundle()),
+            });
         }
 
         // ── Helpers ────────────────────────────────────────────────────────────

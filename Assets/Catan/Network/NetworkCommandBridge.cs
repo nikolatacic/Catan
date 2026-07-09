@@ -2,6 +2,7 @@ using Unity.Netcode;
 using UnityEngine;
 using GameCore.Board;
 using GameCore.Player;
+using GameCore.Resources;
 using Catan.UI;
 
 namespace Catan.Network
@@ -122,7 +123,60 @@ namespace Catan.Network
             GameManager.Instance?.TryBankTrade(give, receive);
         }
 
+        // ── Player trading ─────────────────────────────────────────────────────
+
+        [ServerRpc(RequireOwnership = false)]
+        public void ProposePlayerTradeServerRpc(
+            byte targetPlayerIndex,
+            byte offerWood, byte offerBrick, byte offerSheep, byte offerWheat, byte offerOre,
+            byte wantWood,  byte wantBrick,  byte wantSheep,  byte wantWheat,  byte wantOre,
+            ServerRpcParams rpc = default)
+        {
+            var manager = GameManager.Instance;
+            if (manager == null) return;
+            var offering   = BundleFromBytes(offerWood, offerBrick, offerSheep, offerWheat, offerOre);
+            var requesting = BundleFromBytes(wantWood,  wantBrick,  wantSheep,  wantWheat,  wantOre);
+            manager.TryProposePlayerTrade(targetPlayerIndex, offering, requesting);
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        public void AcceptPlayerTradeServerRpc(byte acceptingPlayerIndex, ServerRpcParams rpc = default)
+            => GameManager.Instance?.TryAcceptPlayerTrade(acceptingPlayerIndex);
+
+        [ServerRpc(RequireOwnership = false)]
+        public void DeclinePlayerTradeServerRpc(byte decliningPlayerIndex, ServerRpcParams rpc = default)
+            => GameManager.Instance?.TryDeclinePlayerTrade(decliningPlayerIndex);
+
+        [ServerRpc(RequireOwnership = false)]
+        public void CounterPlayerTradeServerRpc(
+            byte counteringPlayerIndex,
+            byte counterOfferWood, byte counterOfferBrick, byte counterOfferSheep, byte counterOfferWheat, byte counterOfferOre,
+            byte counterWantWood,  byte counterWantBrick,  byte counterWantSheep,  byte counterWantWheat,  byte counterWantOre,
+            ServerRpcParams rpc = default)
+        {
+            var manager = GameManager.Instance;
+            if (manager == null) return;
+            var counterOffering   = BundleFromBytes(counterOfferWood, counterOfferBrick, counterOfferSheep, counterOfferWheat, counterOfferOre);
+            var counterRequesting = BundleFromBytes(counterWantWood,  counterWantBrick,  counterWantSheep,  counterWantWheat,  counterWantOre);
+            manager.TryCounterPlayerTrade(counteringPlayerIndex, counterOffering, counterRequesting);
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        public void CancelPlayerTradeServerRpc(ServerRpcParams rpc = default)
+            => GameManager.Instance?.TryCancelPlayerTrade();
+
         // ── Topology lookups ───────────────────────────────────────────────────
+
+        private static ResourceBundle BundleFromBytes(byte wood, byte brick, byte sheep, byte wheat, byte ore)
+        {
+            var bundle = new ResourceBundle();
+            if (wood  > 0) bundle = bundle.Add(CatanResources.Wood,  wood);
+            if (brick > 0) bundle = bundle.Add(CatanResources.Brick, brick);
+            if (sheep > 0) bundle = bundle.Add(CatanResources.Sheep, sheep);
+            if (wheat > 0) bundle = bundle.Add(CatanResources.Wheat, wheat);
+            if (ore   > 0) bundle = bundle.Add(CatanResources.Ore,   ore);
+            return bundle;
+        }
 
         private static HexVertex LookupVertex(int q, int r, byte cornerIndex)
         {

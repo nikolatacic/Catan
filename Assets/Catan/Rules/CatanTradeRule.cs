@@ -25,8 +25,10 @@ namespace Catan
 
         private string GetTradeFailureReason(ITradeOffer offer, IPlayer responder)
         {
-            if (_turn.CurrentCatanPhase != CatanTurnPhase.Trading)
-                return "Trading is only allowed during the trading phase.";
+            bool isValidPhase = _turn.CurrentCatanPhase == CatanTurnPhase.Trading
+                             || _turn.CurrentCatanPhase == CatanTurnPhase.Building;
+            if (!isValidPhase)
+                return "Trading is only allowed during your turn.";
 
             if (offer.Target == null)
                 return ValidateBankTrade(offer);

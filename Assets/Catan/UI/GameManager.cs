@@ -82,6 +82,7 @@ namespace Catan.UI
         private LargestArmyTracker _largestArmyTracker;
         private LongestRoadTracker _longestRoadTracker;
         private bool _devCardPlayedThisTurn;
+        private GameCore.Trade.ITradeOffer _pendingPlayerTradeOffer;
 
         // ── Unity lifecycle ────────────────────────────────────────────────────
 
@@ -427,6 +428,97 @@ namespace Catan.UI
             return resourceType.HasValue ? Board.Ports.GetTradeRatio(player, resourceType.Value) : 4;
         }
 
+        // ── Player-to-player trading ───────────────────────────────────────────
+
+        public bool TryProposePlayerTrade(int targetPlayerIndex, ResourceBundle offering, ResourceBundle requesting)
+        {
+            if (IsGameOver) return false;
+            var proposer = ActivePlayer;
+            if (proposer == null) return false;
+
+            var phase = TurnManager.CurrentCatanPhase;
+            if (phase != CatanTurnPhase.Trading && phase != CatanTurnPhase.Building) return false;
+
+            if (targetPlayerIndex < 0 || targetPlayerIndex >= Players.Count) return false;
+            var target = Players[targetPlayerIndex];
+            if (target == proposer) return false;
+
+            if (!proposer.Resources.CanAfford(offering)) return false;
+
+            bool offeringHasResources = false;
+            bool requestingHasResources = false;
+            foreach (var resource in CatanResources.All)
+            {
+                if (offering.Get(resource) > 0) offeringHasResources = true;
+                if (requesting.Get(resource) > 0) requestingHasResources = true;
+            }
+            if (!offeringHasResources || !requestingHasResources) return false;
+
+            if (_pendingPlayerTradeOffer != null)
+            {
+                TradeManager.CancelTrade(_pendingPlayerTradeOffer);
+                _pendingPlayerTradeOffer = null;
+            }
+
+            _pendingPlayerTradeOffer = TradeManager.ProposeTradeToPlayer(proposer, target, offering, requesting);
+            return true;
+        }
+
+        public bool TryAcceptPlayerTrade(int acceptingPlayerIndex)
+        {
+            if (IsGameOver || _pendingPlayerTradeOffer == null) return false;
+            if (acceptingPlayerIndex < 0 || acceptingPlayerIndex >= Players.Count) return false;
+
+            var responder = Players[acceptingPlayerIndex];
+            var offer = _pendingPlayerTradeOffer;
+            _pendingPlayerTradeOffer = null;
+
+            if (!TradeManager.AcceptTrade(offer, responder)) return false;
+
+            (offer.Proposer as CatanPlayer)?.Resources.TryRemove(offer.Offering);
+            (offer.Proposer as CatanPlayer)?.Resources.TryAdd(offer.Requesting);
+            (responder as CatanPlayer)?.Resources.TryRemove(offer.Requesting);
+            (responder as CatanPlayer)?.Resources.TryAdd(offer.Offering);
+
+            RecalculateScoresAndCheckVictory();
+            return true;
+        }
+
+        public void TryDeclinePlayerTrade(int decliningPlayerIndex)
+        {
+            if (_pendingPlayerTradeOffer == null) return;
+            if (decliningPlayerIndex < 0 || decliningPlayerIndex >= Players.Count) return;
+
+            var offer = _pendingPlayerTradeOffer;
+            _pendingPlayerTradeOffer = null;
+            TradeManager.RejectTrade(offer, Players[decliningPlayerIndex]);
+        }
+
+        public bool TryCounterPlayerTrade(int counteringPlayerIndex, ResourceBundle counterOffering, ResourceBundle counterRequesting)
+        {
+            if (IsGameOver || _pendingPlayerTradeOffer == null) return false;
+            if (counteringPlayerIndex < 0 || counteringPlayerIndex >= Players.Count) return false;
+
+            var originalProposer = _pendingPlayerTradeOffer.Proposer;
+            var counteringPlayer = Players[counteringPlayerIndex];
+
+            var originalOffer = _pendingPlayerTradeOffer;
+            _pendingPlayerTradeOffer = null;
+            TradeManager.CancelTrade(originalOffer);
+
+            _pendingPlayerTradeOffer = TradeManager.ProposeTradeToPlayer(
+                counteringPlayer, originalProposer, counterOffering, counterRequesting);
+            return true;
+        }
+
+        public void TryCancelPlayerTrade()
+        {
+            if (_pendingPlayerTradeOffer == null) return;
+            var offer = _pendingPlayerTradeOffer;
+            _pendingPlayerTradeOffer = null;
+            TradeManager.CancelTrade(offer);
+        }
+
         public bool TryBankTrade(IResource give, IResource receive)
         {
             if (IsGameOver) return false;
@@ -581,6 +673,12 @@ namespace Catan.UI
             SetupSettlementPlaced  = false;
             FreeRoadsRemaining     = 0;
             CurrentPlacementMode   = PlacementMode.None;
+
+            if (_pendingPlayerTradeOffer != null)
+            {
+                TradeManager.CancelTrade(_pendingPlayerTradeOffer);
+                _pendingPlayerTradeOffer = null;
+            }
         }
     }
 }
