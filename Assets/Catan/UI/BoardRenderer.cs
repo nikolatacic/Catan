@@ -7,6 +7,7 @@ namespace Catan.UI
     // Attach to a child GameObject of GameManager ("BoardRenderer").
     // Assign HexTilePrefab, VertexPrefab, EdgePrefab.
     // Assign TileSprites array indexed by CatanResourceType enum value.
+    // Optionally assign PortPrefab + port sprites for port rendering.
     // GameManager calls RenderBoard() after the board is generated.
     // ──────────────────────────────────────────────────────────────────────────
 
@@ -16,14 +17,23 @@ namespace Catan.UI
         public GameObject HexTilePrefab;
         public GameObject VertexPrefab;
         public GameObject EdgePrefab;
+        public GameObject PortPrefab;
 
         [Header("Tile Sprites (indexed by CatanResourceType, last index = Desert)")]
         public Sprite[] TileSprites;
         public Sprite DesertSprite;
 
+        [Header("Port Sprites (indexed by CatanResourceType for 2:1 ports)")]
+        public Sprite[] ResourcePortSprites;
+        public Sprite GenericPortSprite;
+
         private readonly List<HexTileView> _tileViews = new();
         private readonly List<VertexView> _vertexViews = new();
         private readonly List<EdgeView> _edgeViews = new();
+        private readonly List<PortView> _portViews = new();
+
+        // Built during RenderBoard so SpawnPorts can look up vertex world positions.
+        private readonly Dictionary<GameCore.Board.HexVertex, Vector3> _vertexWorldPositions = new();
 
         // Measured once from a reference tile sprite; every tile sprite is the same size.
         private bool _hexSizeMeasured;
@@ -60,6 +70,8 @@ namespace Catan.UI
                     SpawnEdge(edge, tile.Coord, edgeIndex);
                 }
             }
+
+            SpawnPorts();
         }
 
         private void SpawnTile(CatanHexTile tile)
@@ -83,6 +95,8 @@ namespace Catan.UI
             if (VertexPrefab == null) return;
 
             var worldPos = CornerWorldPosition(tileCoord, cornerIndex);
+            _vertexWorldPositions[vertex] = worldPos;
+
             var go = Instantiate(VertexPrefab, worldPos, Quaternion.identity, transform);
             go.name = $"Vertex_{vertex.GetHashCode()}";
 
@@ -116,6 +130,39 @@ namespace Catan.UI
             _edgeViews.Add(edgeView);
         }
 
+        private void SpawnPorts()
+        {
+            if (PortPrefab == null) return;
+
+            var board = GameManager.Instance?.Board;
+            if (board?.Ports == null) return;
+
+            EnsureHexSizeMeasured();
+
+            foreach (var port in board.Ports.Ports)
+            {
+                if (port.AccessVertices == null || port.AccessVertices.Length < 2) continue;
+
+                if (!_vertexWorldPositions.TryGetValue(port.AccessVertices[0], out var posA)) continue;
+                if (!_vertexWorldPositions.TryGetValue(port.AccessVertices[1], out var posB)) continue;
+
+                var edgeMidpoint = (posA + posB) * 0.5f;
+
+                // Push the port marker outward from the board centre so it sits just
+                // outside the border hex edge, visible at the edge of the play area.
+                var outwardDirection = edgeMidpoint.normalized;
+                var worldPos = edgeMidpoint + new Vector3(outwardDirection.x, outwardDirection.y, 0f) * (_hexHeight * 0.35f);
+
+                var portSprite = GetPortSprite(port.SpecificResource);
+                var go = Instantiate(PortPrefab, worldPos, Quaternion.identity, transform);
+                go.name = $"Port_{port.TradeRatio}_{port.SpecificResource?.ToString() ?? "Generic"}";
+
+                var portView = go.GetComponent<PortView>();
+                portView?.Initialize(port, portSprite);
+                _portViews.Add(portView);
+            }
+        }
+
         public void RefreshAll()
         {
             foreach (var vertexView in _vertexViews) vertexView.Refresh();
@@ -127,9 +174,12 @@ namespace Catan.UI
             foreach (var view in _tileViews) if (view != null) Destroy(view.gameObject);
             foreach (var view in _vertexViews) if (view != null) Destroy(view.gameObject);
             foreach (var view in _edgeViews) if (view != null) Destroy(view.gameObject);
+            foreach (var view in _portViews) if (view != null) Destroy(view.gameObject);
             _tileViews.Clear();
             _vertexViews.Clear();
             _edgeViews.Clear();
+            _portViews.Clear();
+            _vertexWorldPositions.Clear();
         }
 
         // ── Coordinate math ────────────────────────────────────────────────────
@@ -195,6 +245,15 @@ namespace Catan.UI
             int index = (int)resourceType.Value;
             if (TileSprites == null || index < 0 || index >= TileSprites.Length) return null;
             return TileSprites[index];
+        }
+
+        private Sprite GetPortSprite(CatanResourceType? resourceType)
+        {
+            if (resourceType == null) return GenericPortSprite;
+            int index = (int)resourceType.Value;
+            if (ResourcePortSprites == null || index < 0 || index >= ResourcePortSprites.Length)
+                return GenericPortSprite;
+            return ResourcePortSprites[index];
         }
     }
 }

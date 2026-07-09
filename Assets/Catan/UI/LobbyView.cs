@@ -131,7 +131,6 @@ namespace Catan.UI
                 ConfigureTransportForHost(allocation);
 
                 NetworkSession.EnterHostMode(joinCode);
-                GameSession.SetDefault2PlayerHotseat();
 
                 SetStatus("Starting host…");
                 if (!NetworkManager.Singleton.StartHost())
@@ -146,6 +145,8 @@ namespace Catan.UI
             }
 
             SetStatus("Loading game…");
+            int connectedPlayerCount = NetworkManager.Singleton.ConnectedClientsIds.Count;
+            GameSession.SetNetworkedPlayers(connectedPlayerCount);
             NetworkManager.Singleton.SceneManager.LoadScene("GameHotseat", LoadSceneMode.Single);
         }
 
