@@ -9,6 +9,20 @@
     bottom: 0;
 }
 
+/*
+ * Modal UXML templates instantiate as a TemplateContainer child of HUDRoot.
+ * That container has no size by default, so absolutely-positioned modal roots
+ * inside it would position relative to a 0×0 box. Stretch them to fill the HUD
+ * so the modal overlay covers the full screen and centers its content correctly.
+ */
+.hud-root > .unity-template-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
 /* ── Right panel ──────────────────────────────────────────────────────────── */
 
 .right-panel {
@@ -179,7 +193,7 @@
 
 .action-btn-label {
     font-size: 10px;
-    color: inherit;
+    color: rgba(240, 228, 196, 1);
     -unity-text-align: upper-center;
     white-space: nowrap;
 }
@@ -236,7 +250,6 @@
     color: rgba(240, 228, 196, 1);
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .summary-row-name--active {

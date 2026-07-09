@@ -50,15 +50,22 @@ namespace Catan.UI.Editor
             var gameHUDAsset     = LoadVisualTreeAsset(GameHUDUxmlPath);
             if (gameHUDAsset == null) return;
 
-            var existingHUD = GameObject.Find("HUD");
-            if (existingHUD != null)
+            // Remove any existing UIDocuments that already have GameHUD.uxml loaded,
+            // not just the one named "HUD" — catches duplicates from re-running setup.
+            var existingHUDDocuments = Object.FindObjectsByType<UIDocument>(FindObjectsSortMode.None)
+                .Where(document => document.visualTreeAsset == gameHUDAsset)
+                .ToArray();
+
+            if (existingHUDDocuments.Length > 0)
             {
+                var existingNames = string.Join(", ", existingHUDDocuments.Select(document => document.gameObject.name));
                 bool replace = EditorUtility.DisplayDialog(
                     "HUD already exists",
-                    "A GameObject named 'HUD' already exists. Replace it?",
+                    $"Found {existingHUDDocuments.Length} GameObject(s) already using GameHUD.uxml: {existingNames}. Replace them?",
                     "Replace", "Cancel");
                 if (!replace) return;
-                Undo.DestroyObjectImmediate(existingHUD);
+                foreach (var existingDocument in existingHUDDocuments)
+                    Undo.DestroyObjectImmediate(existingDocument.gameObject);
             }
 
             // ── Create HUD GameObject ─────────────────────────────────────────────
@@ -149,6 +156,7 @@ namespace Catan.UI.Editor
                 var lobbyDocument = Undo.AddComponent<UIDocument>(lobbyObject);
                 lobbyDocument.panelSettings = panelSettings;
                 lobbyDocument.visualTreeAsset = lobbyAsset;
+                lobbyDocument.sortingOrder = 10;
             }
 
             var lobbyView = Undo.AddComponent<LobbyView>(lobbyObject);
@@ -188,10 +196,17 @@ namespace Catan.UI.Editor
             return true;
         }
 
+        // Reference resolution that makes the HUD 1.5× larger at 1920×1080
+        private static readonly Vector2Int TargetReferenceResolution = new Vector2Int(1280, 720);
+
         private static PanelSettings FindOrCreatePanelSettings()
         {
             var existing = AssetDatabase.LoadAssetAtPath<PanelSettings>(PanelSettingsPath);
-            if (existing != null) return existing;
+            if (existing != null)
+            {
+                ApplyReferenceResolution(existing);
+                return existing;
+            }
 
             // Search anywhere in the project first
             var guids = AssetDatabase.FindAssets("t:PanelSettings");
@@ -201,6 +216,7 @@ namespace Catan.UI.Editor
                 if (found != null)
                 {
                     Debug.Log($"[UIToolkitSetup] Using existing PanelSettings: {AssetDatabase.GetAssetPath(found)}");
+                    ApplyReferenceResolution(found);
                     return found;
                 }
             }
@@ -208,7 +224,7 @@ namespace Catan.UI.Editor
             // Create one
             var settings = ScriptableObject.CreateInstance<PanelSettings>();
             settings.scaleMode = PanelScaleMode.ScaleWithScreenSize;
-            settings.referenceResolution = new Vector2Int(1920, 1080);
+            settings.referenceResolution = TargetReferenceResolution;
             settings.screenMatchMode = PanelScreenMatchMode.MatchWidthOrHeight;
 
             System.IO.Directory.CreateDirectory("Assets/Catan/UI/UIToolkit");
@@ -216,6 +232,24 @@ namespace Catan.UI.Editor
             AssetDatabase.SaveAssets();
             Debug.Log($"[UIToolkitSetup] Created PanelSettings at {PanelSettingsPath}");
             return settings;
+        }
+
+        private static void ApplyReferenceResolution(PanelSettings settings)
+        {
+            if (settings.referenceResolution == TargetReferenceResolution) return;
+            settings.referenceResolution = TargetReferenceResolution;
+            settings.scaleMode = PanelScaleMode.ScaleWithScreenSize;
+            settings.screenMatchMode = PanelScreenMatchMode.MatchWidthOrHeight;
+            EditorUtility.SetDirty(settings);
+            AssetDatabase.SaveAssets();
+            Debug.Log($"[UIToolkitSetup] Updated PanelSettings reference resolution to {TargetReferenceResolution}.");
+        }
+
+        [MenuItem("Catan/UI Toolkit/Fix UI Scale (1280×720 reference)")]
+        public static void FixUIScale()
+        {
+            var panelSettings = FindOrCreatePanelSettings();
+            Debug.Log($"[UIToolkitSetup] PanelSettings reference resolution is now {panelSettings.referenceResolution}.");
         }
 
         private static VisualTreeAsset LoadVisualTreeAsset(string path)
