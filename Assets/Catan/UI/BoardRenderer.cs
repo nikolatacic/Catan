@@ -158,7 +158,7 @@ namespace Catan.UI
                 go.name = $"Port_{port.TradeRatio}_{port.SpecificResource?.ToString() ?? "Generic"}";
 
                 var portView = go.GetComponent<PortView>();
-                portView?.Initialize(port, portSprite);
+                portView?.Initialize(port, portSprite, posA, posB);
                 _portViews.Add(portView);
             }
         }
