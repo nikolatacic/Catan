@@ -30,8 +30,10 @@
 
 .modal-title {
     align-self: center;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
     -unity-font-style: bold;
+    white-space: normal;
+    -unity-text-align: upper-center;
 }
 
 .section-title {
@@ -55,8 +57,7 @@
     width: 44px;
     height: 62px;
     margin-bottom: 4px;
-    background-size: contain;
-    background-repeat: no-repeat;
+    -unity-background-scale-mode: scale-to-fit;
     align-self: center;
 }
 
@@ -73,6 +74,8 @@
     align-self: center;
     margin-top: 8px;
     color: rgba(180, 164, 128, 1);
+    white-space: normal;
+    -unity-text-align: upper-center;
 }
 
 /* ── Bottom button row ───────────────────────────────────────────── */
@@ -100,13 +103,12 @@
 .discard-card-area {
     flex-direction: row;
     flex-wrap: nowrap;
-    min-height: 80px;
-    max-height: 100px;
+    min-height: 90px;
+    max-height: 92px;
     border-radius: 4px;
     background-color: rgba(0, 0, 0, 0.2);
-    padding: 4px;
-    margin-bottom: 4px;
-    overflow: hidden;
+    padding: 6px;
+    margin-bottom: 6px;
 }
 
 .discard-selected-area {
@@ -117,18 +119,16 @@
 
 /* Each discard card widget */
 .discard-card {
-    width: 48px;
-    height: 64px;
+    width: 52px;
+    height: 74px;
     margin-right: 4px;
     border-radius: 4px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    transition-duration: 0.1s;
-    transition-property: scale;
+    -unity-background-scale-mode: scale-to-fit;
 }
 
 .discard-card:hover {
-    scale: 1.08;
+    border-color: rgba(255, 220, 80, 1);
+    border-width: 1px;
 }
 
 /* ── Steal panel ──────────────────────────────────────────────────── */
@@ -157,7 +157,7 @@
 .steal-player-color-swatch {
     width: 14px;
     height: 14px;
-    border-radius: 50%;
+    border-radius: 7px;
     margin-right: 8px;
 }
 

@@ -3,7 +3,7 @@
         <ui:VisualElement class="modal discard-modal">
 
             <ui:Label name="DiscardPlayerNameLabel" text="" class="label--lg modal-title"/>
-            <ui:Label name="DiscardInstructionLabel" text="" class="label--sm label--secondary"/>
+            <ui:Label name="DiscardInstructionLabel" text="" class="label--sm label--secondary" style="white-space: normal; margin-bottom: 6px;"/>
             <ui:VisualElement class="divider"/>
 
             <ui:Label text="YOUR HAND" class="label--xs label--secondary section-title"/>

@@ -24,6 +24,11 @@ namespace Catan.UI
             if (_panelRoot != null) _panelRoot.style.display = DisplayStyle.None;
         }
 
+        private void Start()
+        {
+            _panelRoot?.StretchTemplateContainerToFill();
+        }
+
         // ── Public API ─────────────────────────────────────────────────────────
 
         public void Show(GameCore.Board.HexCoord coord, List<IPlayer> victims)

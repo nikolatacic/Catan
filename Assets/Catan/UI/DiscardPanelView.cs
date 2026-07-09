@@ -42,6 +42,11 @@ namespace Catan.UI
             EventBus.Subscribe<DiscardRequiredEvent>(OnDiscardRequired);
         }
 
+        private void Start()
+        {
+            _panelRoot?.StretchTemplateContainerToFill();
+        }
+
         private void OnDestroy()
         {
             EventBus.Unsubscribe<DiscardRequiredEvent>(OnDiscardRequired);

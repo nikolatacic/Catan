@@ -32,6 +32,11 @@ namespace Catan.UI
             EventBus.Subscribe<VictoryAchievedEvent>(OnVictoryAchieved);
         }
 
+        private void Start()
+        {
+            _screenRoot?.StretchTemplateContainerToFill();
+        }
+
         private void OnDestroy()
         {
             EventBus.Unsubscribe<VictoryAchievedEvent>(OnVictoryAchieved);

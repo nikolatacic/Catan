@@ -98,7 +98,11 @@ namespace Catan.UI
                 int capturedIndex = buttonIndex;
                 _receiveButtons[buttonIndex]?.RegisterCallback<ClickEvent>(_ => OnReceiveClicked(capturedIndex));
             }
+        }
 
+        private void Start()
+        {
+            _panelRoot?.StretchTemplateContainerToFill();
             ApplyResourceCardSprites();
         }
 
@@ -224,6 +228,20 @@ namespace Catan.UI
         {
             if (element != null && sprite != null)
                 element.style.backgroundImage = new StyleBackground(sprite);
+        }
+
+        // UXML <ui:Instance> elements are wrapped in a TemplateContainer that has no
+        // size by default. Call this on the modal root so its parent fills the HUD,
+        // allowing position:absolute + align/justify center to actually center the panel.
+        internal static void StretchTemplateContainerToFill(this VisualElement modalRoot)
+        {
+            var templateContainer = modalRoot?.parent;
+            if (templateContainer == null) return;
+            templateContainer.style.position = Position.Absolute;
+            templateContainer.style.left     = 0;
+            templateContainer.style.top      = 0;
+            templateContainer.style.right    = 0;
+            templateContainer.style.bottom   = 0;
         }
     }
 }
