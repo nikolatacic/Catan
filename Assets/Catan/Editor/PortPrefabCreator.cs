@@ -16,21 +16,12 @@ namespace Catan.Editor
 
             var rootGo = new GameObject("PortView");
 
-            var backgroundRenderer = rootGo.AddComponent<SpriteRenderer>();
-            backgroundRenderer.sortingLayerName = "Default";
-            backgroundRenderer.sortingOrder = 0;
-
-            var iconGo = new GameObject("ResourceIcon");
-            iconGo.transform.SetParent(rootGo.transform, false);
-            iconGo.transform.localPosition = Vector3.zero;
-            iconGo.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
-            var iconRenderer = iconGo.AddComponent<SpriteRenderer>();
-            iconRenderer.sortingLayerName = "Default";
-            iconRenderer.sortingOrder = 1;
+            var portIconRenderer = rootGo.AddComponent<SpriteRenderer>();
+            portIconRenderer.sortingLayerName = "Default";
+            portIconRenderer.sortingOrder = 2;
 
             var portView = rootGo.AddComponent<PortView>();
-            portView.BackgroundRenderer = backgroundRenderer;
-            portView.ResourceIconRenderer = iconRenderer;
+            portView.PortIconRenderer = portIconRenderer;
 
             var prefab = PrefabUtility.SaveAsPrefabAsset(rootGo, PrefabPath);
             Object.DestroyImmediate(rootGo);
@@ -39,7 +30,8 @@ namespace Catan.Editor
 
             if (prefab != null)
                 Debug.Log($"[PortPrefabCreator] Port prefab created at {PrefabPath}. " +
-                          "Assign it to BoardRenderer.PortPrefab in the scene, then assign port sprites.");
+                          "Assign it to BoardRenderer.PortPrefab. " +
+                          "Assign port sprites to BoardRenderer.ResourcePortSprites[0-4] and GenericPortSprite.");
             else
                 Debug.LogError("[PortPrefabCreator] Failed to create port prefab.");
         }
