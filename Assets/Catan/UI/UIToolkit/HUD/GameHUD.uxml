@@ -3,14 +3,6 @@
     <ui:Style src="project://database/Assets/Catan/UI/UIToolkit/HUD/GameHUD.uss"/>
     <ui:Style src="project://database/Assets/Catan/UI/UIToolkit/Modals/Modals.uss"/>
 
-    <!-- Modal templates -->
-    <ui:Template name="BankTradePanel"   src="project://database/Assets/Catan/UI/UIToolkit/Modals/BankTradePanel.uxml"/>
-    <ui:Template name="DiscardPanel"     src="project://database/Assets/Catan/UI/UIToolkit/Modals/DiscardPanel.uxml"/>
-    <ui:Template name="MonopolyPanel"    src="project://database/Assets/Catan/UI/UIToolkit/Modals/MonopolyPanel.uxml"/>
-    <ui:Template name="YearOfPlentyPanel" src="project://database/Assets/Catan/UI/UIToolkit/Modals/YearOfPlentyPanel.uxml"/>
-    <ui:Template name="StealTargetPanel" src="project://database/Assets/Catan/UI/UIToolkit/Modals/StealTargetPanel.uxml"/>
-    <ui:Template name="VictoryScreen"    src="project://database/Assets/Catan/UI/UIToolkit/Modals/VictoryScreen.uxml"/>
-
     <!--
         Full-screen HUD overlay. picking-mode="Ignore" on the root so board
         clicks pass through. Interactive children override this with their own
@@ -138,13 +130,180 @@
 
         </ui:VisualElement>
 
-        <!-- ── Modals (hidden by default, shown via DisplayStyle in C#) ─────── -->
-        <ui:Instance template="BankTradePanel"/>
-        <ui:Instance template="DiscardPanel"/>
-        <ui:Instance template="MonopolyPanel"/>
-        <ui:Instance template="YearOfPlentyPanel"/>
-        <ui:Instance template="StealTargetPanel"/>
-        <ui:Instance template="VictoryScreen"/>
+        <!-- ── Modals — inlined directly so position:absolute works relative to HUDRoot ── -->
+
+        <!-- Bank Trade -->
+        <ui:VisualElement name="BankTradePanelRoot" class="panel--overlay modal-overlay" style="display: none;">
+            <ui:VisualElement class="modal bank-trade-modal">
+                <ui:Label text="BANK TRADE" class="label--lg modal-title"/>
+                <ui:VisualElement class="divider"/>
+                <ui:Label text="YOU GIVE" class="label--xs label--secondary section-title"/>
+                <ui:VisualElement class="row bank-resource-row">
+                    <ui:Button name="GiveWoodBtn"  class="btn resource-btn bank-give-btn">
+                        <ui:VisualElement name="GiveWoodIcon"  class="bank-card-icon"/>
+                        <ui:Label name="GiveWoodLabel"  text="Wood"  class="label--xs"/>
+                        <ui:Label name="GiveWoodInfo"   text=""      class="label--xs label--secondary"/>
+                    </ui:Button>
+                    <ui:Button name="GiveBrickBtn" class="btn resource-btn bank-give-btn">
+                        <ui:VisualElement name="GiveBrickIcon" class="bank-card-icon"/>
+                        <ui:Label name="GiveBrickLabel" text="Brick" class="label--xs"/>
+                        <ui:Label name="GiveBrickInfo"  text=""      class="label--xs label--secondary"/>
+                    </ui:Button>
+                    <ui:Button name="GiveSheepBtn" class="btn resource-btn bank-give-btn">
+                        <ui:VisualElement name="GiveSheepIcon" class="bank-card-icon"/>
+                        <ui:Label name="GiveSheepLabel" text="Sheep" class="label--xs"/>
+                        <ui:Label name="GiveSheepInfo"  text=""      class="label--xs label--secondary"/>
+                    </ui:Button>
+                    <ui:Button name="GiveWheatBtn" class="btn resource-btn bank-give-btn">
+                        <ui:VisualElement name="GiveWheatIcon" class="bank-card-icon"/>
+                        <ui:Label name="GiveWheatLabel" text="Wheat" class="label--xs"/>
+                        <ui:Label name="GiveWheatInfo"  text=""      class="label--xs label--secondary"/>
+                    </ui:Button>
+                    <ui:Button name="GiveOreBtn"   class="btn resource-btn bank-give-btn">
+                        <ui:VisualElement name="GiveOreIcon"   class="bank-card-icon"/>
+                        <ui:Label name="GiveOreLabel"   text="Ore"   class="label--xs"/>
+                        <ui:Label name="GiveOreInfo"    text=""      class="label--xs label--secondary"/>
+                    </ui:Button>
+                </ui:VisualElement>
+                <ui:VisualElement class="divider"/>
+                <ui:Label text="YOU RECEIVE" class="label--xs label--secondary section-title"/>
+                <ui:VisualElement class="row bank-resource-row">
+                    <ui:Button name="ReceiveWoodBtn"  class="btn resource-btn">
+                        <ui:VisualElement name="ReceiveWoodIcon"  class="bank-card-icon"/>
+                        <ui:Label text="Wood"  class="label--xs"/>
+                    </ui:Button>
+                    <ui:Button name="ReceiveBrickBtn" class="btn resource-btn">
+                        <ui:VisualElement name="ReceiveBrickIcon" class="bank-card-icon"/>
+                        <ui:Label text="Brick" class="label--xs"/>
+                    </ui:Button>
+                    <ui:Button name="ReceiveSheepBtn" class="btn resource-btn">
+                        <ui:VisualElement name="ReceiveSheepIcon" class="bank-card-icon"/>
+                        <ui:Label text="Sheep" class="label--xs"/>
+                    </ui:Button>
+                    <ui:Button name="ReceiveWheatBtn" class="btn resource-btn">
+                        <ui:VisualElement name="ReceiveWheatIcon" class="bank-card-icon"/>
+                        <ui:Label text="Wheat" class="label--xs"/>
+                    </ui:Button>
+                    <ui:Button name="ReceiveOreBtn"   class="btn resource-btn">
+                        <ui:VisualElement name="ReceiveOreIcon"   class="bank-card-icon"/>
+                        <ui:Label text="Ore"   class="label--xs"/>
+                    </ui:Button>
+                </ui:VisualElement>
+                <ui:Label name="BankTradeFeedbackLabel" text="" class="label--sm modal-feedback"/>
+                <ui:VisualElement class="row modal-button-row">
+                    <ui:Button name="BankTradeCancelBtn"  text="Cancel" class="btn modal-btn"/>
+                    <ui:Button name="BankTradeConfirmBtn" text="Trade"  class="btn btn--primary modal-btn"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Discard -->
+        <ui:VisualElement name="DiscardPanelRoot" class="panel--overlay modal-overlay" style="display: none;">
+            <ui:VisualElement class="modal discard-modal">
+                <ui:Label name="DiscardPlayerNameLabel" text="" class="label--lg modal-title"/>
+                <ui:Label name="DiscardInstructionLabel" text="" class="label--sm label--secondary" style="white-space: normal; margin-bottom: 6px;"/>
+                <ui:VisualElement class="divider"/>
+                <ui:Label text="YOUR HAND" class="label--xs label--secondary section-title"/>
+                <ui:ScrollView name="DiscardHandContainer" class="discard-card-area" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" mode="Horizontal"/>
+                <ui:Label text="DISCARDING" class="label--xs label--secondary section-title"/>
+                <ui:ScrollView name="DiscardSelectedContainer" class="discard-card-area discard-selected-area" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" mode="Horizontal"/>
+                <ui:Button name="DiscardConfirmButton" text="Confirm Discard" class="btn btn--primary btn--danger modal-btn-full"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Monopoly -->
+        <ui:VisualElement name="MonopolyPanelRoot" class="panel--overlay modal-overlay" style="display: none;">
+            <ui:VisualElement class="modal resource-picker-modal">
+                <ui:Label text="MONOPOLY" class="label--lg modal-title"/>
+                <ui:Label text="Choose a resource type to claim from all players." class="label--sm label--secondary" style="white-space: normal;"/>
+                <ui:VisualElement class="divider"/>
+                <ui:VisualElement class="row bank-resource-row">
+                    <ui:Button name="MonopolyWoodBtn"  class="btn resource-btn">
+                        <ui:VisualElement name="MonopolyWoodIcon"  class="bank-card-icon"/>
+                        <ui:Label text="Wood"  class="label--xs"/>
+                    </ui:Button>
+                    <ui:Button name="MonopolyBrickBtn" class="btn resource-btn">
+                        <ui:VisualElement name="MonopolyBrickIcon" class="bank-card-icon"/>
+                        <ui:Label text="Brick" class="label--xs"/>
+                    </ui:Button>
+                    <ui:Button name="MonopolySheepBtn" class="btn resource-btn">
+                        <ui:VisualElement name="MonopolySheepIcon" class="bank-card-icon"/>
+                        <ui:Label text="Sheep" class="label--xs"/>
+                    </ui:Button>
+                    <ui:Button name="MonopolyWheatBtn" class="btn resource-btn">
+                        <ui:VisualElement name="MonopolyWheatIcon" class="bank-card-icon"/>
+                        <ui:Label text="Wheat" class="label--xs"/>
+                    </ui:Button>
+                    <ui:Button name="MonopolyOreBtn"   class="btn resource-btn">
+                        <ui:VisualElement name="MonopolyOreIcon"   class="bank-card-icon"/>
+                        <ui:Label text="Ore"   class="label--xs"/>
+                    </ui:Button>
+                </ui:VisualElement>
+                <ui:VisualElement class="row modal-button-row">
+                    <ui:Button name="MonopolyCancelBtn"  text="Cancel" class="btn modal-btn"/>
+                    <ui:Button name="MonopolyConfirmBtn" text="Claim"  class="btn btn--primary modal-btn"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Year of Plenty -->
+        <ui:VisualElement name="YearOfPlentyPanelRoot" class="panel--overlay modal-overlay" style="display: none;">
+            <ui:VisualElement class="modal resource-picker-modal">
+                <ui:Label text="YEAR OF PLENTY" class="label--lg modal-title"/>
+                <ui:Label name="YearOfPlentyInstructionLabel" text="Choose your first resource." class="label--sm label--secondary" style="white-space: normal;"/>
+                <ui:VisualElement class="divider"/>
+                <ui:VisualElement class="row bank-resource-row">
+                    <ui:Button name="YopWoodBtn"  class="btn resource-btn">
+                        <ui:VisualElement name="YopWoodIcon"  class="bank-card-icon"/>
+                        <ui:Label text="Wood"  class="label--xs"/>
+                    </ui:Button>
+                    <ui:Button name="YopBrickBtn" class="btn resource-btn">
+                        <ui:VisualElement name="YopBrickIcon" class="bank-card-icon"/>
+                        <ui:Label text="Brick" class="label--xs"/>
+                    </ui:Button>
+                    <ui:Button name="YopSheepBtn" class="btn resource-btn">
+                        <ui:VisualElement name="YopSheepIcon" class="bank-card-icon"/>
+                        <ui:Label text="Sheep" class="label--xs"/>
+                    </ui:Button>
+                    <ui:Button name="YopWheatBtn" class="btn resource-btn">
+                        <ui:VisualElement name="YopWheatIcon" class="bank-card-icon"/>
+                        <ui:Label text="Wheat" class="label--xs"/>
+                    </ui:Button>
+                    <ui:Button name="YopOreBtn"   class="btn resource-btn">
+                        <ui:VisualElement name="YopOreIcon"   class="bank-card-icon"/>
+                        <ui:Label text="Ore"   class="label--xs"/>
+                    </ui:Button>
+                </ui:VisualElement>
+                <ui:VisualElement class="row modal-button-row">
+                    <ui:Button name="YopCancelBtn"  text="Cancel" class="btn modal-btn"/>
+                    <ui:Button name="YopConfirmBtn" text="Take"   class="btn btn--primary modal-btn"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Steal Target -->
+        <ui:VisualElement name="StealTargetPanelRoot" class="panel--overlay modal-overlay" style="display: none;">
+            <ui:VisualElement class="modal steal-modal">
+                <ui:Label text="CHOOSE A TARGET" class="label--lg modal-title"/>
+                <ui:Label text="Select a player to steal a resource from." class="label--sm label--secondary" style="white-space: normal;"/>
+                <ui:VisualElement class="divider"/>
+                <ui:VisualElement name="StealButtonContainer" class="col steal-button-container"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Victory Screen -->
+        <ui:VisualElement name="VictoryScreenRoot" class="panel--overlay modal-overlay victory-overlay" style="display: none;">
+            <ui:VisualElement class="modal victory-modal">
+                <ui:Label text="VICTORY!" class="label--hero label--highlight modal-title"/>
+                <ui:VisualElement name="VictoryColorBar" class="victory-color-bar"/>
+                <ui:Label name="VictoryWinnerLabel" text=""  class="label--xl"/>
+                <ui:Label name="VictoryPointsLabel" text=""  class="label--md label--secondary"/>
+                <ui:VisualElement class="divider"/>
+                <ui:Label text="FINAL STANDINGS" class="label--xs label--secondary section-title"/>
+                <ui:Label name="VictoryStandingsLabel" text="" class="label--sm" style="white-space: normal;"/>
+                <ui:Button name="VictoryRestartButton" text="Play Again" class="btn btn--primary modal-btn-full"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
 
     </ui:VisualElement>
 </ui:UXML>

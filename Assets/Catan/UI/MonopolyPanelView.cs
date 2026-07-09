@@ -60,7 +60,6 @@ namespace Catan.UI
 
         private void Start()
         {
-            _panelRoot?.StretchTemplateContainerToFill();
             ApplyResourceIcons();
         }
 
