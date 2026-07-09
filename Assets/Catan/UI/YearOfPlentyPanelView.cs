@@ -58,8 +58,13 @@ namespace Catan.UI
                 _resourceButtons[buttonIndex]?.RegisterCallback<ClickEvent>(_ => OnResourceClicked(capturedIndex));
             }
 
-            ApplyResourceIcons();
             if (_panelRoot != null) _panelRoot.style.display = DisplayStyle.None;
+        }
+
+        private void Start()
+        {
+            _panelRoot?.StretchTemplateContainerToFill();
+            ApplyResourceIcons();
         }
 
         // ── Public API ─────────────────────────────────────────────────────────
