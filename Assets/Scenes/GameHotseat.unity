@@ -547,6 +547,7 @@ GameObject:
   - component: {fileID: 1419109257}
   - component: {fileID: 1419109256}
   - component: {fileID: 1419109255}
+  - component: {fileID: 1419109269}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -643,6 +644,7 @@ MonoBehaviour:
   CitySprite: {fileID: 1089953460198422421, guid: 1fd697f571768ac4496dbee8da5ee714, type: 3}
   DevCardSprite: {fileID: 5272219037728646743, guid: 1fd697f571768ac4496dbee8da5ee714, type: 3}
   BankTradePanel: {fileID: 1419109260}
+  PlayerTradePanel: {fileID: 1419109269}
 --- !u!114 &1419109262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -752,6 +754,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1419109269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419109254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bc7a8b437d6d4c0fa5e120c322c7381, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Catan::Catan.UI.PlayerTradePanelView
 --- !u!1 &1452303018
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,7 +916,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
   panSpeed: 20
-  panBorderThickness: 20
+  panBorderThickness: 30
   panLimit: {x: 2, y: 2}
   scrollSpeed: 5
   minZ: -15
@@ -1091,6 +1105,7 @@ MonoBehaviour:
   HexTilePrefab: {fileID: 3572951175064106642, guid: 230f99e8ef75f1c4baf46f5b1743624e, type: 3}
   VertexPrefab: {fileID: 5233387328953722309, guid: c8817155ed68d7c4ba88d20faacf1d32, type: 3}
   EdgePrefab: {fileID: 222406597254124932, guid: 5e0e62bab837f23438fabff71ff52576, type: 3}
+  PortPrefab: {fileID: 2172998188130166123, guid: 91518f47aca92481d8b3f900d0a59e6f, type: 3}
   TileSprites:
   - {fileID: 4257458840871683411, guid: 1fd697f571768ac4496dbee8da5ee714, type: 3}
   - {fileID: 5751645452255951020, guid: 1fd697f571768ac4496dbee8da5ee714, type: 3}
@@ -1098,6 +1113,13 @@ MonoBehaviour:
   - {fileID: -7352173502298073465, guid: 1fd697f571768ac4496dbee8da5ee714, type: 3}
   - {fileID: 7821320336301065792, guid: 1fd697f571768ac4496dbee8da5ee714, type: 3}
   DesertSprite: {fileID: 6364977248867974805, guid: 1fd697f571768ac4496dbee8da5ee714, type: 3}
+  ResourcePortSprites:
+  - {fileID: -2489265126405692410, guid: 1fd697f571768ac4496dbee8da5ee714, type: 3}
+  - {fileID: 1585719682702775968, guid: 1fd697f571768ac4496dbee8da5ee714, type: 3}
+  - {fileID: -5288665589010421987, guid: 1fd697f571768ac4496dbee8da5ee714, type: 3}
+  - {fileID: 3204558683114093736, guid: 1fd697f571768ac4496dbee8da5ee714, type: 3}
+  - {fileID: 6179918090706146172, guid: 1fd697f571768ac4496dbee8da5ee714, type: 3}
+  GenericPortSprite: {fileID: -5100809756593437698, guid: 1fd697f571768ac4496dbee8da5ee714, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

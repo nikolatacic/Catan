@@ -829,7 +829,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_27
+      name: Port_3to1
       rect:
         serializedVersion: 2
         x: 661
@@ -851,7 +851,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_28
+      name: Port_Wheat
       rect:
         serializedVersion: 2
         x: 785
@@ -873,7 +873,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_29
+      name: Port_Ore
       rect:
         serializedVersion: 2
         x: 909
@@ -895,7 +895,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_30
+      name: Port_Brick
       rect:
         serializedVersion: 2
         x: 1033
@@ -917,7 +917,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_31
+      name: Port_Wool
       rect:
         serializedVersion: 2
         x: 1157
@@ -939,7 +939,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatanElements_32
+      name: Port_Wood
       rect:
         serializedVersion: 2
         x: 1281
@@ -976,12 +976,6 @@ TextureImporter:
     nameFileIdTable:
       Brick_Card: -6620172601595713784
       Brick_Tile: 5751645452255951020
-      CatanElements_27: -5100809756593437698
-      CatanElements_28: 3204558683114093736
-      CatanElements_29: 6179918090706146172
-      CatanElements_30: 1585719682702775968
-      CatanElements_31: -5288665589010421987
-      CatanElements_32: -2489265126405692410
       City: 1089953460198422421
       Desert_Tile: 6364977248867974805
       Development_Card: 5272219037728646743
@@ -998,7 +992,13 @@ TextureImporter:
       Map_Circle_Number_9: 7629610136878271465
       Ore_Card: -939965994133293783
       Ore_Tile: 7821320336301065792
+      Port_3to1: -5100809756593437698
+      Port_Brick: 1585719682702775968
+      Port_Ore: 6179918090706146172
       Port_Tile: 7896664584934623288
+      Port_Wheat: 3204558683114093736
+      Port_Wood: -2489265126405692410
+      Port_Wool: -5288665589010421987
       Road: -5421782824720375859
       Sheep_Card: 7119511083895964361
       Sheep_Tile: -34323195216768746
