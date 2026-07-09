@@ -156,4 +156,74 @@ namespace Catan.Commands
             return null;
         }
     }
+
+    public class ProposePlayerTradeCommand : IGameCommand
+    {
+        public int TargetPlayerIndex;
+        public GameCore.Resources.ResourceBundle Offering;
+        public GameCore.Resources.ResourceBundle Requesting;
+
+        public void Execute(UI.GameManager manager)
+            => manager.TryProposePlayerTrade(TargetPlayerIndex, Offering, Requesting);
+
+        public void SendOverNetwork(NetworkCommandBridge bridge)
+            => bridge.ProposePlayerTradeServerRpc(
+                (byte)TargetPlayerIndex,
+                (byte)Offering.Get(CatanResources.Wood),
+                (byte)Offering.Get(CatanResources.Brick),
+                (byte)Offering.Get(CatanResources.Sheep),
+                (byte)Offering.Get(CatanResources.Wheat),
+                (byte)Offering.Get(CatanResources.Ore),
+                (byte)Requesting.Get(CatanResources.Wood),
+                (byte)Requesting.Get(CatanResources.Brick),
+                (byte)Requesting.Get(CatanResources.Sheep),
+                (byte)Requesting.Get(CatanResources.Wheat),
+                (byte)Requesting.Get(CatanResources.Ore));
+    }
+
+    public class AcceptPlayerTradeCommand : IGameCommand
+    {
+        public int AcceptingPlayerIndex;
+        public void Execute(UI.GameManager manager) => manager.TryAcceptPlayerTrade(AcceptingPlayerIndex);
+        public void SendOverNetwork(NetworkCommandBridge bridge)
+            => bridge.AcceptPlayerTradeServerRpc((byte)AcceptingPlayerIndex);
+    }
+
+    public class DeclinePlayerTradeCommand : IGameCommand
+    {
+        public int DecliningPlayerIndex;
+        public void Execute(UI.GameManager manager) => manager.TryDeclinePlayerTrade(DecliningPlayerIndex);
+        public void SendOverNetwork(NetworkCommandBridge bridge)
+            => bridge.DeclinePlayerTradeServerRpc((byte)DecliningPlayerIndex);
+    }
+
+    public class CounterPlayerTradeCommand : IGameCommand
+    {
+        public int CounteringPlayerIndex;
+        public GameCore.Resources.ResourceBundle CounterOffering;
+        public GameCore.Resources.ResourceBundle CounterRequesting;
+
+        public void Execute(UI.GameManager manager)
+            => manager.TryCounterPlayerTrade(CounteringPlayerIndex, CounterOffering, CounterRequesting);
+
+        public void SendOverNetwork(NetworkCommandBridge bridge)
+            => bridge.CounterPlayerTradeServerRpc(
+                (byte)CounteringPlayerIndex,
+                (byte)CounterOffering.Get(CatanResources.Wood),
+                (byte)CounterOffering.Get(CatanResources.Brick),
+                (byte)CounterOffering.Get(CatanResources.Sheep),
+                (byte)CounterOffering.Get(CatanResources.Wheat),
+                (byte)CounterOffering.Get(CatanResources.Ore),
+                (byte)CounterRequesting.Get(CatanResources.Wood),
+                (byte)CounterRequesting.Get(CatanResources.Brick),
+                (byte)CounterRequesting.Get(CatanResources.Sheep),
+                (byte)CounterRequesting.Get(CatanResources.Wheat),
+                (byte)CounterRequesting.Get(CatanResources.Ore));
+    }
+
+    public class CancelPlayerTradeCommand : IGameCommand
+    {
+        public void Execute(UI.GameManager manager) => manager.TryCancelPlayerTrade();
+        public void SendOverNetwork(NetworkCommandBridge bridge) => bridge.CancelPlayerTradeServerRpc();
+    }
 }

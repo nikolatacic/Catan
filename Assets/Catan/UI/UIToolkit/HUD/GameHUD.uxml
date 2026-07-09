@@ -123,6 +123,9 @@
             <ui:Button name="BankTradeButton" class="btn action-btn action-btn--trade">
                 <ui:Label text="Bank Trade" class="action-btn-label"/>
             </ui:Button>
+            <ui:Button name="PlayerTradeButton" class="btn action-btn action-btn--trade">
+                <ui:Label text="Player Trade" class="action-btn-label"/>
+            </ui:Button>
 
             <ui:Button name="CancelPlacementButton" class="btn btn--danger action-btn">
                 <ui:Label text="Cancel" class="action-btn-label"/>
@@ -288,6 +291,143 @@
                 <ui:Label text="Select a player to steal a resource from." class="label--sm label--secondary" style="white-space: normal;"/>
                 <ui:VisualElement class="divider"/>
                 <ui:VisualElement name="StealButtonContainer" class="col steal-button-container"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Player Trade -->
+        <ui:VisualElement name="PlayerTradePanelRoot" class="panel--overlay modal-overlay" style="display: none;">
+            <ui:VisualElement class="modal player-trade-modal">
+                <ui:Label name="PlayerTradeTitleLabel" text="PLAYER TRADE" class="label--lg modal-title"/>
+                <ui:VisualElement class="divider"/>
+
+                <!-- Target player picker (Proposing mode) -->
+                <ui:VisualElement name="PlayerTradeTargetSection">
+                    <ui:Label text="TRADE WITH" class="label--xs label--secondary section-title"/>
+                    <ui:VisualElement name="PlayerTradeTargetRow" class="row"/>
+                </ui:VisualElement>
+
+                <!-- Resource counters (Proposing + Countering modes) -->
+                <ui:VisualElement name="PlayerTradeResourceSection">
+                    <ui:Label text="YOU OFFER" class="label--xs label--secondary section-title"/>
+                    <ui:VisualElement class="row trade-resource-row">
+                        <ui:VisualElement class="trade-resource-slot">
+                            <ui:Label text="Wood" class="label--xs"/>
+                            <ui:VisualElement class="row trade-counter-row">
+                                <ui:Button name="OfferWoodMinus" text="-" class="btn trade-counter-btn"/>
+                                <ui:Label name="OfferWoodCount" text="0" class="label--sm trade-count"/>
+                                <ui:Button name="OfferWoodPlus" text="+" class="btn trade-counter-btn"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="trade-resource-slot">
+                            <ui:Label text="Brick" class="label--xs"/>
+                            <ui:VisualElement class="row trade-counter-row">
+                                <ui:Button name="OfferBrickMinus" text="-" class="btn trade-counter-btn"/>
+                                <ui:Label name="OfferBrickCount" text="0" class="label--sm trade-count"/>
+                                <ui:Button name="OfferBrickPlus" text="+" class="btn trade-counter-btn"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="trade-resource-slot">
+                            <ui:Label text="Sheep" class="label--xs"/>
+                            <ui:VisualElement class="row trade-counter-row">
+                                <ui:Button name="OfferSheepMinus" text="-" class="btn trade-counter-btn"/>
+                                <ui:Label name="OfferSheepCount" text="0" class="label--sm trade-count"/>
+                                <ui:Button name="OfferSheepPlus" text="+" class="btn trade-counter-btn"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="trade-resource-slot">
+                            <ui:Label text="Wheat" class="label--xs"/>
+                            <ui:VisualElement class="row trade-counter-row">
+                                <ui:Button name="OfferWheatMinus" text="-" class="btn trade-counter-btn"/>
+                                <ui:Label name="OfferWheatCount" text="0" class="label--sm trade-count"/>
+                                <ui:Button name="OfferWheatPlus" text="+" class="btn trade-counter-btn"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="trade-resource-slot">
+                            <ui:Label text="Ore" class="label--xs"/>
+                            <ui:VisualElement class="row trade-counter-row">
+                                <ui:Button name="OfferOreMinus" text="-" class="btn trade-counter-btn"/>
+                                <ui:Label name="OfferOreCount" text="0" class="label--sm trade-count"/>
+                                <ui:Button name="OfferOrePlus" text="+" class="btn trade-counter-btn"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:Label text="YOU WANT" class="label--xs label--secondary section-title"/>
+                    <ui:VisualElement class="row trade-resource-row">
+                        <ui:VisualElement class="trade-resource-slot">
+                            <ui:Label text="Wood" class="label--xs"/>
+                            <ui:VisualElement class="row trade-counter-row">
+                                <ui:Button name="WantWoodMinus" text="-" class="btn trade-counter-btn"/>
+                                <ui:Label name="WantWoodCount" text="0" class="label--sm trade-count"/>
+                                <ui:Button name="WantWoodPlus" text="+" class="btn trade-counter-btn"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="trade-resource-slot">
+                            <ui:Label text="Brick" class="label--xs"/>
+                            <ui:VisualElement class="row trade-counter-row">
+                                <ui:Button name="WantBrickMinus" text="-" class="btn trade-counter-btn"/>
+                                <ui:Label name="WantBrickCount" text="0" class="label--sm trade-count"/>
+                                <ui:Button name="WantBrickPlus" text="+" class="btn trade-counter-btn"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="trade-resource-slot">
+                            <ui:Label text="Sheep" class="label--xs"/>
+                            <ui:VisualElement class="row trade-counter-row">
+                                <ui:Button name="WantSheepMinus" text="-" class="btn trade-counter-btn"/>
+                                <ui:Label name="WantSheepCount" text="0" class="label--sm trade-count"/>
+                                <ui:Button name="WantSheepPlus" text="+" class="btn trade-counter-btn"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="trade-resource-slot">
+                            <ui:Label text="Wheat" class="label--xs"/>
+                            <ui:VisualElement class="row trade-counter-row">
+                                <ui:Button name="WantWheatMinus" text="-" class="btn trade-counter-btn"/>
+                                <ui:Label name="WantWheatCount" text="0" class="label--sm trade-count"/>
+                                <ui:Button name="WantWheatPlus" text="+" class="btn trade-counter-btn"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="trade-resource-slot">
+                            <ui:Label text="Ore" class="label--xs"/>
+                            <ui:VisualElement class="row trade-counter-row">
+                                <ui:Button name="WantOreMinus" text="-" class="btn trade-counter-btn"/>
+                                <ui:Label name="WantOreCount" text="0" class="label--sm trade-count"/>
+                                <ui:Button name="WantOrePlus" text="+" class="btn trade-counter-btn"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <!-- Status text (Waiting mode) -->
+                <ui:VisualElement name="PlayerTradeWaitingSection" style="display: none;">
+                    <ui:Label name="PlayerTradeWaitingLabel" text="" class="label--md" style="white-space: normal;"/>
+                </ui:VisualElement>
+
+                <!-- Offer summary (Responding mode) -->
+                <ui:VisualElement name="PlayerTradeRespondingSection" style="display: none;">
+                    <ui:Label name="PlayerTradeOfferLabel" text="" class="label--sm modal-feedback" style="white-space: normal;"/>
+                </ui:VisualElement>
+
+                <ui:Label name="PlayerTradeFeedbackLabel" text="" class="label--sm modal-feedback"/>
+
+                <!-- Proposing buttons -->
+                <ui:VisualElement name="PlayerTradeProposingButtons" class="row modal-button-row">
+                    <ui:Button name="PlayerTradeCancelBtn"  text="Cancel"  class="btn modal-btn"/>
+                    <ui:Button name="PlayerTradeProposeBtn" text="Propose" class="btn btn--primary modal-btn"/>
+                </ui:VisualElement>
+                <!-- Waiting buttons -->
+                <ui:VisualElement name="PlayerTradeWaitingButtons" class="row modal-button-row" style="display: none;">
+                    <ui:Button name="PlayerTradeWithdrawBtn" text="Withdraw" class="btn btn--danger modal-btn"/>
+                </ui:VisualElement>
+                <!-- Responding buttons -->
+                <ui:VisualElement name="PlayerTradeRespondingButtons" class="row modal-button-row" style="display: none;">
+                    <ui:Button name="PlayerTradeDeclineBtn" text="Decline" class="btn btn--danger modal-btn"/>
+                    <ui:Button name="PlayerTradeCounterBtn" text="Counter" class="btn modal-btn"/>
+                    <ui:Button name="PlayerTradeAcceptBtn"  text="Accept"  class="btn btn--primary modal-btn"/>
+                </ui:VisualElement>
+                <!-- Countering buttons -->
+                <ui:VisualElement name="PlayerTradeCounteringButtons" class="row modal-button-row" style="display: none;">
+                    <ui:Button name="PlayerTradeCancelCounterBtn"  text="Cancel"  class="btn modal-btn"/>
+                    <ui:Button name="PlayerTradeSubmitCounterBtn"  text="Counter" class="btn btn--primary modal-btn"/>
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
 

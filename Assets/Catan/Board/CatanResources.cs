@@ -24,6 +24,8 @@ namespace Catan
             Ore   = ore;
         }
 
+        public static IResource[] All => new[] { Wood, Brick, Sheep, Wheat, Ore };
+
         public static IResource Get(CatanResourceType resourceType) => resourceType switch
         {
             CatanResourceType.Wood  => Wood,
